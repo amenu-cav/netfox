@@ -18,7 +18,7 @@ struct TestScreen7ToggleView: View {
                         .foregroundColor(Color(red: 103/255, green: 103/255, blue: 103/255))
                     
                     HStack(spacing: 5) {
-                        Image(isToggleActive ? "Screen7GreenMark" : "Screen7RedMark")
+                        Image(isToggleActive ? .screen7GreenMark : .screen7RedMark)
                             .frame(width: 12, height: 12)
                         
                         Text(isToggleActive ? activeTitle : disactiveTitle)

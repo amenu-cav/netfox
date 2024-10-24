@@ -35,12 +35,9 @@ public struct Screen1View: View {
                       ? "Screen1IMG"
                       : "Screen1IMG2")
                 .resizable()
-                //                    .frame(width: .infinity)
                 .frame(maxWidth: .infinity)
-                //                    .frame(maxHeight: .infinity)
                 .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
                 .ignoresSafeArea(.all)
-                //                                .background(.red)
                 
                 VStack {
                     Text(state == .green
@@ -113,11 +110,9 @@ public struct Screen1View: View {
                 .padding(.horizontal)
                 .padding(.top, 0)
                 .padding(.bottom)
-                //                            .background(.orange)
                 
             }
             .background(Color.white)
-            //        .background(.blue)
             .ignoresSafeArea(.all)
             .navigationBarHidden(true)
             

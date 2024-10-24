@@ -13,7 +13,6 @@ struct TestScreen7SecurityCenterView: View {
     
     var body: some View {
         VStack(spacing: 5) {
-            
             HStack {
                 ZStack {
                     Rectangle()
@@ -37,9 +36,6 @@ struct TestScreen7SecurityCenterView: View {
                         .lineLimit(2)
                 }
                 .padding(.leading, 7)
-                //                .padding(.vertical)
-                //                .padding()
-                //                .background(.red)
                 
                 Spacer()
             }
@@ -96,4 +92,3 @@ struct TestScreen7SecurityCenterView: View {
         .cornerRadius(15)
     }
 }
-

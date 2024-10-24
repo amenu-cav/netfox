@@ -55,7 +55,7 @@ public struct TestScreen7View: View {
                     .animation(.easeInOut(duration: 0.5), value: circleProgress())
 
                 VStack {
-                    Image(isProtect ? "Screen7GreenImg" : "Screen7Rtiangle")
+                    Image(isProtect ? .screen7GreenImg : .screen7Rtiangle)
                         .frame(width: 58, height: 58)
                     
                     Text(isProtect ? "You're\nProtected" : "You're not\nProtected")
