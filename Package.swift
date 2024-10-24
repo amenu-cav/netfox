@@ -17,12 +17,16 @@ let package = Package(
         .package(url: "https://github.com/airbnb/lottie-spm.git", from: "4.5.0"),
     ],
     targets: [
-        .target(name: "netfox",
-                dependencies: [
-                    .product(name: "Lottie", package: "lottie-spm"),
-                ],
-                path: "netfox/",
-                exclude: ["OSX"])
-    ],
-    swiftLanguageVersions: [.v5]
+        .target(
+            name: "netfox",
+            dependencies: [
+                .product(name: "Lottie", package: "lottie-spm"),
+            ],
+            path: "netfox/",
+            exclude: ["OSX"],
+            resources: [
+                .process("Media.xcassets")
+            ]
+        )
+    ]
 )
