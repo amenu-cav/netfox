@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct Screen6View: View {
+public struct Screen6View: View {
     let data = [
         ("89 viruses", "Danger!"),
         ("45 vulnerabilities", "Critical!"),
@@ -9,7 +9,7 @@ struct Screen6View: View {
         ("Battery condition", "Unsatisfactory!")
     ]
     
-    var body: some View {
+    public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
                 Text("Protection Center")

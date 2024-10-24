@@ -5,11 +5,11 @@ enum ActiveAlert {
     case first, second
 }
 
-struct Screen5View: View {
+public struct Screen5View: View {
     @State private var showAlert = true
     @State private var activeAlert: ActiveAlert = .first
 
-    var body: some View {
+    public var body: some View {
         VStack {
             Image("Screen5AtIcon")
                 .resizable()

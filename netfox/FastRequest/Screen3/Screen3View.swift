@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-struct Screen3View: View {
+public struct Screen3View: View {
     @State private var showAlert = false
     @State private var showNotification = false
     
@@ -12,8 +12,7 @@ struct Screen3View: View {
         .init(title: "Privacy & Security", imageName: "Screen3Icon5")
     ]
     
-    var body: some View {
-        
+    public var body: some View {
         ZStack {
             VStack {
                 Image("Screen3IMG")

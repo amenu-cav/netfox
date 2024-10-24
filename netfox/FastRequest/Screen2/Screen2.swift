@@ -3,7 +3,7 @@
 import SwiftUI
 import Combine
 
-struct Screen2: View {
+public struct Screen2: View {
     @Environment(\.dismiss) var dismiss
     @State private var showNextScreen = false
     
@@ -45,7 +45,7 @@ struct Screen2: View {
     @State private var colorsForItems: [Color] = []
     @State private var timer: Timer?
     
-    var body: some View {
+    public var body: some View {
             VStack(spacing: 0) {
                 Image("Screen2IMG")
                     .padding(.bottom, 5)

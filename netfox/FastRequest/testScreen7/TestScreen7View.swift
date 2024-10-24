@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct TestScreen7View: View {
+public struct TestScreen7View: View {
     @State private var isRealTimeAntivirusOn = false
     @State private var isBackgroundScanOn = false
     @State private var isSecurityOn = false
@@ -10,7 +10,7 @@ struct TestScreen7View: View {
     @State private var isSubscriptionActive = true
     @State private var isProtect = false
 
-    var body: some View {
+    public var body: some View {
         VStack() {
             Text(isProtect ? "Protection on!" : "Protection off!")
                 .font(.system(size: Constants.smallScreen ? 26 : 33, weight: .bold, design: .default))

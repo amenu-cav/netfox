@@ -11,7 +11,7 @@ struct MockInfoItem: Hashable {
     let imageName: String
 }
 
-struct Screen1View: View {
+public struct Screen1View: View {
     @Environment(\.dismiss) var dismiss
     
     let state: Screen1State
@@ -28,7 +28,7 @@ struct Screen1View: View {
         .init(title: "You contact list can be leaked into the Web.", imageName: "Screen1Icon3"),
     ]
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 0) {
                 Image(state == .green
