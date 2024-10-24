@@ -1,11 +1,11 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.8
 
 import PackageDescription
 
 let package = Package(
     name: "netfox",
     platforms: [
-        .iOS(.v9)
+        .iOS(.v16)
     ],
     products: [
         .library(
@@ -13,8 +13,14 @@ let package = Package(
             targets: ["netfox"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/airbnb/lottie-spm.git", from: "4.5.0"),
+    ],
     targets: [
         .target(name: "netfox",
+                dependencies: [
+                    .product(name: "Lottie", package: "lottie-spm"),
+                ],
                 path: "netfox/",
                 exclude: ["OSX"])
     ],
