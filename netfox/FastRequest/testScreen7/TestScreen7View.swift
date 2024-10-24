@@ -9,6 +9,16 @@ public struct TestScreen7View: View {
     @State private var isCacheOn = false
     @State private var isSubscriptionActive = true
     @State private var isProtect = false
+    
+    public init(isRealTimeAntivirusOn: Bool = false, isBackgroundScanOn: Bool = false, isSecurityOn: Bool = false, isPasswordsOn: Bool = false, isCacheOn: Bool = false, isSubscriptionActive: Bool = true, isProtect: Bool = false) {
+        self.isRealTimeAntivirusOn = isRealTimeAntivirusOn
+        self.isBackgroundScanOn = isBackgroundScanOn
+        self.isSecurityOn = isSecurityOn
+        self.isPasswordsOn = isPasswordsOn
+        self.isCacheOn = isCacheOn
+        self.isSubscriptionActive = isSubscriptionActive
+        self.isProtect = isProtect
+    }
 
     public var body: some View {
         VStack() {
@@ -89,5 +99,3 @@ public struct TestScreen7View: View {
         return result
     }
 }
-
-
