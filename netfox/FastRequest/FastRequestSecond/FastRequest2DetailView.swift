@@ -29,37 +29,38 @@ public struct FastRequest2DetailView: View {
                     .frame(width: 110, height: 110)
                     .padding(.top)
                 
-                Text("You are not \nProtected")
+                Text(model?.prtd?.title ?? "")
                     .font(.system(size: 24, weight: .bold, design: .default))
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                 
-                Text("Your IP: 109.101.78.125")
+                Text(model?.prtd?.ip ?? "")
                     .font(.system(size: 12, weight: .medium, design: .default))
                     .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
                     .multilineTextAlignment(.center)
                 
                 HStack(spacing: 17) {
-                    Image("Screen3Icon1")
+                    KFImage(URL(string: model?.modalIcon ?? ""))
+                        .setProcessor(SVGImgProcessor())
                         .resizable()
                         .frame(width: 63, height: 64)
                         .padding(.leading, 15)
                         .padding(.vertical, 10)
                     
                     VStack(alignment: .leading ,spacing: 0) {
-                        Text("Detected issues: 4")
+                        Text(model?.prtd?.b_title ?? "")
                             .font(.system(size: 18, weight: .medium, design: .default))
                             .foregroundColor(.white)
                             .multilineTextAlignment(.leading)
                         
-                        Text("Device security is low")
+                        Text(model?.prtd?.b_subtitle ?? "")
                             .font(.system(size: 10, weight: .medium, design: .default))
                             .foregroundColor(Color(red: 156/255, green: 156/255, blue: 156/255))
                             .multilineTextAlignment(.leading)
                             .padding(.bottom, 6)
                         
-                        Text("CRITICAL")
+                        Text(model?.prtd?.b_status ?? "")
                             .font(.system(size: 10, weight: .bold, design: .default))
                             .foregroundColor(.red)
                             .multilineTextAlignment(.leading)
@@ -123,7 +124,7 @@ public struct FastRequest2DetailView: View {
                 .scrollDisabled(true)
                 
                 
-                Text("A system alert indicates potential compromise. Secure your device without delay!")
+                Text(model?.prtd?.subtitle ?? "")
                     .font(.system(size: 12, weight: .bold, design: .default))
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
