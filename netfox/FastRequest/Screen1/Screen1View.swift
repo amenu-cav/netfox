@@ -105,13 +105,10 @@ public struct Screen1View: View {
                         .cornerRadius(10)
                         
                     }
-                    
-//                    Spacer()
                 }
                 .padding(.horizontal)
-                .padding(.top, 0)
+                .padding(.top, 50)
                 .padding(.bottom)
-                
             }
             .background(Color.white)
             .ignoresSafeArea(.all)

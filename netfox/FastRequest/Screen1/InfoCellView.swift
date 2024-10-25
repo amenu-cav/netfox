@@ -16,7 +16,7 @@ struct InfoCellView: View {
                 .padding(.vertical, 10)
             
             Text(title)
-                .font(.system(size: 14, weight: .none, design: .default))
+                .font(.system(size: 14, weight: .medium, design: .default))
                 .foregroundColor(.black)
                 .multilineTextAlignment(.leading)
                 .padding(.trailing, 30)
