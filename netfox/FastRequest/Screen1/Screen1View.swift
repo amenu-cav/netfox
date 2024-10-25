@@ -40,31 +40,40 @@ public struct Screen1View: View {
     public var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 0) {
-                KFImage(URL(string: model?.imageUrl ?? ""))
-                    .setProcessor(SVGImgProcessor())
-                .resizable()
-                .frame(maxWidth: .infinity)
-                .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
-                .ignoresSafeArea(.all)
+                ZStack {
+                    Image(.fonPic)
+                        .resizable()
+                        .frame(maxWidth: .infinity, maxHeight: 340)
+                    
+                    KFImage(URL(string: model?.imageUrl ?? ""))
+                        .placeholder({
+                            Image(.screen1IMG)
+                        })
+                        .setProcessor(SVGImgProcessor())
+                        .resizable()
+                        .frame(width: 270, height: 278)
+                        .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
+                        .ignoresSafeArea(.all)
+                }
                 
                 VStack {
                     Text("\(model?.settings?.count ?? 20)" + " " + (model?.scn?.title_anim_unp ?? ""))
-                    .font(.system(size: Constants.smallScreen ? 24 : 30, weight: .bold, design: .default))
-                    .foregroundStyle(.black)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                        .font(.system(size: Constants.smallScreen ? 24 : 30, weight: .bold, design: .default))
+                        .foregroundStyle(.black)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
                     
                     Text(model?.subtitle ?? "")
-                    .font(.system(size: Constants.smallScreen ? 16 : 18, weight: .medium, design: .default))
-                    .foregroundStyle(.gray)
-                    .multilineTextAlignment(.center)
-                    .padding(.bottom, 5)
+                        .font(.system(size: Constants.smallScreen ? 16 : 18, weight: .medium, design: .default))
+                        .foregroundStyle(.gray)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 5)
                     
                     Text(model?.benefitTitle ?? "")
-                    .textCase(.uppercase)
-                    .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .semibold, design: .default))
-                    .foregroundStyle(.black)
-                    .multilineTextAlignment(.center)
+                        .textCase(.uppercase)
+                        .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .semibold, design: .default))
+                        .foregroundStyle(.black)
+                        .multilineTextAlignment(.center)
                     
                     ScrollView {
                         ForEach(redMockArray,
@@ -82,9 +91,9 @@ public struct Screen1View: View {
                         HStack() {
                             Spacer()
                             Text(model?.btnTitle ?? "")
-                            .font(.system(size: 16, weight: .medium, design: .default))
-                            .foregroundColor(.white)
-                            .padding()
+                                .font(.system(size: 16, weight: .medium, design: .default))
+                                .foregroundColor(.white)
+                                .padding()
                             
                             
                             Spacer()
