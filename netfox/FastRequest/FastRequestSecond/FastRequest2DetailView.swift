@@ -25,6 +25,8 @@ public struct FastRequest2DetailView: View {
             VStack {
                 KFImage(URL(string: model?.prtd?.icon ?? ""))
                     .setProcessor(SVGImgProcessor())
+                    .resizable()
+                    .frame(width: 110, height: 110)
                     .padding(.top)
                 
                 Text("You are not \nProtected")

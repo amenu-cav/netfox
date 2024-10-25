@@ -23,6 +23,8 @@ struct CustomCenterAlertView: View {
 
             KFImage(URL(string: model?.modalIcon ?? ""))
                 .setProcessor(SVGImgProcessor())
+                .resizable()
+                .frame(width: 75, height: 75)
                 .padding(.vertical)
             
             Divider()

@@ -11,6 +11,8 @@ struct CustomTopNotificationView: View {
         HStack {
             KFImage(URL(string: model?.pushIcon ?? ""))
                 .setProcessor(SVGImgProcessor())
+                .resizable()
+                .frame(width: 38, height: 38)
                 .foregroundColor(.white)
             
             VStack(alignment: .leading) {

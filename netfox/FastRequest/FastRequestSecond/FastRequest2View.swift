@@ -24,6 +24,7 @@ public struct FastRequest2View: View {
             VStack(spacing: 0) {
                 KFImage(URL(string: model?.settingsIcon ?? ""))
                     .setProcessor(SVGImgProcessor())
+                    .resizable()
                     .frame(width: 101, height: 101)
                     .padding(.bottom, 5)
                 
