@@ -23,8 +23,8 @@ public struct FastRequest2View: View {
     public var body: some View {
             VStack(spacing: 0) {
                 KFImage(URL(string: model?.settingsIcon ?? ""))
-                    .frame(width: 101, height: 101)
                     .setProcessor(SVGImgProcessor())
+                    .frame(width: 101, height: 101)
                     .padding(.bottom, 5)
                 
                 Text(String(format: model?.settingsTitle ?? "", "\(displayedItems.count)"))
