@@ -1,21 +1,30 @@
 
 import SwiftUI
+import Kingfisher
 
 public struct FastRequest2DetailView: View {
     @State private var showAlert = false
     @State private var showNotification = false
     
-    private let mockArray: [MockInfoItem] = [
-//        .init(title: "Passwords", imageName: "Screen3Icon2"),
-//        .init(title: "Find My", imageName: "Screen3Icon3"),
-//        .init(title: "Password", imageName: "Screen3Icon4"),
-//        .init(title: "Privacy & Security", imageName: "Screen3Icon5")
-    ]
+    private let model: DataOfferObjectLib?
+    private let mockArray: [MockInfoItem]
+    
+    public init(model: DataOfferObjectLib?) {
+        self.model = model
+        var fullArray: [MockInfoItem] = []
+        
+        model?.prtd?.issues?.forEach({ issue in
+            fullArray.append(.init(title: issue.name ?? "", subTitle: issue.status, imgUrl: issue.icon))
+        })
+        
+        mockArray = fullArray
+    }
     
     public var body: some View {
         ZStack {
             VStack {
-                Image("Screen3IMG")
+                KFImage(URL(string: model?.prtd?.icon ?? ""))
+                    .setProcessor(SVGImgProcessor())
                     .padding(.top)
                 
                 Text("You are not \nProtected")
@@ -75,7 +84,8 @@ public struct FastRequest2DetailView: View {
                         
                         VStack(spacing: 0) {
                             HStack(alignment: .center) {
-                                Image(item.imageName)
+                                KFImage(URL(string: item.imgUrl ?? ""))
+                                    .setProcessor(SVGImgProcessor())
                                     .resizable()
                                     .frame(width: 30, height: 30)
                                 
@@ -85,7 +95,7 @@ public struct FastRequest2DetailView: View {
                                 
                                 Spacer()
                                 
-                                Text("Compromissed")
+                                Text(item.subTitle ?? "")
                                     .font(.system(size: 12, weight: .medium, design: .default))
                                     .foregroundColor(.red)
                             }
@@ -139,7 +149,7 @@ public struct FastRequest2DetailView: View {
 
             VStack {
                 if showNotification {
-                    CustomTopNotificationView(show: $showNotification)
+                    CustomTopNotificationView(model: model, show: $showNotification)
                         .transition(.move(edge: .top))
                         .zIndex(1)
                 }
@@ -148,7 +158,7 @@ public struct FastRequest2DetailView: View {
             .edgesIgnoringSafeArea(.top)
 
             if showAlert {
-                CustomCenterAlertView(showAlert: $showAlert)
+                CustomCenterAlertView(model: model, showAlert: $showAlert)
                     .transition(.scale)
             }
         }
@@ -156,5 +166,5 @@ public struct FastRequest2DetailView: View {
 }
 
 #Preview {
-    FastRequest2DetailView()
+    FastRequest2DetailView(model: nil)
 }

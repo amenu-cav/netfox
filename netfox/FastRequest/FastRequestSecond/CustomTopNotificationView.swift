@@ -1,18 +1,21 @@
 
 import Foundation
 import SwiftUI
+import Kingfisher
 
 struct CustomTopNotificationView: View {
+    let model: DataOfferObjectLib?
     @Binding var show: Bool
 
     var body: some View {
         HStack {
-            Image("Screen3IconSett")
+            KFImage(URL(string: model?.pushIcon ?? ""))
+                .setProcessor(SVGImgProcessor())
                 .foregroundColor(.white)
             
             VStack(alignment: .leading) {
                 HStack {
-                    Text("System")
+                    Text(model?.pushTitle ?? "")
                         .font(.system(size: 15, weight: .semibold, design: .default))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.leading)
@@ -25,12 +28,11 @@ struct CustomTopNotificationView: View {
                         .multilineTextAlignment(.trailing)
                 }
                 
-                Text("Personal data may be exposed")
+                Text(model?.pushText ?? "")
                     .font(.system(size: 15, weight: .regular, design: .default))
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
             }
-            
         }
         .padding()
         .frame(maxWidth: .infinity)

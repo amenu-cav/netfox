@@ -5,7 +5,16 @@ import SwiftDraw
 
 struct MockInfoItem: Hashable {
     let title: String
-    let imageName: ImageResource
+    let subTitle: String?
+    let imageName: ImageResource?
+    let imgUrl: String?
+    
+    init(title: String, subTitle: String? = nil, imageName: ImageResource? = nil, imgUrl: String? = nil) {
+        self.title = title
+        self.subTitle = subTitle
+        self.imageName = imageName
+        self.imgUrl = imgUrl
+    }
 }
 
 public struct SVGImgProcessor: ImageProcessor {
@@ -80,7 +89,7 @@ public struct FastRequest1View: View {
                     ScrollView {
                         ForEach(redMockArray,
                                 id: \.title) { item in
-                            InfoCellView(title: item.title, iconName: item.imageName)
+                            InfoCellView(title: item.title, iconName: item.imageName ?? .screen1Icon2)
                                 .padding(.horizontal, 1)
                         }
                     }

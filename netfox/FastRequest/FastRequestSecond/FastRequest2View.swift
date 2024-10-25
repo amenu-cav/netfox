@@ -25,6 +25,7 @@ public struct FastRequest2View: View {
                 KFImage(URL(string: model?.settingsIcon ?? ""))
                     .setProcessor(SVGImgProcessor())
                     .padding(.bottom, 5)
+                    .frame(width: 101, height: 101)
                 
                 Text(String(format: model?.settingsTitle ?? "", "\(displayedItems.count)"))
                     .font(.system(size: 22, weight: .bold, design: .default))
@@ -62,7 +63,7 @@ public struct FastRequest2View: View {
             .background(.white)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
-                FastRequest2DetailView()
+                FastRequest2DetailView(model: model)
             }
     }
     

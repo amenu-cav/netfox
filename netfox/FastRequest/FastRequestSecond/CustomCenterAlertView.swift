@@ -2,25 +2,27 @@
 
 import Foundation
 import SwiftUI
+import Kingfisher
 
 struct CustomCenterAlertView: View {
+    let model: DataOfferObjectLib?
     @Binding var showAlert: Bool
 
     var body: some View {
         VStack(spacing: 0) {
-            Text("YOUR PHONE HAS BEEN COMPROMISED")
+            Text(model?.modalTitle ?? "")
                 .font(.system(size: 17, weight: .semibold, design: .default))
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
 
-            Text("Immediate Action is Required!")
+            Text(model?.modalText ?? "")
                 .font(.system(size: 13, weight: .regular, design: .default))
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
                 .padding(.top, 3)
 
-
-            Image("Screen3Icon1")
+            KFImage(URL(string: model?.modalIcon ?? ""))
+                .setProcessor(SVGImgProcessor())
                 .padding(.vertical)
             
             Divider()
@@ -30,7 +32,7 @@ struct CustomCenterAlertView: View {
                     showAlert = false
                 }
             }) {
-                Text("PROTECT YOURSELF")
+                Text(model?.modalBtn ?? "")
                     .font(.system(size: 17, weight: .semibold, design: .default))
                     .foregroundColor(Color(red: 0/255, green: 122/255, blue: 255/255))
                     .multilineTextAlignment(.center)
