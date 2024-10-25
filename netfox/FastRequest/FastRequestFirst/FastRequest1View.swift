@@ -21,7 +21,7 @@ public struct SVGImgProcessor: ImageProcessor {
     }
 }
 
-public struct Screen1View: View {
+public struct FastRequest1View: View {
     @Environment(\.dismiss) var dismiss
     
     private let redMockArray: [MockInfoItem]
@@ -137,5 +137,5 @@ public struct Screen1View: View {
 }
 
 #Preview {
-    Screen1View(model: nil)
+    FastRequest1View(model: nil)
 }

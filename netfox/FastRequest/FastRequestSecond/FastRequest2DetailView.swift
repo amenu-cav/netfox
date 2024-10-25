@@ -1,7 +1,7 @@
 
 import SwiftUI
 
-public struct Screen3View: View {
+public struct FastRequest2DetailView: View {
     @State private var showAlert = false
     @State private var showNotification = false
     
@@ -156,12 +156,5 @@ public struct Screen3View: View {
 }
 
 #Preview {
-    Screen3View()
+    FastRequest2DetailView()
 }
-
-
-
-
-
-
-

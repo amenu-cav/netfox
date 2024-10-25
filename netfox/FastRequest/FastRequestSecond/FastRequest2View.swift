@@ -4,7 +4,7 @@ import SwiftUI
 import Combine
 import Kingfisher
 
-public struct Screen2: View {
+public struct FastRequest2View: View {
     @Environment(\.dismiss) var dismiss
     @State private var showNextScreen = false
     
@@ -26,7 +26,7 @@ public struct Screen2: View {
                     .setProcessor(SVGImgProcessor())
                     .padding(.bottom, 5)
                 
-                Text("Detected \(displayedItems.count) Issues")
+                Text(String(format: model?.settingsTitle ?? "", "\(displayedItems.count)"))
                     .font(.system(size: 22, weight: .bold, design: .default))
                     .foregroundStyle(.black)
                 
@@ -62,7 +62,7 @@ public struct Screen2: View {
             .background(.white)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
-                Screen3View()
+                FastRequest2DetailView()
             }
     }
     
@@ -98,7 +98,7 @@ public struct Screen2: View {
             if currentIndex >= mockArr.count {
                 timer?.invalidate()
                 timer = nil
-                print("The End")
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     showNextScreen = true
                 }
@@ -125,5 +125,5 @@ public struct Screen2: View {
 }
 
 #Preview {
-    Screen2(model: nil)
+    FastRequest2View(model: nil)
 }
