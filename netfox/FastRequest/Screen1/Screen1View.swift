@@ -51,10 +51,9 @@ public struct Screen1View: View {
                         })
                         .setProcessor(SVGImgProcessor())
                         .resizable()
-                        .frame(width: 300, height: 278)
+                        .frame(width: 300, height: 300)
                         .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
-//                        .ignoresSafeArea(.all)
-                        
+                        .padding(.top)
                 }
                 
                 VStack {
@@ -115,6 +114,8 @@ public struct Screen1View: View {
             .background(Color.white)
             .ignoresSafeArea(.all)
             .navigationBarHidden(true)
+            
+            Spacer()
             
             VStack {
                 HStack {
