@@ -6,10 +6,10 @@ public struct Screen3View: View {
     @State private var showNotification = false
     
     private let mockArray: [MockInfoItem] = [
-        .init(title: "Passwords", imageName: "Screen3Icon2"),
-        .init(title: "Find My", imageName: "Screen3Icon3"),
-        .init(title: "Password", imageName: "Screen3Icon4"),
-        .init(title: "Privacy & Security", imageName: "Screen3Icon5")
+//        .init(title: "Passwords", imageName: "Screen3Icon2"),
+//        .init(title: "Find My", imageName: "Screen3Icon3"),
+//        .init(title: "Password", imageName: "Screen3Icon4"),
+//        .init(title: "Privacy & Security", imageName: "Screen3Icon5")
     ]
     
     public var body: some View {

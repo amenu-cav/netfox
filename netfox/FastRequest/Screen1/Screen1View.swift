@@ -1,73 +1,73 @@
 
 import SwiftUI
-
-enum Screen1State {
-    case green
-    case red
-}
+import Kingfisher
+import SwiftDraw
 
 struct MockInfoItem: Hashable {
     let title: String
-    let imageName: String
+    let imageName: ImageResource
+}
+
+public struct SVGImgProcessor: ImageProcessor {
+    public var identifier: String = "com.appidentifier.webpprocessor"
+    public func process(item: ImageProcessItem, options: KingfisherParsedOptionsInfo) -> KFCrossPlatformImage? {
+        switch item {
+        case .image(let image):
+            print("already an image")
+            return image
+        case .data(let data):
+            return UIImage(svgData: data)
+        }
+    }
 }
 
 public struct Screen1View: View {
     @Environment(\.dismiss) var dismiss
     
-    let state: Screen1State
+    private let redMockArray: [MockInfoItem]
+    private let model: DataOfferObjectLib?
     
-    private let greenMockArray: [MockInfoItem] = [
-        .init(title: "Keep your internet fast with unlimited speed tests.", imageName: "Screen1Icon"),
-        .init(title: "Clean up your device with unlimited removal capabilities.", imageName: "Screen1Icon2"),
-        .init(title: "Easily organize and manage all your contacts in one place.", imageName: "Screen1Icon3"),
-    ]
-    
-    private let redMockArray: [MockInfoItem] = [
-        .init(title: "Your internet connection will become unstable", imageName: "Screen1Icon"),
-        .init(title: "Your media files are in danger and can be lost forever", imageName: "Screen1Icon2"),
-        .init(title: "You contact list can be leaked into the Web.", imageName: "Screen1Icon3"),
-    ]
+    public init(model: DataOfferObjectLib?) {
+        self.model = model
+        
+        self.redMockArray = [
+            .init(title: model?.benefitDescriptions[0] ?? "", imageName: .screen1Icon),
+            .init(title: model?.benefitDescriptions[1] ?? "", imageName: .screen1Icon2),
+            .init(title: model?.benefitDescriptions[2] ?? "", imageName: .screen1Icon3)
+        ]
+    }
     
     public var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 0) {
-                Image(state == .green
-                      ? "Screen1IMG"
-                      : "Screen1IMG2")
+                KFImage(URL(string: model?.imageUrl ?? ""))
+                    .setProcessor(SVGImgProcessor())
                 .resizable()
                 .frame(maxWidth: .infinity)
                 .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
                 .ignoresSafeArea(.all)
                 
                 VStack {
-                    Text(state == .green
-                         ? "Unlock Premium Features"
-                         : "42 Malware files detected")
+                    Text("\(model?.settings?.count ?? 20)" + " " + (model?.scn?.title_anim_unp ?? ""))
                     .font(.system(size: Constants.smallScreen ? 24 : 30, weight: .bold, design: .default))
                     .foregroundStyle(.black)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                     
-                    Text(state == .green
-                         ? "Unlock full power of Organizer and keep your device safe!"
-                         : "Keep your device safe! Remove suspicious files")
+                    Text(model?.subtitle ?? "")
                     .font(.system(size: Constants.smallScreen ? 16 : 18, weight: .medium, design: .default))
                     .foregroundStyle(.gray)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 5)
                     
-                    Text(state == .green
-                         ? "Premium plan includes:"
-                         : "Or else...")
+                    Text(model?.benefitTitle ?? "")
                     .textCase(.uppercase)
                     .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .semibold, design: .default))
                     .foregroundStyle(.black)
                     .multilineTextAlignment(.center)
                     
                     ScrollView {
-                        ForEach(state == .green
-                                ? greenMockArray
-                                : redMockArray,
+                        ForEach(redMockArray,
                                 id: \.title) { item in
                             InfoCellView(title: item.title, iconName: item.imageName)
                                 .padding(.horizontal, 1)
@@ -81,9 +81,7 @@ public struct Screen1View: View {
                     }) {
                         HStack() {
                             Spacer()
-                            Text(state == .green
-                                 ? "Grab the deal"
-                                 : "Remove files")
+                            Text(model?.btnTitle ?? "")
                             .font(.system(size: 16, weight: .medium, design: .default))
                             .foregroundColor(.white)
                             .padding()
@@ -97,15 +95,7 @@ public struct Screen1View: View {
                         
                     }
                     
-                    if state == .green {
-                        Text("$49.99 per year. Cancel anytime")
-                            .font(.system(size: 13, weight: .medium, design: .default))
-                            .foregroundStyle(.gray)
-                            .multilineTextAlignment(.center)
-                    }
-                    
                     Spacer()
-                    
                 }
                 .padding(.horizontal)
                 .padding(.top, 0)
@@ -139,5 +129,5 @@ public struct Screen1View: View {
 }
 
 #Preview {
-    Screen1View(state: .green)
+    Screen1View(model: nil)
 }
