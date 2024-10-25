@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct TestScreen7SecurityCenterView: View {
+struct FastRequestResultSecurityCenterView: View {
     @Binding var isSubscriptionActive: Bool
     @Binding var isRealTimeAntivirusOn: Bool
     
@@ -45,13 +45,13 @@ struct TestScreen7SecurityCenterView: View {
             
             VStack {
                 HStack(spacing: 5) {
-                    TestScreen7ToggleView(title: "Subscription:",
+                    FastRequestResultToggleView(title: "Subscription:",
                                           activeTitle: "Active",
                                           disactiveTitle: "Inactive",
                                           backColor: .white,
                                           isToggleActive: $isSubscriptionActive)
                     
-                    TestScreen7ToggleView(title: "Real-time antivirus:",
+                    FastRequestResultToggleView(title: "Real-time antivirus:",
                                           activeTitle: "Active",
                                           disactiveTitle: "Inactive",
                                           backColor: .white,
@@ -59,13 +59,13 @@ struct TestScreen7SecurityCenterView: View {
                 }
                 
                 HStack(spacing: 5) {
-                    TestScreen7ToggleView(title: "Background Scan:",
+                    FastRequestResultToggleView(title: "Background Scan:",
                                           activeTitle: "Active",
                                           disactiveTitle: "Inactive",
                                           backColor: .white,
                                           isToggleActive: $isBackgroundScanOn)
                     
-                    TestScreen7ToggleView(title: "Security:",
+                    FastRequestResultToggleView(title: "Security:",
                                           activeTitle: "Protected",
                                           disactiveTitle: "Unprotect",
                                           backColor: .white,
@@ -73,13 +73,13 @@ struct TestScreen7SecurityCenterView: View {
                 }
                 
                 HStack(spacing: 5) {
-                    TestScreen7ToggleView(title: "Privacy:",
+                    FastRequestResultToggleView(title: "Privacy:",
                                           activeTitle: "Guarded",
                                           disactiveTitle: "Unprotect",
                                           backColor: .white,
                                           isToggleActive: $isPasswordsOn)
                     
-                    TestScreen7ToggleView(title: "Performance:",
+                    FastRequestResultToggleView(title: "Performance:",
                                           activeTitle: "Optimized",
                                           disactiveTitle: "Inactive",
                                           backColor: .white,

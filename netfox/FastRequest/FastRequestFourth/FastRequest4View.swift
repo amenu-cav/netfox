@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-public struct Screen6View: View {
+public struct FastRequest4View: View {
     let data = [
         ("89 viruses", "Danger!"),
         ("45 vulnerabilities", "Critical!"),

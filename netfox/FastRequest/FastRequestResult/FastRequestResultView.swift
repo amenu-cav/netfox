@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-public struct TestScreen7View: View {
+public struct FastRequestResultView: View {
     @State private var isRealTimeAntivirusOn = false
     @State private var isBackgroundScanOn = false
     @State private var isSecurityOn = false
@@ -73,7 +73,7 @@ public struct TestScreen7View: View {
             }
             .padding(.vertical)
 
-            TestScreen7SecurityCenterView(isSubscriptionActive: $isSubscriptionActive,
+            FastRequestResultSecurityCenterView(isSubscriptionActive: $isSubscriptionActive,
                                           isRealTimeAntivirusOn: $isRealTimeAntivirusOn,
                                           isBackgroundScanOn: $isBackgroundScanOn,
                                           isSecurityOn: $isSecurityOn,

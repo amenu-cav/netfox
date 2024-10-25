@@ -5,7 +5,7 @@ enum ActiveAlert {
     case first, second
 }
 
-public struct Screen5View: View {
+public struct FastRequest3View: View {
     @State private var showAlert = true
     @State private var activeAlert: ActiveAlert = .first
 
@@ -103,6 +103,6 @@ public struct Screen5View: View {
 
 struct Screen5View_Previews: PreviewProvider {
     static var previews: some View {
-        Screen5View(model: nil)
+        FastRequest3View(model: nil)
     }
 }

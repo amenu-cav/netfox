@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct TestScreen7ToggleView: View {
+struct FastRequestResultToggleView: View {
     let title: String
     let activeTitle: String
     let disactiveTitle: String
