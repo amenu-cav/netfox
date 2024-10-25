@@ -9,6 +9,10 @@ public struct Screen6View: View {
         ("Battery condition", "Unsatisfactory!")
     ]
     
+    public init(model: DataOfferObjectLib?) {
+//        self.model = model
+    }
+    
     public var body: some View {
         ScrollView {
             VStack(spacing: 0) {

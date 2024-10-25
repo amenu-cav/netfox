@@ -9,6 +9,10 @@ public struct Screen5View: View {
     @State private var showAlert = true
     @State private var activeAlert: ActiveAlert = .first
 
+    public init(model: DataOfferObjectLib?) {
+//        self.model = model
+    }
+    
     public var body: some View {
         VStack {
             Image("Screen5AtIcon")
@@ -99,7 +103,6 @@ public struct Screen5View: View {
 
 struct Screen5View_Previews: PreviewProvider {
     static var previews: some View {
-        Screen5View()
+        Screen5View(model: nil)
     }
 }
-
