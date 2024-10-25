@@ -51,9 +51,10 @@ public struct Screen1View: View {
                         })
                         .setProcessor(SVGImgProcessor())
                         .resizable()
-                        .frame(width: 270, height: 278)
+                        .frame(width: 300, height: 278)
                         .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
-                        .ignoresSafeArea(.all)
+//                        .ignoresSafeArea(.all)
+                        
                 }
                 
                 VStack {
