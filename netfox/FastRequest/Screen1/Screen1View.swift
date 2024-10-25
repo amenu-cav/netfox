@@ -43,7 +43,7 @@ public struct Screen1View: View {
                 ZStack {
                     Image(.fonPic)
                         .resizable()
-                        .frame(maxWidth: .infinity, maxHeight: 340)
+                        .frame(maxWidth: .infinity, maxHeight: 360)
                     
                     KFImage(URL(string: model?.imageUrl ?? ""))
                         .placeholder({
@@ -55,6 +55,8 @@ public struct Screen1View: View {
                         .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
                         .padding(.top)
                 }
+                
+                Spacer()
                 
                 VStack {
                     Text("\(model?.settings?.count ?? 20)" + " " + (model?.scn?.title_anim_unp ?? ""))
@@ -114,8 +116,6 @@ public struct Screen1View: View {
             .background(Color.white)
             .ignoresSafeArea(.all)
             .navigationBarHidden(true)
-            
-            Spacer()
             
             VStack {
                 HStack {
