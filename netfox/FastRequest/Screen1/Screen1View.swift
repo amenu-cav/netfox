@@ -106,7 +106,7 @@ public struct Screen1View: View {
                         
                     }
                     
-                    Spacer()
+//                    Spacer()
                 }
                 .padding(.horizontal)
                 .padding(.top, 0)
