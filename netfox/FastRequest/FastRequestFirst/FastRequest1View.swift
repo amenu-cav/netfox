@@ -157,7 +157,7 @@ public struct FastRequest1View: View {
         dismiss()
     }
     
-    func triggerForResult() {
+    public func triggerForResult() {
         showNextScreen = true
     }
 }
