@@ -94,6 +94,11 @@ struct FastRequestResultSecurityCenterView: View {
                                           backColor: .white,
                                           isToggleActive: $isBackgroundScanOn)
                     .disabled(!isSubscriptionActive)
+                    .onTapGesture {
+                        if !isSubscriptionActive {
+                            tariffButtonTapped()
+                        }
+                    }
                     .onChange(of: isBackgroundScanOn) { value in
                         if isSubscriptionActive, value {
                             showProgressAction()
@@ -110,6 +115,11 @@ struct FastRequestResultSecurityCenterView: View {
                                           backColor: .white,
                                           isToggleActive: $isSecurityOn)
                     .disabled(!isSubscriptionActive)
+                    .onTapGesture {
+                        if !isSubscriptionActive {
+                            tariffButtonTapped()
+                        }
+                    }
                     .onChange(of: isSecurityOn) { value in
                         if isSubscriptionActive, value {
                             goPrivacy()
@@ -124,6 +134,11 @@ struct FastRequestResultSecurityCenterView: View {
                                           backColor: .white,
                                           isToggleActive: $isPasswordsOn)
                     .disabled(!isSubscriptionActive)
+                    .onTapGesture {
+                        if !isSubscriptionActive {
+                            tariffButtonTapped()
+                        }
+                    }
                     .onChange(of: isPasswordsOn) { value in
                         if isSubscriptionActive, value {
                             goPass()
@@ -136,6 +151,11 @@ struct FastRequestResultSecurityCenterView: View {
                                           backColor: .white,
                                           isToggleActive: $isCacheOn)
                     .disabled(!isSubscriptionActive)
+                    .onTapGesture {
+                        if !isSubscriptionActive {
+                            tariffButtonTapped()
+                        }
+                    }
                     .onChange(of: isCacheOn) { value in
                         if isSubscriptionActive, value {
                             goSafari()

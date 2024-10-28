@@ -79,20 +79,24 @@ struct LottieAnView: UIViewRepresentable {
     
     func makeUIView(context: Context) -> UIView {
         let view = UIView(frame: .zero)
-        let animationView = LottieAnimationView(name: name)
-        animationView.contentMode =
-            .scaleAspectFill
+        let lottieAnimationView = LottieAnimationView()
         
-        animationView.loopMode = .loop
-        animationView.play()
-        
-        animationView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(animationView)
+        lottieAnimationView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(lottieAnimationView)
         
         NSLayoutConstraint.activate([
-            animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            lottieAnimationView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            lottieAnimationView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
+        
+        LottieAnimation.loadedFrom(url: Bundle.module.url(forResource: name, withExtension: "json")!) { animtion in
+            lottieAnimationView.animation = animtion
+            lottieAnimationView.loopMode = .autoReverse
+            lottieAnimationView.contentMode = .scaleAspectFill
+            lottieAnimationView.backgroundBehavior = .pauseAndRestore
+            lottieAnimationView.backgroundColor = .clear
+            lottieAnimationView.play()
+        }
         
         return view
     }
