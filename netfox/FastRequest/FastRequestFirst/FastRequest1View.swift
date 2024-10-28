@@ -39,11 +39,13 @@ public struct FastRequest1View: View {
     private let model: DataOfferObjectLib?
     private let currentTariff: String
     private let isSubscriptionActive: Bool
+    private let completion: (() -> Void)
     
-    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String) {
+    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
         self.isSubscriptionActive = isSubscriptionActive
+        self.completion = completion
         
         self.redMockArray = [
             .init(title: model?.benefitDescriptions[0] ?? "", imageName: .screen1Icon),
@@ -118,7 +120,9 @@ public struct FastRequest1View: View {
                         .frame(height: 50)
                         .background(.blue)
                         .cornerRadius(10)
-                        
+                        .onTapGesture {
+                            completion()
+                        }
                     }
                 }
                 .padding(.horizontal)
@@ -152,8 +156,4 @@ public struct FastRequest1View: View {
     private func closeVC() {
         dismiss()
     }
-}
-
-#Preview {
-    FastRequest1View(isSubscriptionActive: false, model: nil, currentTariff: "nil")
 }
