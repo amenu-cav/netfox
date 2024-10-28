@@ -156,4 +156,8 @@ public struct FastRequest1View: View {
     private func closeVC() {
         dismiss()
     }
+    
+    func triggerForResult() {
+        showNextScreen = true
+    }
 }
