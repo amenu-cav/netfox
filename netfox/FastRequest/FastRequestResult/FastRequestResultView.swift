@@ -55,17 +55,17 @@ public struct FastRequestResultView: View {
                     Image(isProtect ? .screen7GreenImg : .screen7Rtiangle)
                         .frame(width: 58, height: 58)
                     
-                    Text(isProtect ? "You're\nProtected" : "You're not\nProtected")
+                    Text(isProtect ? model?.scn?.title_anim_compl ?? "" : model?.scn?.title_anim_unp ?? "")
                         .font(.system(size: Constants.smallScreen ? 20 : 26, weight: .semibold, design: .default))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
 
-                    Text("WebShield is ")
-                        .font(.system(size: Constants.smallScreen ? 12 : 14, weight: .medium, design: .default))
-                        .foregroundColor(Color(red: 103/255, green: 103/255, blue: 103/255)) +
-                    Text(isProtect ? "ON" : "OFF")
-                        .font(.system(size: Constants.smallScreen ? 12 : 14, weight: .bold, design: .default))
-                        .foregroundColor(isProtect ? .green : .red)
+                    Text(createAtrStr())
+//                        .font(.system(size: Constants.smallScreen ? 12 : 14, weight: .medium, design: .default))
+//                        .foregroundColor(Color(red: 103/255, green: 103/255, blue: 103/255)) +
+//                    Text(isProtect ? "ON" : "OFF")
+//                        .font(.system(size: Constants.smallScreen ? 12 : 14, weight: .bold, design: .default))
+//                        .foregroundColor(isProtect ? .green : .red)
                 }
             }
             .padding(.vertical)
@@ -84,7 +84,7 @@ public struct FastRequestResultView: View {
         .navigationBarHidden(true)
     }
     
-    func circleProgress() -> CGFloat {
+    private func circleProgress() -> CGFloat {
         let togglesOn = [isSubscriptionActive, isRealTimeAntivirusOn, isBackgroundScanOn, isSecurityOn, isPasswordsOn, isCacheOn].filter { $0 }.count
         
         let result = CGFloat(togglesOn) / 6
@@ -94,6 +94,45 @@ public struct FastRequestResultView: View {
         }
         
         return result
+    }
+    
+    private func createAtrStr() -> AttributedString {
+        let attributedStrOne = NSMutableAttributedString(string: String(model?.scn?.subtitle_anim_compl?.dropLast(2) ?? ""), attributes: [
+            NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: "#000000"),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .medium)
+        ])
+        let attributedStrTwo = NSMutableAttributedString(string: localizeText(forKey: isProtect ? .subsActive : .subsOff).uppercased(), attributes: [
+            NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: isProtect ? "#65D65C" : "#E74444"),
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .bold)
+        ])
+        
+        attributedStrOne.append(attributedStrTwo)
+        
+        return AttributedString(attributedStrOne)
+    }
+}
+
+extension UIColor {
+    func hexStringToUIColor(hex: String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+        
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+        
+        var rgbValue:UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
     }
 }
 
