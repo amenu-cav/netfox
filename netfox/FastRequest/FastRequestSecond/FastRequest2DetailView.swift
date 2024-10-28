@@ -5,13 +5,18 @@ import Kingfisher
 public struct FastRequest2DetailView: View {
     @State private var showAlert = false
     @State private var showNotification = false
+    @State private var showNextScreen = false
     
     private let model: DataOfferObjectLib?
     private let mockArray: [MockInfoItem]
+    private let currentTariff: String
+    private let isSubscriptionActive: Bool
     
-    public init(model: DataOfferObjectLib?) {
+    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String) {
         self.model = model
         var fullArray: [MockInfoItem] = []
+        self.currentTariff = currentTariff
+        self.isSubscriptionActive = isSubscriptionActive
         
         model?.prtd?.issues?.forEach({ issue in
             fullArray.append(.init(title: issue.name ?? "", subTitle: issue.status, imgUrl: issue.icon))
@@ -165,9 +170,12 @@ public struct FastRequest2DetailView: View {
                     .transition(.scale)
             }
         }
+        .fullScreenCover(isPresented: $showNextScreen) {
+            FastRequestResultView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
+        }
     }
 }
 
 #Preview {
-    FastRequest2DetailView(model: nil)
+    FastRequest2DetailView(isSubscriptionActive: false, model: nil, currentTariff: "")
 }

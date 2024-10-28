@@ -10,14 +10,18 @@ public struct FastRequest2View: View {
     
     private let mockArr: [String]
     private let model: DataOfferObjectLib?
+    private let currentTariff: String
+    private let isSubscriptionActive: Bool
     
     @State private var displayedItems: [String] = []
     @State private var colorsForItems: [Color] = []
     @State private var timer: Timer?
     
-    public init(model: DataOfferObjectLib?) {
+    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String) {
         self.mockArr = model?.settings ?? []
         self.model = model
+        self.currentTariff = currentTariff
+        self.isSubscriptionActive = isSubscriptionActive
     }
     
     public var body: some View {
@@ -64,7 +68,7 @@ public struct FastRequest2View: View {
             .background(.white)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
-                FastRequest2DetailView(model: model)
+                FastRequest2DetailView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
             }
     }
     
@@ -127,5 +131,5 @@ public struct FastRequest2View: View {
 }
 
 #Preview {
-    FastRequest2View(model: nil)
+    FastRequest2View(isSubscriptionActive: false, model: nil, currentTariff: "")
 }
