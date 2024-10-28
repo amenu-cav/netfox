@@ -4,6 +4,8 @@ import Lottie
 struct SuperRequestView: View {
     @Environment(\.presentationMode) var presentationMode
     
+    var currentTariff: String?
+    
     var body: some View {
         VStack {
             HStack {
@@ -24,7 +26,7 @@ struct SuperRequestView: View {
             ZStack(alignment: .bottom) {
                 LottieAnView(name: "balloon_animation")
                 
-                Text("Exclusive\none-time offer")
+                Text(localizeText(forKey: .subsTitle))
                     .font(.system(size: 38, weight: .bold))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
@@ -32,7 +34,7 @@ struct SuperRequestView: View {
             }
             Spacer()
             
-            Text("Upgrade now and explore secured\nconnection with no data leakage!")
+            Text(localizeText(forKey: .subsSub))
                 .font(.system(size: 18))
                 .foregroundColor(.white)
                 .multilineTextAlignment(.center)
@@ -52,25 +54,28 @@ struct SuperRequestView: View {
                             .frame(width: 200)
                             .padding(.horizontal, 16)
                         
-                        Text("CANCEL ANYTIME")
+                        Text(localizeText(forKey: .subsCancel))
                             .font(.system(size: 14, weight: .bold))
                             .foregroundColor(.black)
                     }
                     .padding(.top, -15)
                     
-                    Text("GRAB 3-DAYS FREE TRIAL")
+                    Text(localizeText(forKey: .subsBuy))
                         .font(.system(size: 16))
                         .foregroundColor(.white)
+                        .onTapGesture {
+                            
+                        }
                 }
             }
             .padding(.bottom, 10)
             
-            Text("3-days free trial, then only $9.99/week")
+            Text(String(format: localizeText(forKey: .subsPrice), currentTariff ?? "7.99"))
                 .font(.system(size: 14, weight: .bold))
                 .foregroundColor(.white)
                 .padding(.bottom, 20)
         }
-        .background(Color(hex: "#01011C").edgesIgnoringSafeArea(.all)) // Фон
+        .background(Color(hex: "#01011C").edgesIgnoringSafeArea(.all))
     }
 }
 
@@ -91,7 +96,7 @@ struct LottieAnView: UIViewRepresentable {
         
         LottieAnimation.loadedFrom(url: Bundle.module.url(forResource: name, withExtension: "json")!) { animtion in
             lottieAnimationView.animation = animtion
-            lottieAnimationView.loopMode = .autoReverse
+            lottieAnimationView.loopMode = .loop
             lottieAnimationView.contentMode = .scaleAspectFill
             lottieAnimationView.backgroundBehavior = .pauseAndRestore
             lottieAnimationView.backgroundColor = .clear

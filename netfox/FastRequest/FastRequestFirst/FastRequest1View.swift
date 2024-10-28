@@ -33,11 +33,17 @@ public struct SVGImgProcessor: ImageProcessor {
 public struct FastRequest1View: View {
     @Environment(\.dismiss) var dismiss
     
+    @State private var showNextScreen = false
+    
     private let redMockArray: [MockInfoItem]
     private let model: DataOfferObjectLib?
+    private let currentTariff: String
+    private let isSubscriptionActive: Bool
     
-    public init(model: DataOfferObjectLib?) {
+    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String) {
         self.model = model
+        self.currentTariff = currentTariff
+        self.isSubscriptionActive = isSubscriptionActive
         
         self.redMockArray = [
             .init(title: model?.benefitDescriptions[0] ?? "", imageName: .screen1Icon),
@@ -138,6 +144,9 @@ public struct FastRequest1View: View {
                 Spacer()
             }
         }
+        .fullScreenCover(isPresented: $showNextScreen) {
+            FastRequestResultView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
+        }
     }
     
     private func closeVC() {
@@ -146,5 +155,5 @@ public struct FastRequest1View: View {
 }
 
 #Preview {
-    FastRequest1View(model: nil)
+    FastRequest1View(isSubscriptionActive: false, model: nil, currentTariff: "nil")
 }
