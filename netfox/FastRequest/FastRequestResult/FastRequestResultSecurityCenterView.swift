@@ -66,6 +66,9 @@ struct FastRequestResultSecurityCenterView: View {
                                           backColor: .white,
                                           isToggleActive: $isRealTimeAntivirusOn)
                     .disabled(!isSubscriptionActive)
+                    .onTapGesture {
+                        print("tapped")
+                    }
                     .onChange(of: isRealTimeAntivirusOn) { value in
                         if isSubscriptionActive, value {
                             print("mer uzac case")
