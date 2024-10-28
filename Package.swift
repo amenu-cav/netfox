@@ -16,7 +16,8 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/airbnb/lottie-spm.git", from: "4.5.0"),
         .package(url: "https://github.com/swhitty/SwiftDraw", from: "0.18.0"),
-        .package(url: "https://github.com/onevcat/Kingfisher", from: "8.1.0")
+        .package(url: "https://github.com/onevcat/Kingfisher", from: "8.1.0"),
+        .package(url: "https://github.com/relatedcode/ProgressHUD", from: "14.1.3")
     ],
     targets: [
         .target(
@@ -24,7 +25,8 @@ let package = Package(
             dependencies: [
                 .product(name: "Lottie", package: "lottie-spm"),
                 .product(name: "SwiftDraw", package: "SwiftDraw"),
-                .product(name: "Kingfisher", package: "Kingfisher")
+                .product(name: "Kingfisher", package: "Kingfisher"),
+                .product(name: "ProgressHUD", package: "ProgressHUD")
             ],
             path: "netfox/",
             exclude: ["OSX"],

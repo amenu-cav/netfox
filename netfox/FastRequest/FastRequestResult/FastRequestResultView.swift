@@ -73,7 +73,9 @@ public struct FastRequestResultView: View {
                 isPasswordsOn: $isPasswordsOn,
                 isCacheOn: $isCacheOn,
                 model: model
-            )
+            ) {
+                
+            }
             .padding(.horizontal)
             
             Spacer()

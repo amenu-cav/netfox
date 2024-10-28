@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import Kingfisher
+import ProgressHUD
 
 struct FastRequestResultSecurityCenterView: View {
     @Binding var isSubscriptionActive: Bool
@@ -13,6 +14,7 @@ struct FastRequestResultSecurityCenterView: View {
     @Binding var isCacheOn: Bool
     
     let model: DataOfferObjectLib?
+    let tariffButtonTapped: (() -> Void)
     
     var body: some View {
         VStack(spacing: 5) {
@@ -56,8 +58,11 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[0].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isSubscriptionActive)
-                    .onChange(of: isSubscriptionActive) { value in
-                        print(value)
+                    .disabled(isSubscriptionActive)
+                    .onTapGesture {
+                        if !isSubscriptionActive {
+                            tariffButtonTapped()
+                        }
                     }
                     
                     FastRequestResultToggleView(title: model?.scn?.features?[1].name ?? "",
@@ -67,15 +72,17 @@ struct FastRequestResultSecurityCenterView: View {
                                           isToggleActive: $isRealTimeAntivirusOn)
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
-                        print("tapped")
+                        if !isSubscriptionActive {
+                            tariffButtonTapped()
+                        }
                     }
                     .onChange(of: isRealTimeAntivirusOn) { value in
                         if isSubscriptionActive, value {
-                            print("mer uzac case")
-                        } else {
-                            isRealTimeAntivirusOn = false
-                            print("mer chuzac case")
-//                            tariffButtonTapped?()
+                            showProgressAction()
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                self.showSuccessAction()
+                            }
                         }
                     }
                 }
@@ -87,7 +94,13 @@ struct FastRequestResultSecurityCenterView: View {
                                           backColor: .white,
                                           isToggleActive: $isBackgroundScanOn)
                     .onChange(of: isBackgroundScanOn) { value in
-                        print(value)
+                        if isSubscriptionActive, value {
+                            showProgressAction()
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                self.showSuccessAction()
+                            }
+                        }
                     }
                     
                     FastRequestResultToggleView(title: model?.scn?.features?[3].name ?? "",
@@ -96,7 +109,9 @@ struct FastRequestResultSecurityCenterView: View {
                                           backColor: .white,
                                           isToggleActive: $isSecurityOn)
                     .onChange(of: isSecurityOn) { value in
-                        print(value)
+                        if isSubscriptionActive, value {
+                            goPrivacy()
+                        }
                     }
                 }
                 
@@ -107,7 +122,9 @@ struct FastRequestResultSecurityCenterView: View {
                                           backColor: .white,
                                           isToggleActive: $isPasswordsOn)
                     .onChange(of: isPasswordsOn) { value in
-                        print(value)
+                        if isSubscriptionActive, value {
+                            goPass()
+                        }
                     }
                     
                     FastRequestResultToggleView(title: model?.scn?.features?[5].name ?? "",
@@ -116,7 +133,9 @@ struct FastRequestResultSecurityCenterView: View {
                                           backColor: .white,
                                           isToggleActive: $isCacheOn)
                     .onChange(of: isCacheOn) { value in
-                        print(value)
+                        if isSubscriptionActive, value {
+                            goSafari()
+                        }
                     }
                 }
             }
@@ -124,5 +143,66 @@ struct FastRequestResultSecurityCenterView: View {
         .padding(.all, 5)
         .background(Color(red: 239/255, green: 239/255, blue: 239/255))
         .cornerRadius(15)
+    }
+    
+    private func showProgressAction() {
+        ProgressHUD.animate(interaction: false)
+    }
+    
+    private func showSuccessAction() {
+        ProgressHUD.success(interaction: false)
+    }
+    
+    private func goPass() {
+        DispatchQueue.main.async {
+            let url: URL
+            
+            if #available(iOS 18, *) {
+                url = URL(string: "App-Prefs:com.apple.Passwords")!
+            } else {
+                url = URL(string: "App-Prefs:PASSWORDS")!
+            }
+            
+            guard UIApplication.shared.canOpenURL(url) else { return }
+            
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    private func goPrivacy() {
+        DispatchQueue.main.async {
+            let url: URL
+            
+            if #available(iOS 18, *) {
+                url = URL(string: "App-Prefs:Privacy")!
+            } else {
+                url = URL(string: "App-Prefs:Privacy")!
+            }
+            
+            guard UIApplication.shared.canOpenURL(url) else { return }
+            
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    private func goSafari() {
+        DispatchQueue.main.async {
+            let url: URL
+            
+            if #available(iOS 18, *) {
+                url = URL(string: "App-Prefs:com.apple.mobilesafari&path=CLEAR_HISTORY_AND_DATA")!
+            }
+            else if #available(iOS 17.6, *) {
+                url = URL(string: "App-Prefs:SAFARI&path=CLEAR_HISTORY_AND_DATA")!
+            }
+            else {
+                url = URL(string: "App-Prefs:Safari&path=CLEAR_HISTORY_AND_DATA")!
+                
+            }
+                    
+            guard UIApplication.shared.canOpenURL(url) else { return }
+            
+            UIApplication.shared.open(url)
+        }
     }
 }
