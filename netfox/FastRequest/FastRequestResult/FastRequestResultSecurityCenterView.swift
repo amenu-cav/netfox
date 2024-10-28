@@ -56,12 +56,18 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[0].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isSubscriptionActive)
+                    .onChange(of: isSubscriptionActive) { value in
+                        print(value)
+                    }
                     
                     FastRequestResultToggleView(title: model?.scn?.features?[1].name ?? "",
                                           activeTitle: model?.scn?.features?[1].g_status ?? "",
                                           disactiveTitle: model?.scn?.features?[1].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isRealTimeAntivirusOn)
+                    .onChange(of: isRealTimeAntivirusOn) { value in
+                        print(value)
+                    }
                 }
                 
                 HStack(spacing: 5) {
@@ -70,12 +76,18 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[2].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isBackgroundScanOn)
+                    .onChange(of: isBackgroundScanOn) { value in
+                        print(value)
+                    }
                     
                     FastRequestResultToggleView(title: model?.scn?.features?[3].name ?? "",
                                           activeTitle: model?.scn?.features?[3].g_status ?? "",
                                           disactiveTitle: model?.scn?.features?[3].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isSecurityOn)
+                    .onChange(of: isSecurityOn) { value in
+                        print(value)
+                    }
                 }
                 
                 HStack(spacing: 5) {
@@ -84,12 +96,18 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[4].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isPasswordsOn)
+                    .onChange(of: isPasswordsOn) { value in
+                        print(value)
+                    }
                     
                     FastRequestResultToggleView(title: model?.scn?.features?[5].name ?? "",
                                           activeTitle: model?.scn?.features?[5].g_status ?? "",
                                           disactiveTitle: model?.scn?.features?[5].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isCacheOn)
+                    .onChange(of: isCacheOn) { value in
+                        print(value)
+                    }
                 }
             }
         }
