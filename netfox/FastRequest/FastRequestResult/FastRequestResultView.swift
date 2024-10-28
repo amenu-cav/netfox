@@ -56,27 +56,25 @@ public struct FastRequestResultView: View {
                         .frame(width: 58, height: 58)
                     
                     Text(isProtect ? model?.scn?.title_anim_compl ?? "" : model?.scn?.title_anim_unp ?? "")
-                        .font(.system(size: Constants.smallScreen ? 20 : 26, weight: .semibold, design: .default))
+                        .font(.system(size: Constants.smallScreen ? 20 : 24, weight: .semibold, design: .default))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
 
                     Text(createAtrStr())
-//                        .font(.system(size: Constants.smallScreen ? 12 : 14, weight: .medium, design: .default))
-//                        .foregroundColor(Color(red: 103/255, green: 103/255, blue: 103/255)) +
-//                    Text(isProtect ? "ON" : "OFF")
-//                        .font(.system(size: Constants.smallScreen ? 12 : 14, weight: .bold, design: .default))
-//                        .foregroundColor(isProtect ? .green : .red)
                 }
             }
             .padding(.vertical)
 
-            FastRequestResultSecurityCenterView(isSubscriptionActive: $isSubscriptionActive,
-                                          isRealTimeAntivirusOn: $isRealTimeAntivirusOn,
-                                          isBackgroundScanOn: $isBackgroundScanOn,
-                                          isSecurityOn: $isSecurityOn,
-                                          isPasswordsOn: $isPasswordsOn,
-                                          isCacheOn: $isCacheOn)
-                .padding(.horizontal)
+            FastRequestResultSecurityCenterView(
+                isSubscriptionActive: $isSubscriptionActive,
+                isRealTimeAntivirusOn: $isRealTimeAntivirusOn,
+                isBackgroundScanOn: $isBackgroundScanOn,
+                isSecurityOn: $isSecurityOn,
+                isPasswordsOn: $isPasswordsOn,
+                isCacheOn: $isCacheOn,
+                model: model
+            )
+            .padding(.horizontal)
             
             Spacer()
         }

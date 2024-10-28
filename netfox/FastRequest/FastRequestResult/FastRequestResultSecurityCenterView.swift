@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import Kingfisher
 
 struct FastRequestResultSecurityCenterView: View {
     @Binding var isSubscriptionActive: Bool
@@ -11,6 +12,8 @@ struct FastRequestResultSecurityCenterView: View {
     @Binding var isPasswordsOn: Bool
     @Binding var isCacheOn: Bool
     
+    let model: DataOfferObjectLib?
+    
     var body: some View {
         VStack(spacing: 5) {
             HStack {
@@ -20,16 +23,19 @@ struct FastRequestResultSecurityCenterView: View {
                         .cornerRadius(5)
                         .frame(width: 70, height: 70)
                     
-                    Image("Screen4Icon")
+                    KFImage(URL(string: model?.scn?.banner_icon_unp ?? ""))
+                        .setProcessor(SVGImgProcessor())
+                        .resizable()
+                        .frame(width: 56, height: 69)
                 }
                 
                 VStack(alignment: .leading) {
-                    Text("Security Center")
+                    Text(model?.scn?.banner_title ?? "")
                         .font(.system(size: 20, weight: .bold, design: .default))
                         .foregroundStyle(.black)
                         .multilineTextAlignment(.leading)
                     
-                    Text("Fully protect your iPhone from \nviruses and threats 24/7")
+                    Text(model?.scn?.banner_subtitle ?? "")
                         .font(.system(size: 12, weight: .medium, design: .default))
                         .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
                         .multilineTextAlignment(.leading)
@@ -45,43 +51,43 @@ struct FastRequestResultSecurityCenterView: View {
             
             VStack {
                 HStack(spacing: 5) {
-                    FastRequestResultToggleView(title: "Subscription:",
-                                          activeTitle: "Active",
-                                          disactiveTitle: "Inactive",
+                    FastRequestResultToggleView(title: model?.scn?.features?[0].name ?? "",
+                                          activeTitle: model?.scn?.features?[0].g_status ?? "",
+                                          disactiveTitle: model?.scn?.features?[0].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isSubscriptionActive)
                     
-                    FastRequestResultToggleView(title: "Real-time antivirus:",
-                                          activeTitle: "Active",
-                                          disactiveTitle: "Inactive",
+                    FastRequestResultToggleView(title: model?.scn?.features?[1].name ?? "",
+                                          activeTitle: model?.scn?.features?[1].g_status ?? "",
+                                          disactiveTitle: model?.scn?.features?[1].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isRealTimeAntivirusOn)
                 }
                 
                 HStack(spacing: 5) {
-                    FastRequestResultToggleView(title: "Background Scan:",
-                                          activeTitle: "Active",
-                                          disactiveTitle: "Inactive",
+                    FastRequestResultToggleView(title: model?.scn?.features?[2].name ?? "",
+                                          activeTitle: model?.scn?.features?[2].g_status ?? "",
+                                          disactiveTitle: model?.scn?.features?[2].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isBackgroundScanOn)
                     
-                    FastRequestResultToggleView(title: "Security:",
-                                          activeTitle: "Protected",
-                                          disactiveTitle: "Unprotect",
+                    FastRequestResultToggleView(title: model?.scn?.features?[3].name ?? "",
+                                          activeTitle: model?.scn?.features?[3].g_status ?? "",
+                                          disactiveTitle: model?.scn?.features?[3].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isSecurityOn)
                 }
                 
                 HStack(spacing: 5) {
-                    FastRequestResultToggleView(title: "Privacy:",
-                                          activeTitle: "Guarded",
-                                          disactiveTitle: "Unprotect",
+                    FastRequestResultToggleView(title: model?.scn?.features?[4].name ?? "",
+                                          activeTitle: model?.scn?.features?[4].g_status ?? "",
+                                          disactiveTitle: model?.scn?.features?[4].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isPasswordsOn)
                     
-                    FastRequestResultToggleView(title: "Performance:",
-                                          activeTitle: "Optimized",
-                                          disactiveTitle: "Inactive",
+                    FastRequestResultToggleView(title: model?.scn?.features?[5].name ?? "",
+                                          activeTitle: model?.scn?.features?[5].g_status ?? "",
+                                          disactiveTitle: model?.scn?.features?[5].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isCacheOn)
                 }
