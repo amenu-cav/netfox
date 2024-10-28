@@ -41,7 +41,7 @@ public struct FastRequestResultView: View {
                 }
                 
                 Circle()
-                    .fill(isProtect ? .white : Color(red: 255/255, green: 193/255, blue: 194/255))
+                    .fill(isProtect ? .clear : Color(red: 255/255, green: 193/255, blue: 194/255))
                     .frame(width: Constants.smallScreen ? 190 : 210, height: Constants.smallScreen ? 190 : 210)
                 
                 Circle()

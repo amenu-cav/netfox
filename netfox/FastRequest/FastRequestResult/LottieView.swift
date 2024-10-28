@@ -10,6 +10,8 @@ struct LottieView: UIViewRepresentable {
         let animationView: LottieAnimationView = .init()
         let view = UIView(frame: .zero)
         
+        view.backgroundColor = .clear
+        
         LottieAnimation.loadedFrom(url: URL(string: animationName)!, closure: { animation in
             animationView.animation = animation
             animationView.loopMode = .loop
