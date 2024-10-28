@@ -93,6 +93,7 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[2].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isBackgroundScanOn)
+                    .disabled(!isSubscriptionActive)
                     .onChange(of: isBackgroundScanOn) { value in
                         if isSubscriptionActive, value {
                             showProgressAction()
@@ -108,6 +109,7 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[3].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isSecurityOn)
+                    .disabled(!isSubscriptionActive)
                     .onChange(of: isSecurityOn) { value in
                         if isSubscriptionActive, value {
                             goPrivacy()
@@ -121,6 +123,7 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[4].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isPasswordsOn)
+                    .disabled(!isSubscriptionActive)
                     .onChange(of: isPasswordsOn) { value in
                         if isSubscriptionActive, value {
                             goPass()
@@ -132,6 +135,7 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[5].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isCacheOn)
+                    .disabled(!isSubscriptionActive)
                     .onChange(of: isCacheOn) { value in
                         if isSubscriptionActive, value {
                             goSafari()
