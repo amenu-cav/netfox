@@ -58,7 +58,7 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[0].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isSubscriptionActive)
-                    .disabled(isSubscriptionActive)
+                    .disabled(true)
                     .onTapGesture {
                         if !isSubscriptionActive {
                             tariffButtonTapped()

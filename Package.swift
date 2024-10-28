@@ -32,7 +32,8 @@ let package = Package(
             exclude: ["OSX"],
             resources: [
                 .process("Media.xcassets"),
-                .process("Localizable.xcstrings")
+                .process("Localizable.xcstrings"),
+                .process("balloon_animation.json")
             ]
         )
     ]

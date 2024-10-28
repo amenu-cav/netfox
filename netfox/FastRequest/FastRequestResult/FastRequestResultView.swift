@@ -10,6 +10,8 @@ public struct FastRequestResultView: View {
     @State private var isSubscriptionActive = true
     @State private var isProtect = false
     
+    @State private var showingSheet = false
+    
     private let model: DataOfferObjectLib?
     
     public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?) {
@@ -74,7 +76,7 @@ public struct FastRequestResultView: View {
                 isCacheOn: $isCacheOn,
                 model: model
             ) {
-                
+                showingSheet = true
             }
             .padding(.horizontal)
             
@@ -82,6 +84,9 @@ public struct FastRequestResultView: View {
         }
         .background(.white)
         .navigationBarHidden(true)
+        .sheet(isPresented: $showingSheet) {
+            SuperRequestView()
+        }
     }
     
     private func circleProgress() -> CGFloat {
