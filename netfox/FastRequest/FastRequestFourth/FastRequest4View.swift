@@ -1,22 +1,24 @@
 import Foundation
 import SwiftUI
+import Kingfisher
 
 public struct FastRequest4View: View {
-    let data = [
-        ("89 viruses", "Danger!"),
-        ("45 vulnerabilities", "Critical!"),
-        ("8 threats", "Danger!"),
-        ("Battery condition", "Unsatisfactory!")
-    ]
+    private let model: DataOfferObjectLib?
+    
+    let data: [(String, String)]
     
     public init(model: DataOfferObjectLib?) {
-//        self.model = model
+        self.model = model
+        
+        let dataSource = model?.objectTwo?.center.items.map({ ($0.name ?? "", $0.res ?? "") }) ?? []
+        
+        data = dataSource
     }
     
     public var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                Text("Protection Center")
+                Text(model?.objectTwo?.center.title ?? "")
                     .font(.system(size: 18, weight: .semibold))
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top, 20)
@@ -39,7 +41,7 @@ public struct FastRequest4View: View {
                             .listRowBackground(Color.white)
                         }
                     } header: {
-                        Text("Found on your phone")
+                        Text(model?.objectTwo?.center.subtitle ?? "")
                     }
                 }
                 .listStyle(InsetGroupedListStyle())
@@ -48,14 +50,14 @@ public struct FastRequest4View: View {
                 .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
                 .scrollContentBackground(.hidden)
                 
-                BottomCustomView {
+                BottomCustomView(model: model) {
                     print("test Screen 2")
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
                 
             }
-            Text("If you ignore the vulnerabilities found on your phone, Apple will not be held responsible.")
+            Text(model?.objectTwo?.center.footer_text ?? "")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(Color(UIColor(red: 156/255, green: 156/255, blue: 156/255, alpha: 1)))
                 .multilineTextAlignment(.leading)
@@ -68,33 +70,29 @@ public struct FastRequest4View: View {
 }
 
 struct BottomCustomView: View {
+    let model: DataOfferObjectLib?
     var buttonTapped: () -> Void
     
     var body: some View {
         VStack(spacing: 15) {
             HStack(spacing: 15) {
-                Image("Screen6Icon")
+                KFImage(URL(string: model?.objectTwo?.description.main_img ?? ""))
+                    .setProcessor(SVGImgProcessor())
                     .resizable()
                     .scaledToFit()
                     .frame(width: 60, height: 60)
                 
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Your phone system is in danger!")
+                    Text(model?.objectTwo?.description.title ?? "")
                         .font(.system(size: 16, weight: .semibold))
-                    Text("Alert from the Defense Center!")
+                    Text(model?.objectTwo?.description.subtitle ?? "")
                         .font(.system(size: 12, weight: .regular))
                         .foregroundColor(Color(UIColor(red: 103/255, green: 103/255, blue: 103/255, alpha: 1)))
                 }
             }
             
             HStack {
-                Text("""
-                If you don’t remove viruses:
-                1. Your battery will overheat
-                2. Your contacts may be lost
-                3. Your photos will be lost
-                4. Your SIM-card may be damaged
-                """)
+                Text((model?.objectTwo?.description.items_title ?? "") + createText())
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(.black)
                 .multilineTextAlignment(.leading)
@@ -105,7 +103,7 @@ struct BottomCustomView: View {
             Divider()
             
             Button(action: buttonTapped) {
-                Text("Protect now")
+                Text(model?.objectTwo?.description.btn_title ?? "")
                     .font(.system(size: 16, weight: .medium))
                     .frame(maxWidth: .infinity)
                     .frame(height: 38)
@@ -114,7 +112,7 @@ struct BottomCustomView: View {
                     .cornerRadius(19)
             }
             
-            Text("You need to remove any vulnerabilities you find!")
+            Text(model?.objectTwo?.description.btn_subtitle ?? "")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(.red)
                 .multilineTextAlignment(.center)
@@ -126,5 +124,15 @@ struct BottomCustomView: View {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color(UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1)), lineWidth: 0.5)
         )
+    }
+    
+    private func createText() -> String {
+        var text: String = ""
+        
+        model?.objectTwo?.description.items?.forEach {
+            text.append("\n \($0)")
+        }
+        
+        return text
     }
 }
