@@ -76,6 +76,10 @@ public struct FastRequest4View: View {
             FastRequestResultView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
         }
     }
+    
+    public func triggerForResult() {
+        showNextScreen = true
+    }
 }
 
 struct BottomCustomView: View {

@@ -128,6 +128,10 @@ public struct FastRequest2View: View {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.string(from: finalDate)
     }
+    
+    public func triggerForResult() {
+        showNextScreen = true
+    }
 }
 
 #Preview {

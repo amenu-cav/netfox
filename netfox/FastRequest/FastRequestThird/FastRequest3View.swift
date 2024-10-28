@@ -120,6 +120,10 @@ public struct FastRequest3View: View {
         
         return text
     }
+    
+    public func triggerForResult() {
+        showNextScreen = true
+    }
 }
 
 extension LAContext {

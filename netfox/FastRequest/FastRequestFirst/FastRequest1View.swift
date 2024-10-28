@@ -132,24 +132,9 @@ public struct FastRequest1View: View {
             .background(Color.white)
             .ignoresSafeArea(.all)
             .navigationBarHidden(true)
-            
-            VStack {
-                HStack {
-                    Button(action: {
-                        closeVC()
-                    }, label: {
-                        Image("close")
-                    })
-                    
-                    Spacer()
-                }
-                .padding(.horizontal)
-                
-                Spacer()
+            .fullScreenCover(isPresented: $showNextScreen) {
+                FastRequestResultView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
             }
-        }
-        .fullScreenCover(isPresented: $showNextScreen) {
-            FastRequestResultView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
         }
     }
     
