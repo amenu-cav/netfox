@@ -65,8 +65,15 @@ struct FastRequestResultSecurityCenterView: View {
                                           disactiveTitle: model?.scn?.features?[1].b_status ?? "",
                                           backColor: .white,
                                           isToggleActive: $isRealTimeAntivirusOn)
+                    .disabled(!isSubscriptionActive)
                     .onChange(of: isRealTimeAntivirusOn) { value in
-                        print(value)
+                        if isSubscriptionActive, value {
+                            print("mer uzac case")
+                        } else {
+                            isRealTimeAntivirusOn = false
+                            print("mer chuzac case")
+//                            tariffButtonTapped?()
+                        }
                     }
                 }
                 
