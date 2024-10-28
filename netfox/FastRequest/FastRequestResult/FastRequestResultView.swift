@@ -10,24 +10,21 @@ public struct FastRequestResultView: View {
     @State private var isSubscriptionActive = true
     @State private var isProtect = false
     
-    public init(isRealTimeAntivirusOn: Bool = false, isBackgroundScanOn: Bool = false, isSecurityOn: Bool = false, isPasswordsOn: Bool = false, isCacheOn: Bool = false, isSubscriptionActive: Bool = true, isProtect: Bool = false) {
-        self.isRealTimeAntivirusOn = isRealTimeAntivirusOn
-        self.isBackgroundScanOn = isBackgroundScanOn
-        self.isSecurityOn = isSecurityOn
-        self.isPasswordsOn = isPasswordsOn
-        self.isCacheOn = isCacheOn
+    private let model: DataOfferObjectLib?
+    
+    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?) {
         self.isSubscriptionActive = isSubscriptionActive
-        self.isProtect = isProtect
+        self.model = model
     }
 
     public var body: some View {
         VStack() {
-            Text(isProtect ? "Protection on!" : "Protection off!")
+            Text(isProtect ? String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsOn)) : String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsDis)))
                 .font(.system(size: Constants.smallScreen ? 26 : 33, weight: .bold, design: .default))
                 .foregroundStyle(.black)
                 .padding(.top, Constants.smallScreen ? 5 : 50)
             
-            Text(isProtect ? "You can relax and close the app. Your device is safe as long as your subscription is active" : "Enable all services to customize\nyour phone's protection!")
+            Text(isProtect ? model?.scn?.subtitle_compl ?? "" : model?.scn?.subtitle_unp ?? "")
                 .font(.system(size: 16, weight: .medium, design: .default))
                 .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
                 .multilineTextAlignment(.center)
@@ -35,7 +32,7 @@ public struct FastRequestResultView: View {
             
             ZStack {
                 if isProtect {
-                    LottieView(animationName: "ScanLottie1", loopMode: .loop) //Тут нужную лотти поставить надо 
+                    LottieView(animationName: model?.scn?.anim_done ?? "")
                         .frame(width: Constants.smallScreen ? 230 : 260, height: Constants.smallScreen ? 230 : 260)
                 } else {
                     Circle()
@@ -98,4 +95,37 @@ public struct FastRequestResultView: View {
         
         return result
     }
+}
+
+func localizeText(forKey key: KeyForLocale) -> String {
+    let bundle = Bundle.module
+    
+    var result = bundle.localizedString(
+        forKey: key.rawValue,
+        value: nil,
+        table: nil
+    )
+    
+    if result == key.rawValue {
+        result = Bundle.module.localizedString(
+            forKey: key.rawValue,
+            value: nil,
+            table: "Localizable"
+        )
+    }
+    
+    return result
+}
+
+enum KeyForLocale: String  {
+    case now
+    case subsOff
+    case subsOn
+    case subsPrice
+    case subsTitle
+    case subsSub
+    case subsCancel
+    case subsBuy
+    case subsDis
+    case subsActive
 }
