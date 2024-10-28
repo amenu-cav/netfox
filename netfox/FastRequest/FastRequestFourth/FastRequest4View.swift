@@ -89,6 +89,8 @@ struct BottomCustomView: View {
                         .font(.system(size: 12, weight: .regular))
                         .foregroundColor(Color(UIColor(red: 103/255, green: 103/255, blue: 103/255, alpha: 1)))
                 }
+                
+                Spacer()
             }
             
             HStack {
@@ -113,6 +115,7 @@ struct BottomCustomView: View {
             }
             
             Text(model?.objectTwo?.description.btn_subtitle ?? "")
+                .multilineTextAlignment(.leading)
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(.red)
                 .multilineTextAlignment(.center)
