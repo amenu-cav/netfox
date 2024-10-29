@@ -135,11 +135,12 @@ public struct FastRequest1View: View {
             .fullScreenCover(isPresented: $showNextScreen) {
                 FastRequestResultView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
             }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    showNextScreen = true
+                }
+            }
         }
-    }
-    
-    private func closeVC() {
-        dismiss()
     }
     
     public func triggerForResult() {
