@@ -10,12 +10,14 @@ public struct FastRequest2DetailView: View {
     private let model: DataOfferObjectLib?
     private let mockArray: [MockInfoItem]
     private let currentTariff: String
+    private let completion: (() -> Void)
     
-    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String) {
+    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
         self.model = model
         var fullArray: [MockInfoItem] = []
         self.currentTariff = currentTariff
         self._showNextScreen = showNextScreen
+        self.completion = completion
         
         model?.prtd?.issues?.forEach({ issue in
             fullArray.append(.init(title: issue.name ?? "", subTitle: issue.status, imgUrl: issue.icon))
@@ -165,7 +167,9 @@ public struct FastRequest2DetailView: View {
             .edgesIgnoringSafeArea(.top)
 
             if showAlert {
-                CustomCenterAlertView(model: model, showAlert: $showAlert)
+                CustomCenterAlertView(model: model, showAlert: $showAlert) {
+                    completion()
+                }
                     .transition(.scale)
             }
         }
@@ -173,8 +177,4 @@ public struct FastRequest2DetailView: View {
             FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff)
         }
     }
-}
-
-#Preview {
-    FastRequest2DetailView(showNextScreen: .constant(false), model: nil, currentTariff: "")
 }

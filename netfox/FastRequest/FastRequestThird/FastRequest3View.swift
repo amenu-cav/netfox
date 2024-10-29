@@ -14,11 +14,13 @@ public struct FastRequest3View: View {
     
     private let model: DataOfferObjectLib?
     private let currentTariff: String
+    private let completion: (() -> Void)
     
-    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String) {
+    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
         self._showNextScreen = showNextScreen
+        self.completion = completion
     }
     
     public var body: some View {
@@ -103,7 +105,7 @@ public struct FastRequest3View: View {
                     message: Text(alertMess),
                     primaryButton: .cancel(Text("Cancel")),
                     secondaryButton: .default(Text("OK"), action: {
-                        print("action")
+                        completion()
                     })
                 )
             }

@@ -7,13 +7,14 @@ public struct FastRequest4View: View {
     
     private let model: DataOfferObjectLib?
     private let currentTariff: String
+    private let completion: (() -> Void)
+    private let data: [(String, String)]
     
-    let data: [(String, String)]
-    
-    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String) {
+    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
         self._showNextScreen = showNextScreen
+        self.completion = completion
         
         let dataSource = model?.objectTwo?.center.items.map({ ($0.name ?? "", $0.res ?? "") }) ?? []
         
@@ -56,7 +57,7 @@ public struct FastRequest4View: View {
                 .scrollContentBackground(.hidden)
                 
                 BottomCustomView(model: model) {
-                    print("test Screen 2")
+                    completion()
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 20)

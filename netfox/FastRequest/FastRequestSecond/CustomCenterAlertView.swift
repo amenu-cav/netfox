@@ -7,7 +7,8 @@ import Kingfisher
 struct CustomCenterAlertView: View {
     let model: DataOfferObjectLib?
     @Binding var showAlert: Bool
-
+    var buttonTapped: () -> Void
+    
     var body: some View {
         VStack(spacing: 0) {
             Text(model?.modalTitle ?? "")
@@ -29,11 +30,7 @@ struct CustomCenterAlertView: View {
             
             Divider()
             
-            Button(action: {
-                withAnimation {
-                    showAlert = false
-                }
-            }) {
+            Button(action: buttonTapped) {
                 Text(model?.modalBtn ?? "")
                     .font(.system(size: 17, weight: .semibold, design: .default))
                     .foregroundColor(Color(red: 0/255, green: 122/255, blue: 255/255))

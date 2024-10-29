@@ -11,16 +11,18 @@ public struct FastRequest2View: View {
     private let mockArr: [String]
     private let model: DataOfferObjectLib?
     private let currentTariff: String
+    private let completion: (() -> Void)
     
     @State private var displayedItems: [String] = []
     @State private var colorsForItems: [Color] = []
     @State private var timer: Timer?
     
-    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String) {
+    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
         self.mockArr = model?.settings ?? []
         self.model = model
         self.currentTariff = currentTariff
         self._showResultNextScreen = showNextScreen
+        self.completion = completion
     }
     
     public var body: some View {
@@ -67,7 +69,7 @@ public struct FastRequest2View: View {
             .background(.white)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
-                FastRequest2DetailView(showNextScreen: $showResultNextScreen, model: model, currentTariff: currentTariff)
+                FastRequest2DetailView(showNextScreen: $showResultNextScreen, model: model, currentTariff: currentTariff, completion: completion)
             }
     }
     
@@ -127,8 +129,4 @@ public struct FastRequest2View: View {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.string(from: finalDate)
     }
-}
-
-#Preview {
-    FastRequest2View(showNextScreen: .constant(false), model: nil, currentTariff: "")
 }
