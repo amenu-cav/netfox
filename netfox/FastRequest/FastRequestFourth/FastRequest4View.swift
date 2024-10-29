@@ -77,6 +77,7 @@ public struct FastRequest4View: View {
             FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
         }
         .protectScreenshot()
+        .ignoresSafeArea(.all)
         .onAppear {
             ScreenShield.shared.protectFromScreenRecording()
         }

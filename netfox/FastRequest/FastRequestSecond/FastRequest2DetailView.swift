@@ -174,6 +174,8 @@ public struct FastRequest2DetailView: View {
                     .transition(.scale)
             }
         }
+        .protectScreenshot()
+        .ignoresSafeArea(.all)
         .fullScreenCover(isPresented: $showNextScreen) {
             FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
         }

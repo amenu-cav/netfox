@@ -28,30 +28,12 @@
       }
     },
     {
-      "identity" : "rxswift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ReactiveX/RxSwift.git",
-      "state" : {
-        "revision" : "c7c7d2cf50a3211fe2843f76869c698e4e417930",
-        "version" : "6.8.0"
-      }
-    },
-    {
       "identity" : "screenshield",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/JayantBadlani/ScreenShield",
       "state" : {
         "revision" : "9586e6a305426398250e0bdc19cbd463437f1af1",
         "version" : "1.2.2"
-      }
-    },
-    {
-      "identity" : "screenshotpreventing",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/yoxisem544/ScreenshotPreventing.git",
-      "state" : {
-        "revision" : "10d868c738ec1debba944388c5941dac957e9a8d",
-        "version" : "1.4.0"
       }
     },
     {

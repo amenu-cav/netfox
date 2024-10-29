@@ -72,6 +72,7 @@ public struct FastRequest2View: View {
                 FastRequest2DetailView(showNextScreen: $showResultNextScreen, model: model, currentTariff: currentTariff, completion: completion)
             }
             .protectScreenshot()
+            .ignoresSafeArea(.all)
             .onAppear {
                 ScreenShield.shared.protectFromScreenRecording()
             }
