@@ -84,7 +84,7 @@ public struct FastRequest3View: View {
         .background(Color(red: 29/255, green: 34/255, blue: 57/255))
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showNextScreen) {
-            FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff)
+            FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff, completion: nil)
         }
         .alert(isPresented: $showAlert) {
             switch activeAlert {

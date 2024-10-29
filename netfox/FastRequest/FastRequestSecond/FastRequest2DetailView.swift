@@ -174,7 +174,7 @@ public struct FastRequest2DetailView: View {
             }
         }
         .fullScreenCover(isPresented: $showNextScreen) {
-            FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff)
+            FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff, completion: nil)
         }
     }
 }

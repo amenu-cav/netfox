@@ -132,7 +132,7 @@ public struct FastRequest1View: View {
             .ignoresSafeArea(.all)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
-                FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff)
+                FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff, completion: nil)
             }
         }
     }

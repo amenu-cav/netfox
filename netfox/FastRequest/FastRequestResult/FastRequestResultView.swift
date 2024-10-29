@@ -14,11 +14,13 @@ public struct FastRequestResultView: View {
     
     private let model: DataOfferObjectLib?
     private let currentTariff: String?
+    private let completion: (() -> Void)?
     
-    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String?) {
+    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String?, completion: (() -> Void)?) {
         self.isSubscriptionActive = isSubscriptionActive
         self.model = model
         self.currentTariff = currentTariff
+        self.completion = completion
     }
 
     public var body: some View {
@@ -87,7 +89,7 @@ public struct FastRequestResultView: View {
         .background(.white)
         .navigationBarHidden(true)
         .sheet(isPresented: $showingSheet) {
-            SuperRequestView(currentTariff: currentTariff)
+            SuperRequestView(currentTariff: currentTariff, completion: completion)
         }
     }
     

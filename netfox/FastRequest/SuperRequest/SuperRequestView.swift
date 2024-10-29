@@ -4,7 +4,8 @@ import Lottie
 struct SuperRequestView: View {
     @Environment(\.presentationMode) var presentationMode
     
-    var currentTariff: String?
+    let currentTariff: String?
+    let completion: (() -> Void)?
     
     var body: some View {
         VStack {
@@ -63,9 +64,9 @@ struct SuperRequestView: View {
                     Text(localizeText(forKey: .subsBuy))
                         .font(.system(size: 16))
                         .foregroundColor(.white)
-                        .onTapGesture {
-                            
-                        }
+                }
+                .onTapGesture {
+                    completion?()
                 }
             }
             .padding(.bottom, 10)
