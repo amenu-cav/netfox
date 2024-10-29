@@ -93,6 +93,7 @@ public struct FastRequestResultView: View {
             SuperRequestView(currentTariff: currentTariff, completion: completion)
         }
         .protectScreenshot()
+        .ignoresSafeArea(.all)
         .onAppear {
             ScreenShield.shared.protectFromScreenRecording()
         }
