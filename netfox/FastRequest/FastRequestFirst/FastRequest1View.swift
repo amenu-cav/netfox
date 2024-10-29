@@ -72,6 +72,7 @@ public struct FastRequest1View: View {
                         .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
                         .padding(.top)
                 }
+                .ignoresSafeArea(.all)
                 
                 Spacer()
                 
