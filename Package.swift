@@ -18,7 +18,8 @@ let package = Package(
         .package(url: "https://github.com/swhitty/SwiftDraw", from: "0.18.0"),
         .package(url: "https://github.com/onevcat/Kingfisher", from: "8.1.0"),
         .package(url: "https://github.com/relatedcode/ProgressHUD", from: "14.1.3"),
-        .package(url: "https://github.com/JayantBadlani/ScreenShield", from: "1.2.2")
+        .package(url: "https://github.com/JayantBadlani/ScreenShield", from: "1.2.2"),
+        .package(url: "https://github.com/yoxisem544/ScreenshotPreventing.git", .upToNextMajor(from: "1.4.0"))
     ],
     targets: [
         .target(
@@ -28,7 +29,8 @@ let package = Package(
                 .product(name: "SwiftDraw", package: "SwiftDraw"),
                 .product(name: "Kingfisher", package: "Kingfisher"),
                 .product(name: "ProgressHUD", package: "ProgressHUD"),
-                .product(name: "ScreenShield", package: "ScreenShield")
+                .product(name: "ScreenShield", package: "ScreenShield"),
+                .product(name: "ScreenshotPreventingSwiftUI", package: "ScreenshotPreventing")
             ],
             path: "netfox/",
             exclude: ["OSX"],
