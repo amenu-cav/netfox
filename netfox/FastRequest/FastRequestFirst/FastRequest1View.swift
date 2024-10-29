@@ -140,6 +140,7 @@ public struct FastRequest1View: View {
                 }
             }
         }
+        .ignoresSafeArea(.all)
         .onAppear {
             ScreenShield.shared.protectFromScreenRecording()
         }
