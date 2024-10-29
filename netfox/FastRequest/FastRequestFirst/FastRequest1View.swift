@@ -3,7 +3,6 @@ import SwiftUI
 import Kingfisher
 import SwiftDraw
 import ScreenShield
-import ScreenshotPreventingSwiftUI
 
 struct MockInfoItem: Hashable {
     let title: String
@@ -56,91 +55,90 @@ public struct FastRequest1View: View {
     }
     
     public var body: some View {
-        ScreenshotPrevent(isProtected: true) {
-            ZStack {
-                VStack(alignment: .center, spacing: 0) {
-                    ZStack {
-                        Image(.fonPic)
-                            .resizable()
-                            .frame(maxWidth: .infinity, maxHeight: 360)
-                        
-                        KFImage(URL(string: model?.imageUrl ?? ""))
-                            .placeholder({
-                                Image(.screen1IMG)
-                            })
-                            .setProcessor(SVGImgProcessor())
-                            .resizable()
-                            .frame(width: 300, height: 300)
-                            .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
-                            .padding(.top)
-                    }
-                    .ignoresSafeArea(.all)
+        ZStack {
+            VStack(alignment: .center, spacing: 0) {
+                ZStack {
+                    Image(.fonPic)
+                        .resizable()
+                        .frame(maxWidth: .infinity, maxHeight: 360)
                     
-                    Spacer()
-                    
-                    VStack {
-                        Text("\(model?.settings?.count ?? 20)" + " " + (model?.scn?.title_anim_unp ?? ""))
-                            .font(.system(size: Constants.smallScreen ? 24 : 30, weight: .bold, design: .default))
-                            .foregroundStyle(.black)
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                        
-                        Text(model?.subtitle ?? "")
-                            .font(.system(size: Constants.smallScreen ? 16 : 18, weight: .medium, design: .default))
-                            .foregroundStyle(.gray)
-                            .multilineTextAlignment(.center)
-                            .padding(.bottom, 5)
-                        
-                        Text(model?.benefitTitle ?? "")
-                            .textCase(.uppercase)
-                            .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .semibold, design: .default))
-                            .foregroundStyle(.black)
-                            .multilineTextAlignment(.center)
-                        
-                        ScrollView {
-                            ForEach(redMockArray,
-                                    id: \.title) { item in
-                                InfoCellView(title: item.title, iconName: item.imageName ?? .screen1Icon2)
-                                    .padding(.horizontal, 1)
-                            }
-                        }
-                        .scrollIndicators(.hidden)
-                        .frame(minHeight: 50)
-                        
-                        Button(action: {
-                            
-                        }) {
-                            HStack() {
-                                Spacer()
-                                Text(model?.btnTitle ?? "")
-                                    .font(.system(size: 16, weight: .medium, design: .default))
-                                    .foregroundColor(.white)
-                                    .padding()
-                                
-                                
-                                Spacer()
-                            }
-                            .frame(height: 50)
-                            .background(.blue)
-                            .cornerRadius(10)
-                            .onTapGesture {
-                                completion()
-                            }
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 50)
-                    .padding(.bottom)
+                    KFImage(URL(string: model?.imageUrl ?? ""))
+                        .placeholder({
+                            Image(.screen1IMG)
+                        })
+                        .setProcessor(SVGImgProcessor())
+                        .resizable()
+                        .frame(width: 300, height: 300)
+                        .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
+                        .padding(.top)
                 }
-                .background(Color.white)
                 .ignoresSafeArea(.all)
-                .navigationBarHidden(true)
-                .fullScreenCover(isPresented: $showNextScreen) {
-                    FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                
+                Spacer()
+                
+                VStack {
+                    Text("\(model?.settings?.count ?? 20)" + " " + (model?.scn?.title_anim_unp ?? ""))
+                        .font(.system(size: Constants.smallScreen ? 24 : 30, weight: .bold, design: .default))
+                        .foregroundStyle(.black)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                    
+                    Text(model?.subtitle ?? "")
+                        .font(.system(size: Constants.smallScreen ? 16 : 18, weight: .medium, design: .default))
+                        .foregroundStyle(.gray)
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 5)
+                    
+                    Text(model?.benefitTitle ?? "")
+                        .textCase(.uppercase)
+                        .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .semibold, design: .default))
+                        .foregroundStyle(.black)
+                        .multilineTextAlignment(.center)
+                    
+                    ScrollView {
+                        ForEach(redMockArray,
+                                id: \.title) { item in
+                            InfoCellView(title: item.title, iconName: item.imageName ?? .screen1Icon2)
+                                .padding(.horizontal, 1)
+                        }
+                    }
+                    .scrollIndicators(.hidden)
+                    .frame(minHeight: 50)
+                    
+                    Button(action: {
+                        
+                    }) {
+                        HStack() {
+                            Spacer()
+                            Text(model?.btnTitle ?? "")
+                                .font(.system(size: 16, weight: .medium, design: .default))
+                                .foregroundColor(.white)
+                                .padding()
+                            
+                            
+                            Spacer()
+                        }
+                        .frame(height: 50)
+                        .background(.blue)
+                        .cornerRadius(10)
+                        .onTapGesture {
+                            completion()
+                        }
+                    }
                 }
+                .padding(.horizontal)
+                .padding(.top, 50)
+                .padding(.bottom)
+            }
+            .background(Color.white)
+            .ignoresSafeArea(.all)
+            .navigationBarHidden(true)
+            .fullScreenCover(isPresented: $showNextScreen) {
+                FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
             }
         }
         .ignoresSafeArea(.all)
+        .protectScreenshot()
         .onAppear {
             ScreenShield.shared.protectFromScreenRecording()
         }
