@@ -73,6 +73,7 @@ public struct FastRequest1View: View {
                         .padding(.top)
                 }
                 .ignoresSafeArea(.all)
+                .protectScreenshot()
                 
                 Spacer()
                 
@@ -129,6 +130,7 @@ public struct FastRequest1View: View {
                 .padding(.horizontal)
                 .padding(.top, 50)
                 .padding(.bottom)
+                .protectScreenshot()
             }
             .background(Color.white)
             .ignoresSafeArea(.all)
