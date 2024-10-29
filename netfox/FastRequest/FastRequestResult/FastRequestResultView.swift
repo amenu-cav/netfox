@@ -3,7 +3,8 @@ import SwiftUI
 import ScreenShield
 
 public struct FastRequestResultView: View {
-    @State private var isRealTimeAntivirusOn = false
+    @AppStorage("isRealTimeAntivirusOn") private var isRealTimeAntivirusOn = false
+//    @State private var isRealTimeAntivirusOn = false
     @State private var isBackgroundScanOn = false
     @State private var isSecurityOn = false
     @State private var isPasswordsOn = false
