@@ -19,10 +19,10 @@ struct CustomTopNotificationView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text(model?.pushTitle ?? "")
+                        .protectScreenshot()
                         .font(.system(size: 15, weight: .semibold, design: .default))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.leading)
-                        .protectScreenshot()
                     
                     Spacer()
                     
@@ -33,10 +33,10 @@ struct CustomTopNotificationView: View {
                 }
                 
                 Text(model?.pushText ?? "")
+                    .protectScreenshot()
                     .font(.system(size: 15, weight: .regular, design: .default))
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
-                    .protectScreenshot()
             }
         }
         .padding()
