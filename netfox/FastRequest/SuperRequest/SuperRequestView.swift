@@ -78,6 +78,7 @@ struct SuperRequestView: View {
                 .foregroundColor(.white)
                 .padding(.bottom, 20)
         }
+        .ignoresSafeArea()
         .background(Color(hex: "#01011C").edgesIgnoringSafeArea(.all))
         .protectScreenshot()
         .onAppear {
