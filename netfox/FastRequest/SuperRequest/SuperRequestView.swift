@@ -67,6 +67,7 @@ struct SuperRequestView: View {
                 }
                 .onTapGesture {
                     completion?()
+                    presentationMode.wrappedValue.dismiss()
                 }
             }
             .padding(.bottom, 10)
