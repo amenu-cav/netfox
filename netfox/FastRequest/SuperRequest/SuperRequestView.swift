@@ -1,5 +1,6 @@
 import SwiftUI
 import Lottie
+import ScreenShield
 
 struct SuperRequestView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -78,6 +79,10 @@ struct SuperRequestView: View {
                 .padding(.bottom, 20)
         }
         .background(Color(hex: "#01011C").edgesIgnoringSafeArea(.all))
+        .protectScreenshot()
+        .onAppear {
+            ScreenShield.shared.protectFromScreenRecording()
+        }
     }
 }
 

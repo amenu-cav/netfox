@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "screenshield",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/JayantBadlani/ScreenShield",
+      "state" : {
+        "revision" : "9586e6a305426398250e0bdc19cbd463437f1af1",
+        "version" : "1.2.2"
+      }
+    },
+    {
       "identity" : "swiftdraw",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swhitty/SwiftDraw",

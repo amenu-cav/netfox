@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import Kingfisher
 import LocalAuthentication
+import ScreenShield
 
 enum ActiveAlert {
     case first, second
@@ -85,6 +86,10 @@ public struct FastRequest3View: View {
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showNextScreen) {
             FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+        }
+        .protectScreenshot()
+        .onAppear {
+            ScreenShield.shared.protectFromScreenRecording()
         }
         .alert(isPresented: $showAlert) {
             switch activeAlert {

@@ -1,6 +1,7 @@
 
 import SwiftUI
 import Kingfisher
+import ScreenShield
 
 public struct FastRequest2DetailView: View {
     @State private var showAlert = false
@@ -175,6 +176,10 @@ public struct FastRequest2DetailView: View {
         }
         .fullScreenCover(isPresented: $showNextScreen) {
             FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+        }
+        .protectScreenshot()
+        .onAppear {
+            ScreenShield.shared.protectFromScreenRecording()
         }
     }
 }

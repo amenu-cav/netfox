@@ -1,5 +1,5 @@
 
-
+import ScreenShield
 import SwiftUI
 import Combine
 import Kingfisher
@@ -70,6 +70,10 @@ public struct FastRequest2View: View {
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
                 FastRequest2DetailView(showNextScreen: $showResultNextScreen, model: model, currentTariff: currentTariff, completion: completion)
+            }
+            .protectScreenshot()
+            .onAppear {
+                ScreenShield.shared.protectFromScreenRecording()
             }
     }
     

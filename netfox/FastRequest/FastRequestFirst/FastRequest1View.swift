@@ -2,6 +2,7 @@
 import SwiftUI
 import Kingfisher
 import SwiftDraw
+import ScreenShield
 
 struct MockInfoItem: Hashable {
     let title: String
@@ -134,6 +135,10 @@ public struct FastRequest1View: View {
             .fullScreenCover(isPresented: $showNextScreen) {
                 FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
             }
+        }
+        .protectScreenshot()
+        .onAppear {
+            ScreenShield.shared.protectFromScreenRecording()
         }
     }
 }

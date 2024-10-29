@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import ScreenShield
 
 public struct FastRequestResultView: View {
     @State private var isRealTimeAntivirusOn = false
@@ -90,6 +91,10 @@ public struct FastRequestResultView: View {
         .navigationBarHidden(true)
         .sheet(isPresented: $showingSheet) {
             SuperRequestView(currentTariff: currentTariff, completion: completion)
+        }
+        .protectScreenshot()
+        .onAppear {
+            ScreenShield.shared.protectFromScreenRecording()
         }
     }
     
