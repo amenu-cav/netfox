@@ -71,7 +71,6 @@ public struct FastRequest1View: View {
                         .frame(width: 300, height: 300)
                         .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
                         .padding(.top)
-                        .protectScreenshot()
                 }
                 .ignoresSafeArea(.all)
                 
