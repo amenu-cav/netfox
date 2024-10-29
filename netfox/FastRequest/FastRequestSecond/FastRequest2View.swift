@@ -7,21 +7,20 @@ import Kingfisher
 public struct FastRequest2View: View {
     @Environment(\.dismiss) var dismiss
     @State private var showNextScreen = false
-    
+    @Binding var showResultNextScreen: Bool
     private let mockArr: [String]
     private let model: DataOfferObjectLib?
     private let currentTariff: String
-    private let isSubscriptionActive: Bool
     
     @State private var displayedItems: [String] = []
     @State private var colorsForItems: [Color] = []
     @State private var timer: Timer?
     
-    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String) {
+    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String) {
         self.mockArr = model?.settings ?? []
         self.model = model
         self.currentTariff = currentTariff
-        self.isSubscriptionActive = isSubscriptionActive
+        self._showResultNextScreen = showNextScreen
     }
     
     public var body: some View {
@@ -68,7 +67,7 @@ public struct FastRequest2View: View {
             .background(.white)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
-                FastRequest2DetailView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
+                FastRequest2DetailView(showNextScreen: $showResultNextScreen, model: model, currentTariff: currentTariff)
             }
     }
     
@@ -128,12 +127,8 @@ public struct FastRequest2View: View {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return formatter.string(from: finalDate)
     }
-    
-    public func triggerForResult() {
-        showNextScreen = true
-    }
 }
 
 #Preview {
-    FastRequest2View(isSubscriptionActive: false, model: nil, currentTariff: "")
+    FastRequest2View(showNextScreen: .constant(false), model: nil, currentTariff: "")
 }

@@ -3,18 +3,17 @@ import SwiftUI
 import Kingfisher
 
 public struct FastRequest4View: View {
-    @State private var showNextScreen = false
+    @Binding var showNextScreen: Bool
     
     private let model: DataOfferObjectLib?
     private let currentTariff: String
-    private let isSubscriptionActive: Bool
     
     let data: [(String, String)]
     
-    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String) {
+    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String) {
         self.model = model
         self.currentTariff = currentTariff
-        self.isSubscriptionActive = isSubscriptionActive
+        self._showNextScreen = showNextScreen
         
         let dataSource = model?.objectTwo?.center.items.map({ ($0.name ?? "", $0.res ?? "") }) ?? []
         
@@ -73,7 +72,7 @@ public struct FastRequest4View: View {
         .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showNextScreen) {
-            FastRequestResultView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
+            FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff)
         }
     }
     

@@ -38,13 +38,11 @@ public struct FastRequest1View: View {
     private let redMockArray: [MockInfoItem]
     private let model: DataOfferObjectLib?
     private let currentTariff: String
-    private let isSubscriptionActive: Bool
     private let completion: (() -> Void)
     
-    public init(showNextScreen: Binding<Bool>, isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
+    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
-        self.isSubscriptionActive = isSubscriptionActive
         self.completion = completion
         self._showNextScreen = showNextScreen
         
@@ -134,7 +132,7 @@ public struct FastRequest1View: View {
             .ignoresSafeArea(.all)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
-                FastRequestResultView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
+                FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff)
             }
         }
     }

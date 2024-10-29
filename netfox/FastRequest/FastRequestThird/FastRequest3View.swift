@@ -10,16 +10,15 @@ enum ActiveAlert {
 public struct FastRequest3View: View {
     @State private var showAlert = true
     @State private var activeAlert: ActiveAlert = .first
-    @State private var showNextScreen = false
+    @Binding var showNextScreen: Bool
     
     private let model: DataOfferObjectLib?
     private let currentTariff: String
-    private let isSubscriptionActive: Bool
     
-    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String) {
+    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String) {
         self.model = model
         self.currentTariff = currentTariff
-        self.isSubscriptionActive = isSubscriptionActive
+        self._showNextScreen = showNextScreen
     }
     
     public var body: some View {
@@ -83,7 +82,7 @@ public struct FastRequest3View: View {
         .background(Color(red: 29/255, green: 34/255, blue: 57/255))
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showNextScreen) {
-            FastRequestResultView(isSubscriptionActive: isSubscriptionActive, model: model, currentTariff: currentTariff)
+            FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff)
         }
         .alert(isPresented: $showAlert) {
             switch activeAlert {
