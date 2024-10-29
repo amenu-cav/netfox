@@ -37,7 +37,6 @@ struct CustomTopNotificationView: View {
                     .multilineTextAlignment(.leading)
             }
         }
-        .protectScreenshot()
         .padding()
         .frame(maxWidth: .infinity)
         .background(Color(red: 207/255, green: 207/255, blue: 207/255, opacity: 0.95))
