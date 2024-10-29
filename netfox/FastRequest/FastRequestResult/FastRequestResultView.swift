@@ -4,11 +4,10 @@ import ScreenShield
 
 public struct FastRequestResultView: View {
     @AppStorage("isRealTimeAntivirusOn") private var isRealTimeAntivirusOn = false
-//    @State private var isRealTimeAntivirusOn = false
-    @State private var isBackgroundScanOn = false
-    @State private var isSecurityOn = false
-    @State private var isPasswordsOn = false
-    @State private var isCacheOn = false
+    @AppStorage("isBackgroundScanOn") private var isBackgroundScanOn = false
+    @AppStorage("isSecurityOn") private var isSecurityOn = false
+    @AppStorage("isPasswordsOn") private var isPasswordsOn = false
+    @AppStorage("isCacheOn") private var isCacheOn = false
     @Binding var isSubscriptionActive: Bool
     @State private var isProtect = false
     
