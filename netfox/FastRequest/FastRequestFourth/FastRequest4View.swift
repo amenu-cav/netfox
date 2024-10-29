@@ -73,7 +73,7 @@ public struct FastRequest4View: View {
         .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
         .navigationBarHidden(true)
         .fullScreenCover(isPresented: $showNextScreen) {
-            FastRequestResultView(isSubscriptionActive: true, model: model, currentTariff: currentTariff, completion: nil)
+            FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
         }
     }
     

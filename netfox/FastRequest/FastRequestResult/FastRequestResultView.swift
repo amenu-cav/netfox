@@ -7,7 +7,7 @@ public struct FastRequestResultView: View {
     @State private var isSecurityOn = false
     @State private var isPasswordsOn = false
     @State private var isCacheOn = false
-    @State private var isSubscriptionActive = true
+    @Binding var isSubscriptionActive: Bool
     @State private var isProtect = false
     
     @State private var showingSheet = false
@@ -16,8 +16,8 @@ public struct FastRequestResultView: View {
     private let currentTariff: String?
     private let completion: (() -> Void)?
     
-    public init(isSubscriptionActive: Bool, model: DataOfferObjectLib?, currentTariff: String?, completion: (() -> Void)?) {
-        self.isSubscriptionActive = isSubscriptionActive
+    public init(isSubscriptionActive: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String?, completion: (() -> Void)?) {
+        self._isSubscriptionActive = isSubscriptionActive
         self.model = model
         self.currentTariff = currentTariff
         self.completion = completion
