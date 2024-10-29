@@ -177,7 +177,6 @@ public struct FastRequest2DetailView: View {
         .fullScreenCover(isPresented: $showNextScreen) {
             FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
         }
-        .protectScreenshot()
         .onAppear {
             ScreenShield.shared.protectFromScreenRecording()
         }

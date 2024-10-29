@@ -2,6 +2,7 @@
 import Foundation
 import SwiftUI
 import Kingfisher
+import ScreenShield
 
 struct CustomTopNotificationView: View {
     let model: DataOfferObjectLib?
@@ -21,6 +22,7 @@ struct CustomTopNotificationView: View {
                         .font(.system(size: 15, weight: .semibold, design: .default))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.leading)
+                        .protectScreenshot()
                     
                     Spacer()
                     
@@ -34,6 +36,7 @@ struct CustomTopNotificationView: View {
                     .font(.system(size: 15, weight: .regular, design: .default))
                     .foregroundColor(.black)
                     .multilineTextAlignment(.leading)
+                    .protectScreenshot()
             }
         }
         .padding()
