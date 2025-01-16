@@ -126,8 +126,8 @@ public struct FastRequestResultView: View {
     }
     
     private func circleProgress() -> CGFloat {
-        let togglesOn = [isSubscriptionActive, isRealTimeAntivirusOn, isBackgroundScanOn, isSecurityOn, isPasswordsOn, isCacheOn].filter { $0 }.count
-        
+        let antivirusBool = NFX.sharedInstance().isSheet ? false : isRealTimeAntivirusOn
+        let togglesOn = [isSubscriptionActive, antivirusBool, isBackgroundScanOn, isSecurityOn, isPasswordsOn, isCacheOn].filter { $0 }.count
         let result = CGFloat(togglesOn) / 6
         
         DispatchQueue.main.async {
