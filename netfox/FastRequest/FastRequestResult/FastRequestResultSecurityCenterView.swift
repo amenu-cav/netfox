@@ -72,14 +72,14 @@ struct FastRequestResultSecurityCenterView: View {
                                                 activeTitle: model?.scn?.features?[1].g_status ?? "",
                                                 disactiveTitle: model?.scn?.features?[1].b_status ?? "",
                                                 backColor: .white,
-                                                isToggleActive: NFX.sharedInstance().isSheet ? $isSheetAnti : $isRealTimeAntivirusOn)
+                                                isToggleActive: $isRealTimeAntivirusOn)
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
                             tariffButtonTapped(true)
                         }
                     }
-                    .onChange(of: NFX.sharedInstance().isSheet ? isSheetAnti : isRealTimeAntivirusOn) { value in
+                    .onChange(of: isRealTimeAntivirusOn) { value in
                         if isSubscriptionActive, value, NFX.sharedInstance().isSheet {
                             tariffButtonTapped(false)
                         } else if isSubscriptionActive, value {
