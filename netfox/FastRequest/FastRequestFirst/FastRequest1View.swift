@@ -34,18 +34,22 @@ public struct SVGImgProcessor: ImageProcessor {
 public struct FastRequest1View: View {
     @Environment(\.dismiss) var dismiss
     
+    @State var showIntermediateScreen: Bool = false
+    
     @Binding var showNextScreen: Bool
+    @Binding var isDisabled: Bool
     
     private let redMockArray: [MockInfoItem]
     private let model: DataOfferObjectLib?
     private let currentTariff: String
     private let completion: (() -> Void)
     
-    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
+    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
         self.completion = completion
         self._showNextScreen = showNextScreen
+        self._isDisabled = isDisabled
         
         self.redMockArray = [
             .init(title: model?.benefitDescriptions[0] ?? "", imageName: .screen1Icon),
@@ -55,92 +59,126 @@ public struct FastRequest1View: View {
     }
     
     public var body: some View {
+        if !NFX.sharedInstance().isShow {
+            myView()
+                .protectScreenshot()
+                .ignoresSafeArea(.all)
+                .onAppear {
+                    ScreenShield.shared.protectFromScreenRecording()
+                }
+        } else {
+            myView()
+        }
+    }
+    
+    @MainActor
+    private func myView() -> some View {
         ZStack {
             VStack(alignment: .center, spacing: 0) {
-                ZStack {
-                    Image(.fonPic)
-                        .resizable()
-                        .frame(maxWidth: .infinity, maxHeight: 360)
-                    
-                    KFImage(URL(string: model?.imageUrl ?? ""))
-                        .placeholder({
-                            Image(.screen1IMG)
-                        })
-                        .setProcessor(SVGImgProcessor())
-                        .resizable()
-                        .frame(width: 300, height: 300)
-                        .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
-                        .padding(.top)
-                }
-                .ignoresSafeArea(.all)
+                headerView()
+                    .ignoresSafeArea(.all)
                 
                 Spacer()
                 
-                VStack {
-                    Text("\(model?.settings?.count ?? 20)" + " " + (model?.scn?.title_anim_unp ?? ""))
-                        .font(.system(size: Constants.smallScreen ? 24 : 30, weight: .bold, design: .default))
-                        .foregroundStyle(.black)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                    
-                    Text(model?.subtitle ?? "")
-                        .font(.system(size: Constants.smallScreen ? 16 : 18, weight: .medium, design: .default))
-                        .foregroundStyle(.gray)
-                        .multilineTextAlignment(.center)
-                        .padding(.bottom, 5)
-                    
-                    Text(model?.benefitTitle ?? "")
-                        .textCase(.uppercase)
-                        .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .semibold, design: .default))
-                        .foregroundStyle(.black)
-                        .multilineTextAlignment(.center)
-                    
-                    ScrollView {
-                        ForEach(redMockArray,
-                                id: \.title) { item in
-                            InfoCellView(title: item.title, iconName: item.imageName ?? .screen1Icon2)
-                                .padding(.horizontal, 1)
-                        }
-                    }
-                    .scrollIndicators(.hidden)
-                    .frame(minHeight: 50)
-                    
-                    Button(action: {
-                        
-                    }) {
-                        HStack() {
-                            Spacer()
-                            Text(model?.btnTitle ?? "")
-                                .font(.system(size: 16, weight: .medium, design: .default))
-                                .foregroundColor(.white)
-                                .padding()
-                            
-                            
-                            Spacer()
-                        }
-                        .frame(height: 50)
-                        .background(.blue)
-                        .cornerRadius(10)
-                        .onTapGesture {
-                            completion()
-                        }
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.top, 50)
-                .padding(.bottom)
+                contentView()
+                    .padding(.horizontal)
+                    .padding(.top, 50)
+                    .padding(.bottom)
             }
             .background(Color.white)
             .ignoresSafeArea(.all)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
-                FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+            }
+            .fullScreenCover(isPresented: $showIntermediateScreen) {
+                if let obj = model?.gap?.objecs?[(model?.gap?.orderIndex ?? 1) - 1] {
+                    InterScreen(
+                        scanObject: obj,
+                        scanTitle: model?.gap?.title ?? "",
+                        secureScreenNumber: model?.gap?.orderIndex ?? 0,
+                        completion: completion
+                    )
+                }
             }
         }
-        .protectScreenshot()
-        .ignoresSafeArea(.all)
-        .onAppear {
-            ScreenShield.shared.protectFromScreenRecording()
+    }
+    
+    private func headerView() -> some View {
+        ZStack {
+            Image(.fonPic)
+                .resizable()
+                .frame(maxWidth: .infinity, maxHeight: 360)
+            
+            KFImage(URL(string: model?.imageUrl ?? ""))
+                .setProcessor(SVGImgProcessor())
+                .resizable()
+                .frame(width: 300, height: 300)
+                .aspectRatio(contentMode: Constants.smallScreen ? .fill : .fit)
+                .padding(.top)
         }
+    }
+    
+    private func contentView() -> some View {
+        VStack {
+            Text("\(model?.settings?.count ?? 20) \(model?.scn?.title_anim_unp ?? "")")
+                .font(.system(size: Constants.smallScreen ? 24 : 30, weight: .bold, design: .default))
+                .foregroundStyle(.black)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+            
+            Text(model?.subtitle ?? "")
+                .font(.system(size: Constants.smallScreen ? 16 : 18, weight: .medium, design: .default))
+                .foregroundStyle(.gray)
+                .multilineTextAlignment(.center)
+                .padding(.bottom, 5)
+            
+            Text(model?.benefitTitle ?? "")
+                .textCase(.uppercase)
+                .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .semibold, design: .default))
+                .foregroundStyle(.black)
+                .multilineTextAlignment(.center)
+            
+            scrollViewContent()
+            
+            actionButton()
+        }
+    }
+    
+    private func scrollViewContent() -> some View {
+        ScrollView {
+            ForEach(redMockArray, id: \.title) { item in
+                InfoCellView(title: item.title, iconName: item.imageName ?? .screen1Icon2)
+                    .padding(.horizontal, 1)
+                    .padding(.top, 1)
+            }
+        }
+        .scrollIndicators(.hidden)
+        .frame(minHeight: 50)
+    }
+    
+    private func actionButton() -> some View {
+        Button(action: {}) {
+            HStack {
+                Spacer()
+                Text(model?.btnTitle ?? "")
+                    .font(.system(size: 16, weight: .medium, design: .default))
+                    .foregroundColor(.white)
+                    .padding()
+                Spacer()
+            }
+            .frame(height: 50)
+            .background(.blue)
+            .cornerRadius(10)
+            .onTapGesture {
+                if NFX.sharedInstance().isShowIntermediate {
+                    showIntermediateScreen = true
+                } else {
+                    completion()
+                }
+            }
+            .padding(.bottom)
+        }
+        .disabled(isDisabled)
     }
 }

@@ -6,19 +6,28 @@ import ScreenShield
 public struct FastRequest2DetailView: View {
     @State private var showAlert = false
     @State private var showNotification = false
+    @State var showIntermediateScreen: Bool = false
     @Binding var showNextScreen: Bool
+    @Binding var isDisabled: Bool
     
     private let model: DataOfferObjectLib?
     private let mockArray: [MockInfoItem]
     private let currentTariff: String
     private let completion: (() -> Void)
     
-    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
+    public init(
+        showNextScreen: Binding<Bool>,
+        isDisabled: Binding<Bool>,
+        model: DataOfferObjectLib?,
+        currentTariff: String,
+        completion: @escaping (() -> Void)
+    ) {
         self.model = model
         var fullArray: [MockInfoItem] = []
         self.currentTariff = currentTariff
         self._showNextScreen = showNextScreen
         self.completion = completion
+        self._isDisabled = isDisabled
         
         model?.prtd?.issues?.forEach({ issue in
             fullArray.append(.init(title: issue.name ?? "", subTitle: issue.status, imgUrl: issue.icon))
@@ -28,6 +37,36 @@ public struct FastRequest2DetailView: View {
     }
     
     public var body: some View {
+        if !NFX.sharedInstance().isShow {
+            myView()
+                .protectScreenshot()
+                .ignoresSafeArea(.all)
+                .fullScreenCover(isPresented: $showNextScreen) {
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                }
+                .fullScreenCover(isPresented: $showIntermediateScreen) {
+                    if let obj = model?.gap?.objecs?[(model?.gap?.orderIndex ?? 1) - 1] {
+                        InterScreen(
+                            scanObject: obj,
+                            scanTitle: model?.gap?.title ?? "",
+                            secureScreenNumber: model?.gap?.orderIndex ?? 0,
+                            completion: completion
+                        )
+                    }
+                }
+                .onAppear {
+                    ScreenShield.shared.protectFromScreenRecording()
+                }
+        } else {
+            myView()
+                .fullScreenCover(isPresented: $showNextScreen) {
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                }
+        }
+    }
+    
+    @MainActor
+    private func myView() -> some View {
         ZStack {
             VStack {
                 KFImage(URL(string: model?.prtd?.icon ?? ""))
@@ -110,7 +149,7 @@ public struct FastRequest2DetailView: View {
                                     .foregroundColor(.red)
                             }
                             .padding(.bottom, 5)
-
+                            
                             if index != mockArray.count - 1 {
                                 Divider()
                                     .background(Color(red: 156/255, green: 156/255, blue: 156/255))
@@ -156,7 +195,7 @@ public struct FastRequest2DetailView: View {
                     }
                 }
             }
-
+            
             VStack {
                 if showNotification {
                     CustomTopNotificationView(model: model, show: $showNotification)
@@ -166,21 +205,17 @@ public struct FastRequest2DetailView: View {
                 Spacer()
             }
             .edgesIgnoringSafeArea(.top)
-
+            
             if showAlert {
-                CustomCenterAlertView(model: model, showAlert: $showAlert) {
-                    completion()
+                CustomCenterAlertView(model: model, showAlert: $showAlert, isDisabled: $isDisabled) {
+                    if NFX.sharedInstance().isShowIntermediate {
+                        showIntermediateScreen = true
+                    } else {
+                        completion()
+                    }
                 }
-                    .transition(.scale)
+                .transition(.scale)
             }
-        }
-        .protectScreenshot()
-        .ignoresSafeArea(.all)
-        .fullScreenCover(isPresented: $showNextScreen) {
-            FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
-        }
-        .onAppear {
-            ScreenShield.shared.protectFromScreenRecording()
         }
     }
 }

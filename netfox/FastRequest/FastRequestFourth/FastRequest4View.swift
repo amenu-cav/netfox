@@ -4,18 +4,21 @@ import Kingfisher
 import ScreenShield
 
 public struct FastRequest4View: View {
+    @State var showIntermediateScreen: Bool = false
     @Binding var showNextScreen: Bool
+    @Binding var isDisabled: Bool
     
     private let model: DataOfferObjectLib?
     private let currentTariff: String
     private let completion: (() -> Void)
     private let data: [(String, String)]
     
-    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
+    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
         self._showNextScreen = showNextScreen
         self.completion = completion
+        self._isDisabled = isDisabled
         
         let dataSource = model?.objectTwo?.center.items.map({ ($0.name ?? "", $0.res ?? "") }) ?? []
         
@@ -23,6 +26,44 @@ public struct FastRequest4View: View {
     }
     
     public var body: some View {
+        if !NFX.sharedInstance().isShow {
+            myView()
+                .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
+                .navigationBarHidden(true)
+                .fullScreenCover(isPresented: $showNextScreen) {
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                }
+                .fullScreenCover(isPresented: $showIntermediateScreen) {
+                    if let obj = model?.gap?.objecs?[(model?.gap?.orderIndex ?? 1) - 1] {
+                        InterScreen(
+                            scanObject: obj,
+                            scanTitle: model?.gap?.title ?? "",
+                            secureScreenNumber: model?.gap?.orderIndex ?? 0,
+                            completion: completion
+                        )
+                    }
+                }
+                .protectScreenshot()
+                .ignoresSafeArea(.all)
+                .onAppear {
+                    ScreenShield.shared.protectFromScreenRecording()
+                }
+        } else {
+            myView()
+                .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
+                .navigationBarHidden(true)
+                .fullScreenCover(isPresented: $showNextScreen) {
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                }
+        }
+    }
+    
+    public func triggerForResult() {
+        showNextScreen = true
+    }
+    
+    @MainActor
+    private func myView() -> some View {
         ScrollView {
             VStack(spacing: 0) {
                 Text(model?.objectTwo?.center.title ?? "")
@@ -57,8 +98,12 @@ public struct FastRequest4View: View {
                 .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
                 .scrollContentBackground(.hidden)
                 
-                BottomCustomView(model: model) {
-                    completion()
+                BottomCustomView(isDisabled: $isDisabled, model: model) {
+                    if NFX.sharedInstance().isShowIntermediate {
+                        showIntermediateScreen = true
+                    } else {
+                        completion()
+                    }
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 20)
@@ -71,24 +116,11 @@ public struct FastRequest4View: View {
                 .padding(.horizontal, 21)
                 .padding(.bottom, 15)
         }
-        .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
-        .navigationBarHidden(true)
-        .fullScreenCover(isPresented: $showNextScreen) {
-            FastRequestResultView(isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
-        }
-        .protectScreenshot()
-        .ignoresSafeArea(.all)
-        .onAppear {
-            ScreenShield.shared.protectFromScreenRecording()
-        }
-    }
-    
-    public func triggerForResult() {
-        showNextScreen = true
     }
 }
 
 struct BottomCustomView: View {
+    @Binding var isDisabled: Bool
     let model: DataOfferObjectLib?
     var buttonTapped: () -> Void
     
@@ -114,9 +146,9 @@ struct BottomCustomView: View {
             
             HStack {
                 Text((model?.objectTwo?.description.items_title ?? "") + createText())
-                .font(.system(size: 14, weight: .medium))
-                .foregroundColor(.black)
-                .multilineTextAlignment(.leading)
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.leading)
                 
                 Spacer()
             }
@@ -132,6 +164,7 @@ struct BottomCustomView: View {
                     .foregroundColor(.white)
                     .cornerRadius(19)
             }
+            .disabled(isDisabled)
             
             Text(model?.objectTwo?.description.btn_subtitle ?? "")
                 .multilineTextAlignment(.leading)

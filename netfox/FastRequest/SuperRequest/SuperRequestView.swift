@@ -5,10 +5,27 @@ import ScreenShield
 struct SuperRequestView: View {
     @Environment(\.presentationMode) var presentationMode
     
+    @Binding var isDisabled: Bool
     let currentTariff: String?
     let completion: (() -> Void)?
     
     var body: some View {
+        if !NFX.sharedInstance().isShow {
+            myView()
+                .background(Color(hex: "#01011C").edgesIgnoringSafeArea(.all))
+                .protectScreenshot()
+                .ignoresSafeArea(.all)
+                .onAppear {
+                    ScreenShield.shared.protectFromScreenRecording()
+                }
+        } else {
+            myView()
+                .background(Color(hex: "#01011C").edgesIgnoringSafeArea(.all))
+        }
+    }
+    
+    @MainActor
+    private func myView() -> some View {
         VStack {
             HStack {
                 Button(action: {
@@ -70,6 +87,7 @@ struct SuperRequestView: View {
                     completion?()
                     presentationMode.wrappedValue.dismiss()
                 }
+                .disabled(isDisabled)
             }
             .padding(.bottom, 10)
             
@@ -77,12 +95,6 @@ struct SuperRequestView: View {
                 .font(.system(size: 14, weight: .bold))
                 .foregroundColor(.white)
                 .padding(.bottom, 20)
-        }
-        .background(Color(hex: "#01011C").edgesIgnoringSafeArea(.all))
-        .protectScreenshot()
-        .ignoresSafeArea(.all)
-        .onAppear {
-            ScreenShield.shared.protectFromScreenRecording()
         }
     }
 }

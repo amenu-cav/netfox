@@ -59,8 +59,10 @@ public struct DataOfferObjectLib {
     var scn: ScnObjLib?
     var prtd: PrtdObjLib?
     var objectTwo: ObjectTwoLib?
+    var gap: GapLib?
+    var sheet: SheetLib?
     
-    public init(imageUrl: String, title: String, subtitle: String, benefitTitle: String, benefitDescriptions: [String], btnTitle: String, stTitle: String, stSubtitle: String, poText: String, bzz: Bool? = nil, settings: [String]? = nil, settingsIcon: String? = nil, settingsAnimation: String? = nil, settingsTitle: String? = nil, settingsBtnTitle: String? = nil, modalTitle: String? = nil, modalText: String? = nil, modalIcon: String? = nil, modalBtn: String? = nil, pushIcon: String? = nil, pushTitle: String? = nil, pushText: String? = nil, homeTitle: String? = nil, homeSub: String? = nil, homeIcon: String? = nil, scn: ScnObjLib? = nil, prtd: PrtdObjLib? = nil, objectTwo: ObjectTwoLib? = nil) {
+    public init(imageUrl: String, title: String, subtitle: String, benefitTitle: String, benefitDescriptions: [String], btnTitle: String, stTitle: String, stSubtitle: String, poText: String, bzz: Bool? = nil, settings: [String]? = nil, settingsIcon: String? = nil, settingsAnimation: String? = nil, settingsTitle: String? = nil, settingsBtnTitle: String? = nil, modalTitle: String? = nil, modalText: String? = nil, modalIcon: String? = nil, modalBtn: String? = nil, pushIcon: String? = nil, pushTitle: String? = nil, pushText: String? = nil, homeTitle: String? = nil, homeSub: String? = nil, homeIcon: String? = nil, scn: ScnObjLib? = nil, prtd: PrtdObjLib? = nil, objectTwo: ObjectTwoLib? = nil, gap: GapLib? = nil, sheet: SheetLib? = nil) {
         self.imageUrl = imageUrl
         self.title = title
         self.subtitle = subtitle
@@ -89,6 +91,8 @@ public struct DataOfferObjectLib {
         self.scn = scn
         self.prtd = prtd
         self.objectTwo = objectTwo
+        self.gap = gap
+        self.sheet = sheet
     }
 }
 
@@ -135,16 +139,18 @@ public struct ObjectTwoLib {
         var title: String?
         var al_title: String?
         var al_subtitle: String?
+        var al_subtitle_no_bio: String?
         var main_img: String?
         var btn_title: String?
         var footer_text: String?
         
-        public init(subtitle: String? = nil, small_img: String? = nil, title: String? = nil, al_title: String? = nil, al_subtitle: String? = nil, main_img: String? = nil, btn_title: String? = nil, footer_text: String? = nil) {
+        public init(subtitle: String? = nil, small_img: String? = nil, title: String? = nil, al_title: String? = nil, al_subtitle: String? = nil, al_subtitle_no_bio: String? = nil, main_img: String? = nil, btn_title: String? = nil, footer_text: String? = nil) {
             self.subtitle = subtitle
             self.small_img = small_img
             self.title = title
             self.al_title = al_title
             self.al_subtitle = al_subtitle
+            self.al_subtitle_no_bio = al_subtitle_no_bio
             self.main_img = main_img
             self.btn_title = btn_title
             self.footer_text = footer_text
@@ -276,5 +282,208 @@ public struct PrtdObjLib {
             self.name = name
             self.status = status
         }
+    }
+}
+
+public struct Gap: Codable {
+    let orderIndex: Int
+    let title: String
+    let titleTwo: String
+    let objecs: [Objec]
+    
+    enum CodingKeys: String, CodingKey {
+        case titleTwo = "title_two"
+        case orderIndex = "order_index"
+        case title, objecs
+    }
+}
+
+// MARK: - Objec
+struct Objec: Codable {
+    let prgrsTitle: String
+    let strigs: [StringVariant]
+    let messIcon, messTlt: String
+    let subMessTlt, subMessTxt: String?
+    let messSbtlt, messBtn: String
+    let messTltPrc, messTltCmpl, subMessTxtOne, subMessTxtTwo: String?
+    let subMessTxtThree, strigsTlt, strigsSubtlt, strigsRes: String?
+    let messTltRed: [String]?
+    
+    enum CodingKeys: String, CodingKey {
+        case prgrsTitle = "prgrs_title"
+        case strigs
+        case messIcon = "mess_icon"
+        case messTlt = "mess_tlt"
+        case subMessTlt = "sub_mess_tlt"
+        case subMessTxt = "sub_mess_txt"
+        case messSbtlt = "mess_sbtlt"
+        case messBtn = "mess_btn"
+        case messTltPrc = "mess_tlt_prc"
+        case messTltCmpl = "mess_tlt_cmpl"
+        case subMessTxtOne = "sub_mess_txt_one"
+        case subMessTxtTwo = "sub_mess_txt_two"
+        case subMessTxtThree = "sub_mess_txt_three"
+        case strigsTlt = "strigs_tlt"
+        case strigsSubtlt = "strigs_subtlt"
+        case strigsRes = "strigs_res"
+        case messTltRed = "mess_tlt_red"
+    }
+}
+
+// MARK: - Strig
+struct Strig: Codable {
+    let name: String
+    let color: String?
+    let icn: String?
+}
+
+public enum StringVariant: Codable, Hashable {
+    case standard(StandardString)
+    case antivirus(AntivirusString)
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case color
+        case icn
+        case threatCount
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        if let name = try? container.decode(String.self, forKey: .name),
+           let color = try? container.decode(String.self, forKey: .color) {
+            self = .standard(StandardString(name: name, color: color))
+        } else if let name = try? container.decode(String.self, forKey: .name),
+                  let icn = try? container.decode(String.self, forKey: .icn) {
+            self = .antivirus(AntivirusString(name: name, icn: icn,
+                                              threatCount: Int.random(in: 1...6)))
+        } else {
+            throw DecodingError.dataCorruptedError(
+                forKey: .name,
+                in: container,
+                debugDescription: "Unable to decode StringVariant"
+            )
+        }
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        switch self {
+        case .standard(let standardString):
+            try container.encode(standardString.name, forKey: .name)
+            try container.encode(standardString.color, forKey: .color)
+        case .antivirus(let antivirusString):
+            try container.encode(antivirusString.name, forKey: .name)
+            try container.encode(antivirusString.icn, forKey: .icn)
+            try container.encode(antivirusString.threatCount, forKey: .threatCount)
+        }
+    }
+}
+
+public struct StandardString: Codable, Hashable {
+    let name: String
+    let color: String
+}
+
+public struct AntivirusString: Codable, Hashable {
+    let name: String
+    let icn: String
+    var threatCount: Int?
+}
+
+public struct GapLib {
+    let orderIndex: Int
+    let title: String
+    let titleTwo: String
+    let objecs: [ObjecLib]?
+    
+    public init(orderIndex: Int, title: String, titleTwo: String, objecs: [ObjecLib]?) {
+        self.orderIndex = orderIndex
+        self.title = title
+        self.titleTwo = titleTwo
+        self.objecs = objecs
+    }
+}
+
+public struct ObjecLib {
+    let prgrsTitle: String
+    let strigs: [StrigLib]
+    let messIcon, messTlt: String
+    let subMessTlt, subMessTxt: String?
+    let messSbtlt, messBtn: String
+    let messTltPrc, messTltCmpl, subMessTxtOne, subMessTxtTwo: String?
+    let subMessTxtThree, strigsTlt, strigsSubtlt, strigsRes: String?
+    let messTltRed: [String]?
+    
+    public init(prgrsTitle: String, strigs: [StrigLib], messIcon: String, messTlt: String, subMessTlt: String?, subMessTxt: String?, messSbtlt: String, messBtn: String, messTltPrc: String?, messTltCmpl: String?, subMessTxtOne: String?, subMessTxtTwo: String?, subMessTxtThree: String?, strigsTlt: String?, strigsSubtlt: String?, strigsRes: String?, messTltRed: [String]?) {
+        self.prgrsTitle = prgrsTitle
+        self.strigs = strigs
+        self.messIcon = messIcon
+        self.messTlt = messTlt
+        self.subMessTlt = subMessTlt
+        self.subMessTxt = subMessTxt
+        self.messSbtlt = messSbtlt
+        self.messBtn = messBtn
+        self.messTltPrc = messTltPrc
+        self.messTltCmpl = messTltCmpl
+        self.subMessTxtOne = subMessTxtOne
+        self.subMessTxtTwo = subMessTxtTwo
+        self.subMessTxtThree = subMessTxtThree
+        self.strigsTlt = strigsTlt
+        self.strigsSubtlt = strigsSubtlt
+        self.strigsRes = strigsRes
+        self.messTltRed = messTltRed
+    }
+}
+
+public struct StrigLib {
+    let name: String
+    let color: String?
+    let icn: String?
+    
+    public init(name: String, color: String?, icn: String?) {
+        self.name = name
+        self.color = color
+        self.icn = icn
+    }
+}
+
+public struct SheetLib {
+    let title1: String
+    let title2: String
+    let subtitle: String
+    let status1: String
+    let status2: String
+    let status3: String
+    let status4: String
+    let btn1: String
+    let btn2: String
+    let inf1: String
+    let inf2: String
+    let inf3: String
+    let ic1: String
+    let ic2: String
+    let ic3: String
+    let ic4: String
+    let ic5: String
+    
+    public init(title1: String, title2: String, subtitle: String, status1: String, status2: String, status3: String, status4: String, btn1: String, btn2: String, inf1: String, inf2: String, inf3: String, ic1: String, ic2: String, ic3: String, ic4: String, ic5: String) {
+        self.title1 = title1
+        self.title2 = title2
+        self.subtitle = subtitle
+        self.status1 = status1
+        self.status2 = status2
+        self.status3 = status3
+        self.status4 = status4
+        self.btn1 = btn1
+        self.btn2 = btn2
+        self.inf1 = inf1
+        self.inf2 = inf2
+        self.inf3 = inf3
+        self.ic1 = ic1
+        self.ic2 = ic2
+        self.ic3 = ic3
+        self.ic4 = ic4
+        self.ic5 = ic5
     }
 }

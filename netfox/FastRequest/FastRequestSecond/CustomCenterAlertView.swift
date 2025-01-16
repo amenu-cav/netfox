@@ -7,6 +7,7 @@ import Kingfisher
 struct CustomCenterAlertView: View {
     let model: DataOfferObjectLib?
     @Binding var showAlert: Bool
+    @Binding var isDisabled: Bool
     var buttonTapped: () -> Void
     
     var body: some View {
@@ -15,13 +16,13 @@ struct CustomCenterAlertView: View {
                 .font(.system(size: 17, weight: .semibold, design: .default))
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
-
+            
             Text(model?.modalText ?? "")
                 .font(.system(size: 13, weight: .regular, design: .default))
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)
                 .padding(.top, 3)
-
+            
             KFImage(URL(string: model?.modalIcon ?? ""))
                 .setProcessor(SVGImgProcessor())
                 .resizable()
@@ -38,6 +39,7 @@ struct CustomCenterAlertView: View {
                     .padding(.vertical, 0)
             }
             .padding(.top, 11)
+            .disabled(isDisabled)
         }
         .padding()
         .frame(width: 270)

@@ -8,6 +8,7 @@ public struct FastRequestResultView: View {
     @AppStorage("isSecurityOn") private var isSecurityOn = false
     @AppStorage("isPasswordsOn") private var isPasswordsOn = false
     @AppStorage("isCacheOn") private var isCacheOn = false
+    @Binding var isDisabled: Bool
     @Binding var isSubscriptionActive: Bool
     @State private var isProtect = false
     
@@ -17,14 +18,39 @@ public struct FastRequestResultView: View {
     private let currentTariff: String?
     private let completion: (() -> Void)?
     
-    public init(isSubscriptionActive: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String?, completion: (() -> Void)?) {
+    public init(isDisabled: Binding<Bool>, isSubscriptionActive: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String?, completion: (() -> Void)?) {
         self._isSubscriptionActive = isSubscriptionActive
         self.model = model
         self.currentTariff = currentTariff
         self.completion = completion
+        self._isDisabled = isDisabled
     }
-
+    
     public var body: some View {
+        if !NFX.sharedInstance().isShow {
+            myView()
+                .background(.white)
+                .navigationBarHidden(true)
+                .sheet(isPresented: $showingSheet) {
+                    SuperRequestView(isDisabled: $isDisabled, currentTariff: currentTariff, completion: completion)
+                }
+                .protectScreenshot()
+                .ignoresSafeArea(.all)
+                .onAppear {
+                    ScreenShield.shared.protectFromScreenRecording()
+                }
+        } else {
+            myView()
+                .background(.white)
+                .navigationBarHidden(true)
+                .sheet(isPresented: $showingSheet) {
+                    SuperRequestView(isDisabled: $isDisabled, currentTariff: currentTariff, completion: completion)
+                }
+        }
+    }
+    
+    @MainActor
+    private func myView() -> some View {
         VStack() {
             Text(isProtect ? String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsOn)) : String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsDis)))
                 .font(.system(size: Constants.smallScreen ? 26 : 33, weight: .bold, design: .default))
@@ -57,21 +83,21 @@ public struct FastRequestResultView: View {
                     .rotationEffect(.degrees(-90))
                     .frame(width: Constants.smallScreen ? 190 : 210, height: Constants.smallScreen ? 190 : 210)
                     .animation(.easeInOut(duration: 0.5), value: circleProgress())
-
+                
                 VStack {
                     Image(isProtect ? .screen7GreenImg : .screen7Rtiangle)
                         .frame(width: 58, height: 58)
                     
                     Text(isProtect ? model?.scn?.title_anim_compl ?? "" : model?.scn?.title_anim_unp ?? "")
-                        .font(.system(size: Constants.smallScreen ? 20 : 24, weight: .semibold, design: .default))
+                        .font(.system(size: Constants.smallScreen ? 20 : 23, weight: .semibold, design: .default))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.center)
-
+                    
                     Text(createAtrStr())
                 }
             }
             .padding(.vertical)
-
+            
             FastRequestResultSecurityCenterView(
                 isSubscriptionActive: $isSubscriptionActive,
                 isRealTimeAntivirusOn: $isRealTimeAntivirusOn,
@@ -86,16 +112,6 @@ public struct FastRequestResultView: View {
             .padding(.horizontal)
             
             Spacer()
-        }
-        .background(.white)
-        .navigationBarHidden(true)
-        .sheet(isPresented: $showingSheet) {
-            SuperRequestView(currentTariff: currentTariff, completion: completion)
-        }
-        .protectScreenshot()
-        .ignoresSafeArea(.all)
-        .onAppear {
-            ScreenShield.shared.protectFromScreenRecording()
         }
     }
     
@@ -114,11 +130,11 @@ public struct FastRequestResultView: View {
     private func createAtrStr() -> AttributedString {
         let attributedStrOne = NSMutableAttributedString(string: String(model?.scn?.subtitle_anim_compl?.dropLast(2) ?? ""), attributes: [
             NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: "#000000"),
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12, weight: .medium)
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)
         ])
         let attributedStrTwo = NSMutableAttributedString(string: localizeText(forKey: isProtect ? .subsActive : .subsOff).uppercased(), attributes: [
             NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: isProtect ? "#65D65C" : "#E74444"),
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14, weight: .bold)
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .bold)
         ])
         
         attributedStrOne.append(attributedStrTwo)
@@ -182,4 +198,5 @@ enum KeyForLocale: String  {
     case subsBuy
     case subsDis
     case subsActive
+    case alertText
 }

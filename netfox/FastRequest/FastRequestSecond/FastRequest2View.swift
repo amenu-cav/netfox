@@ -8,6 +8,7 @@ public struct FastRequest2View: View {
     @Environment(\.dismiss) var dismiss
     @State private var showNextScreen = false
     @Binding var showResultNextScreen: Bool
+    @Binding var isDisabled: Bool
     private let mockArr: [String]
     private let model: DataOfferObjectLib?
     private let currentTariff: String
@@ -17,72 +18,105 @@ public struct FastRequest2View: View {
     @State private var colorsForItems: [Color] = []
     @State private var timer: Timer?
     
-    public init(showNextScreen: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
+    public init(
+        showNextScreen: Binding<Bool>,
+        isDisabled: Binding<Bool>,
+        model: DataOfferObjectLib?,
+        currentTariff: String,
+        completion: @escaping (() -> Void)
+    ) {
         self.mockArr = model?.settings ?? []
         self.model = model
         self.currentTariff = currentTariff
         self._showResultNextScreen = showNextScreen
         self.completion = completion
+        self._isDisabled = isDisabled
     }
     
     public var body: some View {
-            VStack(spacing: 0) {
-                KFImage(URL(string: model?.settingsIcon ?? ""))
-                    .setProcessor(SVGImgProcessor())
-                    .resizable()
-                    .frame(width: 101, height: 101)
-                    .padding(.bottom, 5)
-                
-                Text(String(format: model?.settingsTitle ?? "", "\(displayedItems.count)"))
-                    .font(.system(size: 22, weight: .bold, design: .default))
-                    .foregroundStyle(.black)
-                
-                ScrollViewReader { proxy in
-                    List {
-                        ForEach(displayedItems.indices, id: \.self) { index in
-                            Text(displayedItems[index])
-                                .font(.system(size: 14, weight: .regular, design: .default))
-                                .foregroundColor(colorsForItems[index])
-                                .transition(.slide)
-                                .id(index)
-                        }
-                        .listRowBackground(Color(red: 238/255, green: 238/255, blue: 239/255))
+        if !NFX.sharedInstance().isShow {
+            myView()
+                .background(.white)
+                .navigationBarHidden(true)
+                .fullScreenCover(isPresented: $showNextScreen) {
+                    FastRequest2DetailView(
+                        showNextScreen: $showResultNextScreen,
+                        isDisabled: $isDisabled,
+                        model: model,
+                        currentTariff: currentTariff,
+                        completion: completion
+                    )
+                }
+                .protectScreenshot()
+                .ignoresSafeArea(.all)
+                .onAppear {
+                    ScreenShield.shared.protectFromScreenRecording()
+                }
+        } else {
+            myView()
+                .background(.white)
+                .navigationBarHidden(true)
+                .fullScreenCover(isPresented: $showNextScreen) {
+                    FastRequest2DetailView(
+                        showNextScreen: $showResultNextScreen,
+                        isDisabled: $isDisabled,
+                        model: model,
+                        currentTariff: currentTariff,
+                        completion: completion
+                    )
+                }
+        }
+    }
+    
+    @MainActor
+    private func myView() -> some View {
+        VStack(spacing: 0) {
+            KFImage(URL(string: model?.settingsIcon ?? ""))
+                .setProcessor(SVGImgProcessor())
+                .resizable()
+                .frame(width: 101, height: 101)
+                .padding(.bottom, 5)
+            
+            Text(String(format: model?.settingsTitle ?? "", "\(displayedItems.count)"))
+                .font(.system(size: 22, weight: .bold, design: .default))
+                .foregroundStyle(.black)
+            
+            ScrollViewReader { proxy in
+                List {
+                    ForEach(displayedItems.indices, id: \.self) { index in
+                        Text(displayedItems[index])
+                            .font(.system(size: 14, weight: .regular, design: .default))
+                            .foregroundColor(colorsForItems[index])
+                            .transition(.slide)
+                            .id(index)
                     }
-                    .background(Color.clear)
-                    .scrollContentBackground(.hidden)
-                    .scrollIndicators(.never)
-                    .scrollDisabled(true)
-                    .padding(.top, 0)
-                    .padding(.bottom)
-                    .onAppear {
-                        startAnimatingList()
-                    }
-                    .onReceive(Just(displayedItems.count)) { _ in
-                        if let lastIndex = displayedItems.indices.last {
-                            withAnimation {
-                                proxy.scrollTo(lastIndex, anchor: .bottom)
-                            }
+                    .listRowBackground(Color(red: 238/255, green: 238/255, blue: 239/255))
+                }
+                .background(Color.clear)
+                .scrollContentBackground(.hidden)
+                .scrollIndicators(.never)
+                .scrollDisabled(true)
+                .padding(.top, 0)
+                .padding(.bottom)
+                .onAppear {
+                    startAnimatingList()
+                }
+                .onReceive(Just(displayedItems.count)) { _ in
+                    if let lastIndex = displayedItems.indices.last {
+                        withAnimation {
+                            proxy.scrollTo(lastIndex, anchor: .bottom)
                         }
                     }
                 }
             }
-            .background(.white)
-            .navigationBarHidden(true)
-            .fullScreenCover(isPresented: $showNextScreen) {
-                FastRequest2DetailView(showNextScreen: $showResultNextScreen, model: model, currentTariff: currentTariff, completion: completion)
-            }
-            .protectScreenshot()
-            .ignoresSafeArea(.all)
-            .onAppear {
-                ScreenShield.shared.protectFromScreenRecording()
-            }
+        }
     }
     
     private func randomColor() -> Color {
         Bool.random() ? Color.black : Color.red
     }
     
-    func startAnimatingList() {
+    private func startAnimatingList() {
         var currentIndex = 0
         let totalDuration = 2.0
         let steps = mockArr.count / 3
@@ -110,7 +144,7 @@ public struct FastRequest2View: View {
             if currentIndex >= mockArr.count {
                 timer?.invalidate()
                 timer = nil
-
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     showNextScreen = true
                 }

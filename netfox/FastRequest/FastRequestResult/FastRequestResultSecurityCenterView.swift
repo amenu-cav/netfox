@@ -25,7 +25,7 @@ struct FastRequestResultSecurityCenterView: View {
                         .cornerRadius(5)
                         .frame(width: 70, height: 70)
                     
-                    KFImage(URL(string: model?.scn?.banner_icon_unp ?? ""))
+                    KFImage(URL(string: model?.scn?.banner_icon ?? ""))
                         .setProcessor(SVGImgProcessor())
                         .resizable()
                         .frame(width: 56, height: 69)
@@ -54,10 +54,11 @@ struct FastRequestResultSecurityCenterView: View {
             VStack {
                 HStack(spacing: 5) {
                     FastRequestResultToggleView(title: model?.scn?.features?[0].name ?? "",
-                                          activeTitle: model?.scn?.features?[0].g_status ?? "",
-                                          disactiveTitle: model?.scn?.features?[0].b_status ?? "",
-                                          backColor: .white,
-                                          isToggleActive: $isSubscriptionActive)
+                                                activeTitle: model?.scn?.features?[0].g_status ?? "",
+                                                disactiveTitle: model?.scn?.features?[0].b_status ?? "",
+                                                backColor: .white,
+                                                isToggleActive: $isSubscriptionActive)
+                    .toggleStyle(SymbolToggleStyle())
                     .disabled(true)
                     .onTapGesture {
                         if !isSubscriptionActive {
@@ -66,10 +67,10 @@ struct FastRequestResultSecurityCenterView: View {
                     }
                     
                     FastRequestResultToggleView(title: model?.scn?.features?[1].name ?? "",
-                                          activeTitle: model?.scn?.features?[1].g_status ?? "",
-                                          disactiveTitle: model?.scn?.features?[1].b_status ?? "",
-                                          backColor: .white,
-                                          isToggleActive: $isRealTimeAntivirusOn)
+                                                activeTitle: model?.scn?.features?[1].g_status ?? "",
+                                                disactiveTitle: model?.scn?.features?[1].b_status ?? "",
+                                                backColor: .white,
+                                                isToggleActive: $isRealTimeAntivirusOn)
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
@@ -89,10 +90,10 @@ struct FastRequestResultSecurityCenterView: View {
                 
                 HStack(spacing: 5) {
                     FastRequestResultToggleView(title: model?.scn?.features?[2].name ?? "",
-                                          activeTitle: model?.scn?.features?[2].g_status ?? "",
-                                          disactiveTitle: model?.scn?.features?[2].b_status ?? "",
-                                          backColor: .white,
-                                          isToggleActive: $isBackgroundScanOn)
+                                                activeTitle: model?.scn?.features?[2].g_status ?? "",
+                                                disactiveTitle: model?.scn?.features?[2].b_status ?? "",
+                                                backColor: .white,
+                                                isToggleActive: $isBackgroundScanOn)
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
@@ -110,10 +111,10 @@ struct FastRequestResultSecurityCenterView: View {
                     }
                     
                     FastRequestResultToggleView(title: model?.scn?.features?[3].name ?? "",
-                                          activeTitle: model?.scn?.features?[3].g_status ?? "",
-                                          disactiveTitle: model?.scn?.features?[3].b_status ?? "",
-                                          backColor: .white,
-                                          isToggleActive: $isSecurityOn)
+                                                activeTitle: model?.scn?.features?[3].g_status ?? "",
+                                                disactiveTitle: model?.scn?.features?[3].b_status ?? "",
+                                                backColor: .white,
+                                                isToggleActive: $isSecurityOn)
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
@@ -122,17 +123,22 @@ struct FastRequestResultSecurityCenterView: View {
                     }
                     .onChange(of: isSecurityOn) { value in
                         if isSubscriptionActive, value {
-                            goPrivacy()
+                            ProgressHUD.animate(localizeText(forKey: .alertText), interaction: false)
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                self.showSuccessAction()
+                                self.goPrivacy()
+                            }
                         }
                     }
                 }
                 
                 HStack(spacing: 5) {
                     FastRequestResultToggleView(title: model?.scn?.features?[4].name ?? "",
-                                          activeTitle: model?.scn?.features?[4].g_status ?? "",
-                                          disactiveTitle: model?.scn?.features?[4].b_status ?? "",
-                                          backColor: .white,
-                                          isToggleActive: $isPasswordsOn)
+                                                activeTitle: model?.scn?.features?[4].g_status ?? "",
+                                                disactiveTitle: model?.scn?.features?[4].b_status ?? "",
+                                                backColor: .white,
+                                                isToggleActive: $isPasswordsOn)
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
@@ -141,15 +147,20 @@ struct FastRequestResultSecurityCenterView: View {
                     }
                     .onChange(of: isPasswordsOn) { value in
                         if isSubscriptionActive, value {
-                            goPass()
+                            ProgressHUD.animate(localizeText(forKey: .alertText), interaction: false)
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                self.showSuccessAction()
+                                self.goPass()
+                            }
                         }
                     }
                     
                     FastRequestResultToggleView(title: model?.scn?.features?[5].name ?? "",
-                                          activeTitle: model?.scn?.features?[5].g_status ?? "",
-                                          disactiveTitle: model?.scn?.features?[5].b_status ?? "",
-                                          backColor: .white,
-                                          isToggleActive: $isCacheOn)
+                                                activeTitle: model?.scn?.features?[5].g_status ?? "",
+                                                disactiveTitle: model?.scn?.features?[5].b_status ?? "",
+                                                backColor: .white,
+                                                isToggleActive: $isCacheOn)
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
@@ -158,7 +169,12 @@ struct FastRequestResultSecurityCenterView: View {
                     }
                     .onChange(of: isCacheOn) { value in
                         if isSubscriptionActive, value {
-                            goSafari()
+                            ProgressHUD.animate(localizeText(forKey: .alertText), interaction: false)
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                self.showSuccessAction()
+                                self.goSafari()
+                            }
                         }
                     }
                 }
@@ -223,7 +239,7 @@ struct FastRequestResultSecurityCenterView: View {
                 url = URL(string: "App-Prefs:Safari&path=CLEAR_HISTORY_AND_DATA")!
                 
             }
-                    
+            
             guard UIApplication.shared.canOpenURL(url) else { return }
             
             UIApplication.shared.open(url)
