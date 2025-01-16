@@ -79,7 +79,7 @@ struct FastRequestResultSecurityCenterView: View {
                             tariffButtonTapped(true)
                         }
                     }
-                    .onChange(of: isRealTimeAntivirusOn) { value in
+                    .onChange(of: NFX.sharedInstance().isSheet ? isSheetAnti : isRealTimeAntivirusOn) { value in
                         if isSubscriptionActive, value, NFX.sharedInstance().isSheet {
                             tariffButtonTapped(false)
                         } else if isSubscriptionActive, value {
