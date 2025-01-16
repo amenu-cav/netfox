@@ -48,6 +48,7 @@ struct SheetView: View {
             .cornerRadius(15, corners: [.topLeft, .topRight])
             .shadow(radius: 10)
             .frame(maxWidth: .infinity)
+            .frame(height: 300)
             
         }
         .ignoresSafeArea(.all)
@@ -155,6 +156,7 @@ struct SheetView: View {
                                 .setProcessor(SVGImgProcessor())
                                 .resizable()
                                 .foregroundColor(.green)
+                                .frame(width: 14, height: 14)
                         }
                     }
                     .padding()
