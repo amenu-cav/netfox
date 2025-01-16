@@ -44,7 +44,7 @@ struct SheetView: View {
                         .padding(.bottom)
                 }
             }
-            .frame(height: 300)
+            .frame(height: 350)
             .background(Color.white)
             .cornerRadius(15, corners: [.topLeft, .topRight])
             .shadow(radius: 10)
