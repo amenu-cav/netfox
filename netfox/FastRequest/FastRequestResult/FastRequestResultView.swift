@@ -120,7 +120,7 @@ public struct FastRequestResultView: View {
             }
             
             if showSheetView {
-                SheetView(model: model?.sheet)
+                SheetView(showSheetView: $showSheetView, model: model?.sheet)
             }
         }
     }

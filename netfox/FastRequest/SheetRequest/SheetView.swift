@@ -14,6 +14,7 @@ struct SheetView: View {
     @State private var currentState: AntivirusState = .inactive
     @State private var progress: Double = 0.0
     @State private var checks: [CheckState] = [.loading, .loading, .loading]
+    @Binding var showSheetView: Bool
     
     let model: SheetObject?
     
@@ -72,6 +73,8 @@ struct SheetView: View {
                 .padding(.vertical, 4)
                 .background(Color.red)
                 .cornerRadius(10)
+            
+            Spacer()
 
             Button(action: {
                 withAnimation {
@@ -193,10 +196,12 @@ struct SheetView: View {
                 .padding(.vertical, 4)
                 .background(Color.green)
                 .cornerRadius(10)
+            
+            Spacer()
 
             Button(action: {
                 withAnimation {
-//                    showAntivirusView = false
+                    showSheetView = false
                     currentState = .inactive
                 }
             }) {
