@@ -49,6 +49,7 @@ struct SheetView: View {
             .shadow(radius: 10)
             .frame(maxWidth: .infinity)
         }
+        .background(Color.white)
         .frame(height: 300)
         .ignoresSafeArea(.all)
     }
