@@ -120,8 +120,8 @@ public struct FastRequestResultView: View {
             }
             
             if showSheetView {
-//                SheetView()
-//                    .frame(height: 300)
+                SheetView(model: model?.sheet)
+                    .frame(height: 300)
             }
         }
     }

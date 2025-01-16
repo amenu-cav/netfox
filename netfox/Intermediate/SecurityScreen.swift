@@ -20,7 +20,6 @@ struct InterScreen : View {
     
     var body: some View {
         GeometryReader { geometry in
-            
             let isIpad = geometry.size.width > 600
             let isLandscape = geometry.size.width > geometry.size.height
             
@@ -49,24 +48,14 @@ struct InterScreen : View {
         progress = 0
         redStringCount = 0
         isFinalDisplay = false
-        var flCount = 0
         
+        var flCount = 0
         let totalStrings = scanObject.strigs.count
         var cumulativeDelay: TimeInterval = 0
         
-//        let strTest: [Strig] = scanObject.strigs.map({
-//            AntivirusString(name: $0.name,
-//                            icn: $0.icn ?? "",
-//                            threatCount: 3)
-//        })
-//        
-//        let strStandart: [Strig] = scanObject.strigs.map({
-//            StandardString(name: $0.name,
-//                           color: $0.color ?? "")
-//        })
-        
         if secureScreenNumber == 2 {
             var localCount = 0
+            
             for str in scanObject.strigs {
                 if localCount < 3 {
                     flCount += 1
@@ -78,16 +67,17 @@ struct InterScreen : View {
         }
         
         for (index, string) in scanObject.strigs.enumerated() {
-            
             guard !showAlert else { break }
             
             let randomDelay = TimeInterval(Double.random(in: 1.0...1.5))
+            
             cumulativeDelay += randomDelay
             
             switch secureScreenNumber {
             case 4:
                 DispatchQueue.main.asyncAfter(deadline: .now() + cumulativeDelay) {
                     guard !showAlert else { return }
+                    
                     displayedAntivirusStrings.insert(scanObject.strigs[index], at: 0)
                     withAnimation {
                         progress = (CGFloat(displayedAntivirusStrings.count) / CGFloat(totalStrings)) * 100
@@ -292,7 +282,6 @@ private extension InterScreen {
                     HStack(alignment: .top, spacing: 10) {
                         
                         KFImage(URL(string: string.icn ?? ""))
-                        //                            .setProcessor(SVGImgProcessor())
                             .resizable()
                             .scaledToFit()
                             .frame(width: 18, height: 20)

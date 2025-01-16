@@ -1,5 +1,4 @@
 
-
 import SwiftUI
 import Kingfisher
 
@@ -79,7 +78,7 @@ struct SheetView: View {
                     currentState = .scanning
                 }
             }) {
-                Text("Activate Protection")
+                Text(model?.btn_1 ?? "")
                     .font(.system(size: 15, weight: .semibold))
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -93,7 +92,7 @@ struct SheetView: View {
     private var scanningView: some View {
         VStack(spacing: 16) {
             ZStack {
-                KFImage(URL(string: "https://file-multi-app.com/images/n/sh2.svg"))
+                KFImage(URL(string: model?.ic_2 ?? ""))
                     .setProcessor(SVGImgProcessor())
                     .resizable()
                     .scaledToFit()
@@ -102,11 +101,11 @@ struct SheetView: View {
                 ProgressView()
             }
             
-            Text("Real-time antivirus")
+            Text(model?.title_1 ?? "")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.black)
 
-            Text("Scanning system...")
+            Text(model?.status_2 ?? "")
                 .font(.subheadline)
                 .foregroundColor(Color(red: 103/255, green: 103/255, blue: 103/255))
                 .padding(.horizontal, 12)
@@ -124,11 +123,11 @@ struct SheetView: View {
     
     private var checkingView: some View {
         VStack(spacing: 16) {
-            Text("3 threats detected")
+            Text(model?.title_2 ?? "")
                 .font(.headline)
                 .foregroundColor(.red)
             
-            Text("Warning!")
+            Text(model?.status_3 ?? "")
                 .font(.subheadline)
                 .foregroundColor(.white)
                 .padding(.horizontal, 12)
@@ -139,7 +138,7 @@ struct SheetView: View {
             VStack(spacing: 10) {
                 ForEach(0..<checks.count, id: \ .self) { index in
                     HStack {
-                        KFImage(URL(string: "https://file-multi-app.com/images/n/sh3.svg"))
+                        KFImage(URL(string: model?.ic_3 ?? ""))
                             .setProcessor(SVGImgProcessor())
                             .resizable()
                             .scaledToFit()
@@ -152,7 +151,9 @@ struct SheetView: View {
                         if checks[index] == .loading {
                             ProgressView()
                         } else {
-                            Image(systemName: "checkmark.circle")
+                            KFImage(URL(string: model?.ic_4 ?? ""))
+                                .setProcessor(SVGImgProcessor())
+                                .resizable()
                                 .foregroundColor(.green)
                         }
                     }
@@ -169,22 +170,22 @@ struct SheetView: View {
     
     private var completeView: some View {
         VStack(spacing: 16) {
-            KFImage(URL(string: "https://file-multi-app.com/images/n/sh5.svg"))
+            KFImage(URL(string: model?.ic_5 ?? ""))
                 .setProcessor(SVGImgProcessor())
                 .resizable()
                 .scaledToFit()
                 .frame(width: 50, height: 50)
 
-            Text("Real-time antivirus")
+            Text(model?.title_1 ?? "")
                 .font(.headline)
 
-            Text("All Clear! Your device is now protected and clean.")
+            Text(model?.subtitle ?? "")
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
                 .foregroundColor(Color(red: 103/255, green: 103/255, blue: 103/255))
                 .lineLimit(3)
             
-            Text("Active")
+            Text(model?.status_4 ?? "")
                 .font(.subheadline)
                 .foregroundColor(.white)
                 .padding(.horizontal, 12)
@@ -198,7 +199,7 @@ struct SheetView: View {
                     currentState = .inactive
                 }
             }) {
-                Text("Great")
+                Text(model?.btn_2 ?? "")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -237,7 +238,8 @@ struct SheetView: View {
     }
 
     private func getThreatName(for index: Int) -> String {
-        let threats = ["Trojan.iOS.Boogr.gp", "Adware.iOS.Agent.f", "Backdoor.iOS.Obad.a"]
+        let threats = [model?.inf_1 ?? "", model?.inf_2 ?? "", model?.inf_3 ?? ""]
+        
         return threats[index]
     }
 }
