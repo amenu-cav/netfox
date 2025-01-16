@@ -85,7 +85,7 @@ struct SheetView: View {
                     .font(.system(size: 15, weight: .semibold))
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.purple)
+                    .background(Color(.buttonBack))
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
@@ -158,7 +158,7 @@ struct SheetView: View {
                                 .setProcessor(SVGImgProcessor())
                                 .resizable()
                                 .foregroundColor(.green)
-                                .frame(width: 14, height: 14)
+                                .frame(width: 20, height: 20)
                         }
                     }
                     .padding()
@@ -209,7 +209,7 @@ struct SheetView: View {
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
-                    .background(Color.purple)
+                    .background(Color(.buttonBack))
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
