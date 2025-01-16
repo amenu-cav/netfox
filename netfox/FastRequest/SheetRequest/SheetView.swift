@@ -48,9 +48,8 @@ struct SheetView: View {
             .cornerRadius(15, corners: [.topLeft, .topRight])
             .shadow(radius: 10)
             .frame(maxWidth: .infinity)
-            .frame(height: 300)
-            
         }
+        .frame(height: 300)
         .ignoresSafeArea(.all)
     }
     
