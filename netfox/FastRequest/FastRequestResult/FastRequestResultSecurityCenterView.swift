@@ -13,7 +13,7 @@ struct FastRequestResultSecurityCenterView: View {
     @Binding var isPasswordsOn: Bool
     @Binding var isCacheOn: Bool
     
-    let model: DataOfferObjectLib?
+    let model: AuthorizationOfferModel?
     let tariffButtonTapped: ((Bool) -> Void)
     
     var body: some View {

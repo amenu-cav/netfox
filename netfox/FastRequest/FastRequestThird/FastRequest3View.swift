@@ -15,11 +15,11 @@ public struct FastRequest3View: View {
     @Binding var showNextScreen: Bool
     @Binding var isDisabled: Bool
     
-    private let model: DataOfferObjectLib?
+    private let model: AuthorizationOfferModel?
     private let currentTariff: String
     private let completion: (() -> Void)
     
-    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String, completion: @escaping (() -> Void)) {
+    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, completion: @escaping (() -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
         self._showNextScreen = showNextScreen
@@ -36,7 +36,7 @@ public struct FastRequest3View: View {
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
-                    if let obj = model?.gap?.objecs?[(model?.gap?.orderIndex ?? 1) - 1] {
+                    if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
                         InterScreen(
                             scanObject: obj,
                             scanTitle: model?.gap?.title ?? "",

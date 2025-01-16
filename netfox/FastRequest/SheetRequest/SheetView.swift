@@ -16,6 +16,8 @@ struct SheetView: View {
     @State private var progress: Double = 0.0
     @State private var checks: [CheckState] = [.loading, .loading, .loading]
     
+    let model: SheetObject?
+    
     var body: some View {
         Color.black.opacity(0.5)
             .ignoresSafeArea()
@@ -54,16 +56,17 @@ struct SheetView: View {
     
     private var inactiveView: some View {
         VStack(spacing: 16) {
-            Image(systemName: "shield.slash")
+            KFImage(URL(string: model?.ic_1 ?? ""))
+                .setProcessor(SVGImgProcessor())
                 .resizable()
                 .frame(width: 60, height: 60)
                 .foregroundColor(.red)
 
-            Text("Real-time antivirus")
+            Text(model?.title_1 ?? "")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.black)
 
-            Text("Inactive")
+            Text(model?.status_1 ?? "")
                 .font(.system(size: 13, weight: .medium))
                 .foregroundColor(.white)
                 .padding(.horizontal, 12)
@@ -195,7 +198,7 @@ struct SheetView: View {
                     currentState = .inactive
                 }
             }) {
-                Text("Active Protection")
+                Text("Great")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -220,6 +223,7 @@ struct SheetView: View {
     
     private func runThreatCheck() {
         var index = 0
+        
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             checks[index] = .checked
             index += 1

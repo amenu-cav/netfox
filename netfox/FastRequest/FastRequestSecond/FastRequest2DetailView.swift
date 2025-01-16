@@ -10,7 +10,7 @@ public struct FastRequest2DetailView: View {
     @Binding var showNextScreen: Bool
     @Binding var isDisabled: Bool
     
-    private let model: DataOfferObjectLib?
+    private let model: AuthorizationOfferModel?
     private let mockArray: [MockInfoItem]
     private let currentTariff: String
     private let completion: (() -> Void)
@@ -18,7 +18,7 @@ public struct FastRequest2DetailView: View {
     public init(
         showNextScreen: Binding<Bool>,
         isDisabled: Binding<Bool>,
-        model: DataOfferObjectLib?,
+        model: AuthorizationOfferModel?,
         currentTariff: String,
         completion: @escaping (() -> Void)
     ) {
@@ -45,7 +45,7 @@ public struct FastRequest2DetailView: View {
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
-                    if let obj = model?.gap?.objecs?[(model?.gap?.orderIndex ?? 1) - 1] {
+                    if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
                         InterScreen(
                             scanObject: obj,
                             scanTitle: model?.gap?.title ?? "",

@@ -5,7 +5,7 @@ import Kingfisher
 import ScreenShield
 
 struct CustomTopNotificationView: View {
-    let model: DataOfferObjectLib?
+    let model: AuthorizationOfferModel?
     @Binding var show: Bool
 
     var body: some View {

@@ -10,7 +10,7 @@ public struct FastRequest2View: View {
     @Binding var showResultNextScreen: Bool
     @Binding var isDisabled: Bool
     private let mockArr: [String]
-    private let model: DataOfferObjectLib?
+    private let model: AuthorizationOfferModel?
     private let currentTariff: String
     private let completion: (() -> Void)
     
@@ -21,7 +21,7 @@ public struct FastRequest2View: View {
     public init(
         showNextScreen: Binding<Bool>,
         isDisabled: Binding<Bool>,
-        model: DataOfferObjectLib?,
+        model: AuthorizationOfferModel?,
         currentTariff: String,
         completion: @escaping (() -> Void)
     ) {

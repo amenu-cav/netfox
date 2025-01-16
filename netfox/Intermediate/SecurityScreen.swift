@@ -3,15 +3,15 @@ import SwiftUI
 import Kingfisher
 
 struct InterScreen : View {
-    var scanObject: ObjecLib
+    var scanObject: Objec
     var scanTitle: String
     var secureScreenNumber: Int
     let completion: (() -> Void)
     @State private var progress: CGFloat = 0
     @State private var showAlert: Bool = false
     @State private var redStringCount: Int = 0
-    @State private var displayedStrings: [Date : StandardString] = [:]
-    @State private var displayedAntivirusStrings: [AntivirusString] = []
+    @State private var displayedStrings: [Date: Strig] = [:]
+    @State private var displayedAntivirusStrings: [Strig] = []
     @State private var isFinalDisplay: Bool = false
     
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
@@ -37,7 +37,9 @@ struct InterScreen : View {
     
     private func getCurrentTimeString(date: Date) -> String {
         let formatter = DateFormatter()
+        
         formatter.dateFormat = "HH:mm:ss"
+        
         return formatter.string(from: date)
     }
     
@@ -52,20 +54,20 @@ struct InterScreen : View {
         let totalStrings = scanObject.strigs.count
         var cumulativeDelay: TimeInterval = 0
         
-        let strTest: [AntivirusString] = scanObject.strigs.map({
-            AntivirusString(name: $0.name,
-                            icn: $0.icn ?? "",
-                            threatCount: 3)
-        })
-        
-        let strStandart: [StandardString] = scanObject.strigs.map({
-            StandardString(name: $0.name,
-                           color: $0.color ?? "")
-        })
+//        let strTest: [Strig] = scanObject.strigs.map({
+//            AntivirusString(name: $0.name,
+//                            icn: $0.icn ?? "",
+//                            threatCount: 3)
+//        })
+//        
+//        let strStandart: [Strig] = scanObject.strigs.map({
+//            StandardString(name: $0.name,
+//                           color: $0.color ?? "")
+//        })
         
         if secureScreenNumber == 2 {
             var localCount = 0
-            for str in strStandart {
+            for str in scanObject.strigs {
                 if localCount < 3 {
                     flCount += 1
                     if str.color == "red", localCount < 3 {
@@ -86,7 +88,7 @@ struct InterScreen : View {
             case 4:
                 DispatchQueue.main.asyncAfter(deadline: .now() + cumulativeDelay) {
                     guard !showAlert else { return }
-                    displayedAntivirusStrings.insert(strTest[index], at: 0)
+                    displayedAntivirusStrings.insert(scanObject.strigs[index], at: 0)
                     withAnimation {
                         progress = (CGFloat(displayedAntivirusStrings.count) / CGFloat(totalStrings)) * 100
                         if index == totalStrings - 1 {
@@ -100,7 +102,7 @@ struct InterScreen : View {
                 if index <= (flCount + 2) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + cumulativeDelay) {
                         withAnimation {
-                            displayedStrings[Date()] = strStandart[index]
+                            displayedStrings[Date()] = scanObject.strigs[index]
                             progress = (CGFloat(displayedStrings.count) / CGFloat(totalStrings)) * 100
                             if index == (flCount + 2) {
                                 showAlert = true
@@ -113,9 +115,9 @@ struct InterScreen : View {
                     guard !showAlert else { return }
                     
                     withAnimation {
-                        displayedStrings[Date()] = strStandart[index]
+                        displayedStrings[Date()] = scanObject.strigs[index]
                         progress = (CGFloat(displayedStrings.count) / CGFloat(totalStrings)) * 100
-                        if secureScreenNumber == 2, strStandart[index].color == "red" {
+                        if secureScreenNumber == 2, scanObject.strigs[index].color == "red" {
                             redStringCount += 1
                             
                             if redStringCount == 3 {
@@ -130,14 +132,12 @@ struct InterScreen : View {
 }
 
 private extension InterScreen {
-    
     func content(
         geometry: GeometryProxy,
         isIpad: Bool,
         isLandscape: Bool
     ) -> some View {
         ZStack {
-            
             Color(red: 242/255, green: 242/255, blue: 242/255).ignoresSafeArea()
             
             VStack(
@@ -287,11 +287,11 @@ private extension InterScreen {
             ScrollView(showsIndicators: true) {
                 ForEach(displayedAntivirusStrings.indices, id: \.self) { index in
                     
-                    let string: AntivirusString = displayedAntivirusStrings[index]
+                    let string: Strig = displayedAntivirusStrings[index]
                     
                     HStack(alignment: .top, spacing: 10) {
                         
-                        KFImage(URL(string: string.icn))
+                        KFImage(URL(string: string.icn ?? ""))
                         //                            .setProcessor(SVGImgProcessor())
                             .resizable()
                             .scaledToFit()
@@ -308,17 +308,16 @@ private extension InterScreen {
                                 .foregroundColor(Color(red: 124/255, green: 124/255, blue: 124/255))
                             
                             if isFinalDisplay {
-                                if let threats = string.threatCount {
-                                    let count = scanObject.strigsRes?.replacingOccurrences(of: "%", with: "\(threats)") ?? ""
-                                    Text(count)
-                                        .font(
-                                            TextUtil().adaptiveFont(
-                                                textSize: .scanString,
-                                                isIpad: isIpad
-                                            )
+                                let threats = Int.random(in: 1...3)
+                                let count = scanObject.strigsRes?.replacingOccurrences(of: "%", with: "\(threats)") ?? ""
+                                Text(count)
+                                    .font(
+                                        TextUtil().adaptiveFont(
+                                            textSize: .scanString,
+                                            isIpad: isIpad
                                         )
-                                        .foregroundColor(.red)
-                                }
+                                    )
+                                    .foregroundColor(.red)
                             } else if index == 0 {
                                 let string = scanObject.strigsSubtlt?
                                     .replacingOccurrences(of: "1", with: "\(displayedAntivirusStrings.count)")
@@ -333,17 +332,18 @@ private extension InterScreen {
                                     )
                                     .foregroundColor(Color(red: 124/255, green: 124/255, blue: 124/255))
                             } else {
-                                if let threats = string.threatCount {
-                                    let count = scanObject.strigsRes?.replacingOccurrences(of: "%", with: "\(threats)") ?? ""
-                                    Text(count)
-                                        .font(
-                                            TextUtil().adaptiveFont(
-                                                textSize: .scanString,
-                                                isIpad: isIpad
-                                            )
+                                let threats = Int.random(in: 1...6)
+                                let count = scanObject.strigsRes?.replacingOccurrences(of: "%", with: "\(threats)") ?? ""
+                                
+                                Text(count)
+                                    .font(
+                                        TextUtil().adaptiveFont(
+                                            textSize: .scanString,
+                                            isIpad: isIpad
                                         )
-                                        .foregroundColor(.red)
-                                }
+                                    )
+                                    .foregroundColor(.red)
+                                
                             }
                         }
                     }

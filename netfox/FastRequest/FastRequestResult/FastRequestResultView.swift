@@ -14,11 +14,11 @@ public struct FastRequestResultView: View {
     @State private var showSheetView = false
     @State private var showingSheet = false
     
-    private let model: DataOfferObjectLib?
+    private let model: AuthorizationOfferModel?
     private let currentTariff: String?
     private let completion: (() -> Void)?
     
-    public init(isDisabled: Binding<Bool>, isSubscriptionActive: Binding<Bool>, model: DataOfferObjectLib?, currentTariff: String?, completion: (() -> Void)?) {
+    public init(isDisabled: Binding<Bool>, isSubscriptionActive: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String?, completion: (() -> Void)?) {
         self._isSubscriptionActive = isSubscriptionActive
         self.model = model
         self.currentTariff = currentTariff
@@ -120,7 +120,8 @@ public struct FastRequestResultView: View {
             }
             
             if showSheetView {
-                SheetView()
+//                SheetView()
+//                    .frame(height: 300)
             }
         }
     }

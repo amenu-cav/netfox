@@ -5,7 +5,7 @@ import SwiftUI
 import Kingfisher
 
 struct CustomCenterAlertView: View {
-    let model: DataOfferObjectLib?
+    let model: AuthorizationOfferModel?
     @Binding var showAlert: Bool
     @Binding var isDisabled: Bool
     var buttonTapped: () -> Void
