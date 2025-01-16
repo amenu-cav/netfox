@@ -3,7 +3,6 @@ import SwiftUI
 import Kingfisher
 
 struct InterScreen : View {
-    
     var scanObject: ObjecLib
     var scanTitle: String
     var secureScreenNumber: Int
@@ -85,8 +84,6 @@ struct InterScreen : View {
             
             switch secureScreenNumber {
             case 4:
-                print("screen 4")
-                
                 DispatchQueue.main.asyncAfter(deadline: .now() + cumulativeDelay) {
                     guard !showAlert else { return }
                     displayedAntivirusStrings.insert(strTest[index], at: 0)
@@ -100,7 +97,6 @@ struct InterScreen : View {
                     }
                 }
             case 2:
-                print("screen 2")
                 if index <= (flCount + 2) {
                     DispatchQueue.main.asyncAfter(deadline: .now() + cumulativeDelay) {
                         withAnimation {
@@ -113,22 +109,17 @@ struct InterScreen : View {
                     }
                 }
             default:
-                print("screen 1/3")
-                
                 DispatchQueue.main.asyncAfter(deadline: .now() + cumulativeDelay) {
                     guard !showAlert else { return }
-                    print("showAlert first = \(showAlert)")
                     
                     withAnimation {
                         displayedStrings[Date()] = strStandart[index]
                         progress = (CGFloat(displayedStrings.count) / CGFloat(totalStrings)) * 100
                         if secureScreenNumber == 2, strStandart[index].color == "red" {
                             redStringCount += 1
-                            print("redStringCount \(redStringCount)")
+                            
                             if redStringCount == 3 {
                                 showAlert = true
-                                print("showAlert true")
-                                print("showAlert = \(showAlert)")
                             }
                         }
                     }
@@ -205,7 +196,6 @@ private extension InterScreen {
                     foregroundColor: Color(red: 0/255, green: 122/255, blue: 255/255),
                     maxValue: scanObject.strigs.count
                 ) { currentProgress in
-                    print("\(currentProgress)")
                     switch secureScreenNumber {
                     case 1:
                         if currentProgress >= 95 {
@@ -261,7 +251,7 @@ private extension InterScreen {
                                 )
                             )
                             .foregroundColor(Color(red: 124/255, green: 124/255, blue: 124/255))
-
+                        
                         if let scanString = displayedStrings[key] {
                             Text(scanString.name)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -298,11 +288,11 @@ private extension InterScreen {
                 ForEach(displayedAntivirusStrings.indices, id: \.self) { index in
                     
                     let string: AntivirusString = displayedAntivirusStrings[index]
-
+                    
                     HStack(alignment: .top, spacing: 10) {
                         
                         KFImage(URL(string: string.icn))
-//                            .setProcessor(SVGImgProcessor())
+                        //                            .setProcessor(SVGImgProcessor())
                             .resizable()
                             .scaledToFit()
                             .frame(width: 18, height: 20)
@@ -395,10 +385,10 @@ private extension InterScreen {
                     .foregroundColor(.black)
                 
                 Text(scanObject.subMessTxt ?? "")
-                .font(.system(size: isIpad ? 16: 13))
-                .foregroundColor(Color(red: 110/255, green: 112/255, blue: 101/255))
-                .lineLimit(4)
-                .multilineTextAlignment(.center)
+                    .font(.system(size: isIpad ? 16: 13))
+                    .foregroundColor(Color(red: 110/255, green: 112/255, blue: 101/255))
+                    .lineLimit(4)
+                    .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 8)
             .padding(.vertical, 12)
@@ -410,12 +400,12 @@ private extension InterScreen {
             .padding(.horizontal, 16)
             
             Text(scanObject.messSbtlt)
-            .font(.system(size: isIpad ? 16 : 13))
-            .lineLimit(4)
-            .foregroundColor(.black)
-            .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 16)
+                .font(.system(size: isIpad ? 16 : 13))
+                .lineLimit(4)
+                .foregroundColor(.black)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 16)
             
             VStack {
                 Spacer().frame(maxWidth: .infinity, maxHeight: 1).background(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.36))
@@ -569,7 +559,7 @@ private extension InterScreen {
             RoundedRectangle(cornerRadius: 14)
                 .fill(Color(red: 223/255, green: 223/255, blue: 223/255))
                 .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 4)
-            }
+        }
         .frame(width: isIpad ? 400 : 270)
         
     }

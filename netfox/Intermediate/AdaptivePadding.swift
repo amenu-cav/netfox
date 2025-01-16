@@ -15,7 +15,6 @@ enum PaddingType {
 }
 
 private extension PaddingType {
-    
     func padding(width: CGFloat) -> CGFloat {
         return switch self {
         case .titleTopPadding:

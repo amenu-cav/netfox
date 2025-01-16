@@ -11,7 +11,7 @@ public struct FastRequestResultView: View {
     @Binding var isDisabled: Bool
     @Binding var isSubscriptionActive: Bool
     @State private var isProtect = false
-    
+    @State private var showSheetView = false
     @State private var showingSheet = false
     
     private let model: DataOfferObjectLib?
@@ -106,12 +106,20 @@ public struct FastRequestResultView: View {
                 isPasswordsOn: $isPasswordsOn,
                 isCacheOn: $isCacheOn,
                 model: model
-            ) {
-                showingSheet = true
+            ) { isTariif in
+                if isTariif {
+                    showingSheet = true
+                } else {
+                    showSheetView = true
+                }
             }
             .padding(.horizontal)
             
             Spacer()
+            
+            if showSheetView {
+                SheetView()
+            }
         }
     }
     

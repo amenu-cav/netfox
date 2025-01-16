@@ -14,7 +14,7 @@ struct FastRequestResultSecurityCenterView: View {
     @Binding var isCacheOn: Bool
     
     let model: DataOfferObjectLib?
-    let tariffButtonTapped: (() -> Void)
+    let tariffButtonTapped: ((Bool) -> Void)
     
     var body: some View {
         VStack(spacing: 5) {
@@ -62,7 +62,7 @@ struct FastRequestResultSecurityCenterView: View {
                     .disabled(true)
                     .onTapGesture {
                         if !isSubscriptionActive {
-                            tariffButtonTapped()
+                            tariffButtonTapped(true)
                         }
                     }
                     
@@ -74,11 +74,12 @@ struct FastRequestResultSecurityCenterView: View {
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
-                            tariffButtonTapped()
+                            tariffButtonTapped(true)
                         }
                     }
                     .onChange(of: isRealTimeAntivirusOn) { value in
                         if isSubscriptionActive, value {
+                            tariffButtonTapped(false)
                             showProgressAction()
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -97,7 +98,7 @@ struct FastRequestResultSecurityCenterView: View {
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
-                            tariffButtonTapped()
+                            tariffButtonTapped(true)
                         }
                     }
                     .onChange(of: isBackgroundScanOn) { value in
@@ -118,7 +119,7 @@ struct FastRequestResultSecurityCenterView: View {
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
-                            tariffButtonTapped()
+                            tariffButtonTapped(true)
                         }
                     }
                     .onChange(of: isSecurityOn) { value in
@@ -142,7 +143,7 @@ struct FastRequestResultSecurityCenterView: View {
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
-                            tariffButtonTapped()
+                            tariffButtonTapped(true)
                         }
                     }
                     .onChange(of: isPasswordsOn) { value in
@@ -164,7 +165,7 @@ struct FastRequestResultSecurityCenterView: View {
                     .disabled(!isSubscriptionActive)
                     .onTapGesture {
                         if !isSubscriptionActive {
-                            tariffButtonTapped()
+                            tariffButtonTapped(true)
                         }
                     }
                     .onChange(of: isCacheOn) { value in
