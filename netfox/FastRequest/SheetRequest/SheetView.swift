@@ -44,13 +44,12 @@ struct SheetView: View {
                         .padding(.bottom)
                 }
             }
+            .frame(height: 300)
             .background(Color.white)
             .cornerRadius(15, corners: [.topLeft, .topRight])
             .shadow(radius: 10)
             .frame(maxWidth: .infinity)
         }
-        .background(Color.white)
-        .frame(height: 300)
         .ignoresSafeArea(.all)
     }
     
