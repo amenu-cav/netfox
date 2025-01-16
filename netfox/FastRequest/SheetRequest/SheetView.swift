@@ -15,6 +15,7 @@ struct SheetView: View {
     @State private var progress: Double = 0.0
     @State private var checks: [CheckState] = [.loading, .loading, .loading]
     @Binding var showSheetView: Bool
+    @Binding var isSheetAnti: Bool
     
     let model: SheetObject?
     
@@ -201,6 +202,7 @@ struct SheetView: View {
 
             Button(action: {
                 withAnimation {
+                    isSheetAnti = true
                     showSheetView = false
                     currentState = .inactive
                 }

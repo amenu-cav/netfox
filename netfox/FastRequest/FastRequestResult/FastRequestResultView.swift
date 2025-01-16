@@ -8,6 +8,7 @@ public struct FastRequestResultView: View {
     @AppStorage("isSecurityOn") private var isSecurityOn = false
     @AppStorage("isPasswordsOn") private var isPasswordsOn = false
     @AppStorage("isCacheOn") private var isCacheOn = false
+    @AppStorage("isSheetAnti") private var isSheetAnti = false
     @Binding var isDisabled: Bool
     @Binding var isSubscriptionActive: Bool
     @State private var isProtect = false
@@ -106,6 +107,7 @@ public struct FastRequestResultView: View {
                     isSecurityOn: $isSecurityOn,
                     isPasswordsOn: $isPasswordsOn,
                     isCacheOn: $isCacheOn,
+                    isSheetAnti: $isSheetAnti,
                     model: model
                 ) { isTariif in
                     if isTariif {
@@ -120,13 +122,13 @@ public struct FastRequestResultView: View {
             }
             
             if showSheetView {
-                SheetView(showSheetView: $showSheetView, model: model?.sheet)
+                SheetView(showSheetView: $showSheetView, isSheetAnti: $isSheetAnti, model: model?.sheet)
             }
         }
     }
     
     private func circleProgress() -> CGFloat {
-        let antivirusBool = NFX.sharedInstance().isSheet ? false : isRealTimeAntivirusOn
+        let antivirusBool = NFX.sharedInstance().isSheet ? isSheetAnti : isRealTimeAntivirusOn
         let togglesOn = [isSubscriptionActive, antivirusBool, isBackgroundScanOn, isSecurityOn, isPasswordsOn, isCacheOn].filter { $0 }.count
         let result = CGFloat(togglesOn) / 6
         

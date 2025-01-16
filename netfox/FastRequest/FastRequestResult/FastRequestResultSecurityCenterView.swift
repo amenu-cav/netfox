@@ -13,6 +13,8 @@ struct FastRequestResultSecurityCenterView: View {
     @Binding var isPasswordsOn: Bool
     @Binding var isCacheOn: Bool
     
+    @Binding var isSheetAnti: Bool
+    
     let model: AuthorizationOfferModel?
     let tariffButtonTapped: ((Bool) -> Void)
     
@@ -86,6 +88,8 @@ struct FastRequestResultSecurityCenterView: View {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                                 self.showSuccessAction()
                             }
+                        } else {
+                            isSheetAnti = false
                         }
                     }
                 }
