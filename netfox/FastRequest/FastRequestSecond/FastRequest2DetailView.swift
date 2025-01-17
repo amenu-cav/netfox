@@ -42,9 +42,10 @@ public struct FastRequest2DetailView: View {
                 .protectScreenshot()
                 .ignoresSafeArea(.all)
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    let _ = completion(.specialOffer2Hide)
-                    
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                        .onAppear {
+                            completion(.specialOffer2Hide)
+                        }
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
                     if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
@@ -63,9 +64,10 @@ public struct FastRequest2DetailView: View {
         } else {
             myView()
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    let _ = completion(.specialOffer2Hide)
-                    
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                        .onAppear {
+                            completion(.specialOffer2Hide)
+                        }
                 }
                 .onAppear {
                     completion(.specialOffer2ShowNext)

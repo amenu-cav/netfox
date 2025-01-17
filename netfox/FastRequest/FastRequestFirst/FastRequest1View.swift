@@ -92,9 +92,10 @@ public struct FastRequest1View: View {
             .ignoresSafeArea(.all)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
-                let _ = completion(.specialOffer1Hide)
-                
                 FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                    .onAppear {
+                        completion(.specialOffer1Hide)
+                    }
             }
             .fullScreenCover(isPresented: $showIntermediateScreen) {
                 if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {

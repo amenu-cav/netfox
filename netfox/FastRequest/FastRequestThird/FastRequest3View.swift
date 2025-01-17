@@ -33,9 +33,10 @@ public struct FastRequest3View: View {
                 .background(Color(red: 29/255, green: 34/255, blue: 57/255))
                 .navigationBarHidden(true)
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    let _ = completion(.specialOffer3Hide)
-                    
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                        .onAppear {
+                            completion(.specialOffer3Hide)
+                        }
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
                     if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
@@ -101,9 +102,10 @@ public struct FastRequest3View: View {
                 .background(Color(red: 29/255, green: 34/255, blue: 57/255))
                 .navigationBarHidden(true)
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    let _ = completion(.specialOffer3Hide)
-                    
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                        .onAppear {
+                            completion(.specialOffer3Hide)
+                        }
                 }
                 .onAppear {
                     completion(.specialOffer3Show)
