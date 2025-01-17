@@ -13,14 +13,14 @@ public struct FastRequest2DetailView: View {
     private let model: AuthorizationOfferModel?
     private let mockArray: [MockInfoItem]
     private let currentTariff: String
-    private let completion: (() -> Void)
+    private let completion: ((EventsTitles?) -> Void)
     
     public init(
         showNextScreen: Binding<Bool>,
         isDisabled: Binding<Bool>,
         model: AuthorizationOfferModel?,
         currentTariff: String,
-        completion: @escaping (() -> Void)
+        completion: @escaping ((EventsTitles?) -> Void)
     ) {
         self.model = model
         var fullArray: [MockInfoItem] = []
@@ -211,7 +211,7 @@ public struct FastRequest2DetailView: View {
                     if NFX.sharedInstance().isShowIntermediate {
                         showIntermediateScreen = true
                     } else {
-                        completion()
+                        completion(nil)
                     }
                 }
                 .transition(.scale)

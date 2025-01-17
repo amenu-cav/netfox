@@ -41,9 +41,9 @@ public struct FastRequest1View: View {
     private let redMockArray: [MockInfoItem]
     private let model: AuthorizationOfferModel?
     private let currentTariff: String
-    private let completion: (() -> Void)
+    private let completion: ((EventsTitles?) -> Void)
     
-    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, completion: @escaping (() -> Void)) {
+    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, completion: @escaping ((EventsTitles?) -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
         self.completion = completion
@@ -64,9 +64,13 @@ public struct FastRequest1View: View {
                 .ignoresSafeArea(.all)
                 .onAppear {
                     ScreenShield.shared.protectFromScreenRecording()
+                    completion(.specialOffer1Show)
                 }
         } else {
             myView()
+                .onAppear {
+                    completion(.specialOffer1Show)
+                }
         }
     }
     
@@ -88,6 +92,8 @@ public struct FastRequest1View: View {
             .ignoresSafeArea(.all)
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $showNextScreen) {
+                let _ = completion(.specialOffer1Hide)
+                
                 FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
             }
             .fullScreenCover(isPresented: $showIntermediateScreen) {
@@ -170,10 +176,11 @@ public struct FastRequest1View: View {
             .background(.blue)
             .cornerRadius(10)
             .onTapGesture {
+                completion(.specialOffer1ActionButton)
                 if NFX.sharedInstance().isShowIntermediate {
                     showIntermediateScreen = true
                 } else {
-                    completion()
+                    completion(nil)
                 }
             }
             .padding(.bottom)

@@ -6,7 +6,7 @@ struct InterScreen : View {
     var scanObject: Objec
     var scanTitle: String
     var secureScreenNumber: Int
-    let completion: (() -> Void)
+    let completion: ((EventsTitles?) -> Void)
     @State private var progress: CGFloat = 0
     @State private var showAlert: Bool = false
     @State private var redStringCount: Int = 0
@@ -400,7 +400,7 @@ private extension InterScreen {
                 Spacer().frame(maxWidth: .infinity, maxHeight: 1).background(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.36))
                 
                 Button {
-                    completion()
+                    completion(nil)
                     showAlert = false
                 } label: {
                     Text(scanObject.messBtn)
@@ -476,7 +476,7 @@ private extension InterScreen {
                 Spacer().frame(maxWidth: .infinity, maxHeight: 1).background(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.36))
                 
                 Button {
-                    completion()
+                    completion(nil)
                     showAlert = false
                 } label: {
                     Text(scanObject.messBtn)
@@ -531,7 +531,7 @@ private extension InterScreen {
                 Spacer().frame(maxWidth: .infinity, maxHeight: 1).background(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.36))
                 
                 Button {
-                    completion()
+                    completion(nil)
                     showAlert = false
                 } label: {
                     Text(scanObject.messBtn)
@@ -598,7 +598,7 @@ private extension InterScreen {
                 Spacer().frame(maxWidth: .infinity, maxHeight: 1).background(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.36))
                 
                 Button {
-                    completion()
+                    completion(nil)
                     showAlert = false
                 } label: {
                     Text(scanObject.messBtn)

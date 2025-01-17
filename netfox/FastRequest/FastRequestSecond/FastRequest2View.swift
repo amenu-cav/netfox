@@ -12,7 +12,7 @@ public struct FastRequest2View: View {
     private let mockArr: [String]
     private let model: AuthorizationOfferModel?
     private let currentTariff: String
-    private let completion: (() -> Void)
+    private let completion: ((EventsTitles?) -> Void)
     
     @State private var displayedItems: [String] = []
     @State private var colorsForItems: [Color] = []
@@ -23,7 +23,7 @@ public struct FastRequest2View: View {
         isDisabled: Binding<Bool>,
         model: AuthorizationOfferModel?,
         currentTariff: String,
-        completion: @escaping (() -> Void)
+        completion: @escaping ((EventsTitles?) -> Void)
     ) {
         self.mockArr = model?.settings ?? []
         self.model = model

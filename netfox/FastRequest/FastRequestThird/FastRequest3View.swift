@@ -17,9 +17,9 @@ public struct FastRequest3View: View {
     
     private let model: AuthorizationOfferModel?
     private let currentTariff: String
-    private let completion: (() -> Void)
+    private let completion: ((EventsTitles?) -> Void)
     
-    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, completion: @escaping (() -> Void)) {
+    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, completion: @escaping ((EventsTitles?) -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
         self._showNextScreen = showNextScreen
@@ -79,7 +79,7 @@ public struct FastRequest3View: View {
                                 if NFX.sharedInstance().isShowIntermediate {
                                     showIntermediateScreen = true
                                 } else {
-                                    completion()
+                                    completion(nil)
                                 }
                             })
                         )
@@ -111,7 +111,7 @@ public struct FastRequest3View: View {
                             message: Text(alertMess),
                             primaryButton: .cancel(Text("Cancel")),
                             secondaryButton: .default(Text("OK"), action: {
-                                completion()
+                                completion(nil)
                             })
                         )
                     }
