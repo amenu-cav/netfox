@@ -31,6 +31,8 @@ public struct FastRequest4View: View {
                 .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
                 .navigationBarHidden(true)
                 .fullScreenCover(isPresented: $showNextScreen) {
+                    let _ = completion(.specialOffer4Hide)
+                    
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
@@ -46,6 +48,7 @@ public struct FastRequest4View: View {
                 .protectScreenshot()
                 .ignoresSafeArea(.all)
                 .onAppear {
+                    completion(.specialOffer4Show)
                     ScreenShield.shared.protectFromScreenRecording()
                 }
         } else {
@@ -53,7 +56,12 @@ public struct FastRequest4View: View {
                 .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
                 .navigationBarHidden(true)
                 .fullScreenCover(isPresented: $showNextScreen) {
+                    let _ = completion(.specialOffer4Hide)
+                    
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                }
+                .onAppear {
+                    completion(.specialOffer4Show)
                 }
         }
     }
@@ -99,6 +107,8 @@ public struct FastRequest4View: View {
                 .scrollContentBackground(.hidden)
                 
                 BottomCustomView(isDisabled: $isDisabled, model: model) {
+                    completion(.specialOffer4ActionButton)
+                    
                     if NFX.sharedInstance().isShowIntermediate {
                         showIntermediateScreen = true
                     } else {

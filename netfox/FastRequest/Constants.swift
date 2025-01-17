@@ -29,7 +29,6 @@ public enum EventsTitles: String {
     case specialOffer3ShowFirst = "special_offer3_show_first"
     case specialOffer3FirstButtonTap = "special_offer3_first_button_tap"
     case specialOffer3ShowSecond = "special_offer3_show_second"
-    case specialOffer3SecondButtonTap = "special_offer3_second_button_tap"
     case specialOffer3SecondButtonDis = "special_offer3_second_button_dis"
     case specialOffer3Hide = "special_offer3_hide"
     

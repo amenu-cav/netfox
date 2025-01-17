@@ -50,6 +50,7 @@ public struct FastRequest2View: View {
                 .protectScreenshot()
                 .ignoresSafeArea(.all)
                 .onAppear {
+                    completion(.specialOffer2Show)
                     ScreenShield.shared.protectFromScreenRecording()
                 }
         } else {
@@ -64,6 +65,9 @@ public struct FastRequest2View: View {
                         currentTariff: currentTariff,
                         completion: completion
                     )
+                }
+                .onAppear {
+                    completion(.specialOffer2Show)
                 }
         }
     }

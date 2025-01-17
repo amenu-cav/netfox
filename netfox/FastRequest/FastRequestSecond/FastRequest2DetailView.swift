@@ -42,6 +42,8 @@ public struct FastRequest2DetailView: View {
                 .protectScreenshot()
                 .ignoresSafeArea(.all)
                 .fullScreenCover(isPresented: $showNextScreen) {
+                    let _ = completion(.specialOffer2Hide)
+                    
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
@@ -55,12 +57,18 @@ public struct FastRequest2DetailView: View {
                     }
                 }
                 .onAppear {
+                    completion(.specialOffer2ShowNext)
                     ScreenShield.shared.protectFromScreenRecording()
                 }
         } else {
             myView()
                 .fullScreenCover(isPresented: $showNextScreen) {
+                    let _ = completion(.specialOffer2Hide)
+                    
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                }
+                .onAppear {
+                    completion(.specialOffer2ShowNext)
                 }
         }
     }
@@ -183,6 +191,7 @@ public struct FastRequest2DetailView: View {
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     withAnimation(.easeInOut(duration: 0.5)) {
+                        completion(.specialOffer2Notification)
                         showNotification = true
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 4.5) {
@@ -191,6 +200,7 @@ public struct FastRequest2DetailView: View {
                         }
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        completion(.specialOffer2Main)
                         showAlert = true
                     }
                 }
@@ -208,6 +218,7 @@ public struct FastRequest2DetailView: View {
             
             if showAlert {
                 CustomCenterAlertView(model: model, showAlert: $showAlert, isDisabled: $isDisabled) {
+                    completion(.specialOffer2ActionButton)
                     if NFX.sharedInstance().isShowIntermediate {
                         showIntermediateScreen = true
                     } else {

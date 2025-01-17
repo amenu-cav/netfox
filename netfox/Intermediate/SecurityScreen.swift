@@ -29,7 +29,34 @@ struct InterScreen : View {
                 isLandscape: isLandscape
             )
             .onAppear {
+                switch secureScreenNumber {
+                case 1:
+                    completion(.scan1Show)
+                case 2:
+                    completion(.scan2Show)
+                case 3:
+                    completion(.scan3Show)
+                case 4:
+                    completion(.scan4Show)
+                default:
+                    completion(.scan1Show)
+                }
+                
                 displayStringsWithDelay()
+            }
+            .onDisappear {
+                switch secureScreenNumber {
+                case 1:
+                    completion(.scan1Hide)
+                case 2:
+                    completion(.scan2Hide)
+                case 3:
+                    completion(.scan3Hide)
+                case 4:
+                    completion(.scan4Hide)
+                default:
+                    completion(.scan1Hide)
+                }
             }
         }
     }
@@ -400,6 +427,7 @@ private extension InterScreen {
                 Spacer().frame(maxWidth: .infinity, maxHeight: 1).background(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.36))
                 
                 Button {
+                    completion(.scan1Action)
                     completion(nil)
                     showAlert = false
                 } label: {
@@ -476,6 +504,7 @@ private extension InterScreen {
                 Spacer().frame(maxWidth: .infinity, maxHeight: 1).background(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.36))
                 
                 Button {
+                    completion(.scan2Action)
                     completion(nil)
                     showAlert = false
                 } label: {
@@ -531,6 +560,7 @@ private extension InterScreen {
                 Spacer().frame(maxWidth: .infinity, maxHeight: 1).background(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.36))
                 
                 Button {
+                    completion(.scan3Action)
                     completion(nil)
                     showAlert = false
                 } label: {
@@ -598,6 +628,7 @@ private extension InterScreen {
                 Spacer().frame(maxWidth: .infinity, maxHeight: 1).background(Color(red: 60/255, green: 60/255, blue: 67/255, opacity: 0.36))
                 
                 Button {
+                    completion(.scan4Action)
                     completion(nil)
                     showAlert = false
                 } label: {

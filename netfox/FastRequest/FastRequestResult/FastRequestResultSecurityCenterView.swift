@@ -15,6 +15,7 @@ struct FastRequestResultSecurityCenterView: View {
     
     @Binding var isSheetAnti: Bool
     
+    let completion: ((EventsTitles?) -> Void)?
     let model: AuthorizationOfferModel?
     let tariffButtonTapped: ((Bool) -> Void)
     
@@ -64,6 +65,7 @@ struct FastRequestResultSecurityCenterView: View {
                     .disabled(true)
                     .onTapGesture {
                         if !isSubscriptionActive {
+                            completion?(.specialOffer5T0)
                             tariffButtonTapped(true)
                         }
                     }
@@ -80,6 +82,8 @@ struct FastRequestResultSecurityCenterView: View {
                         }
                     }
                     .onChange(of: isRealTimeAntivirusOn) { value in
+                        completion?(.specialOffer5T1)
+                        
                         if isSubscriptionActive, value, NFX.sharedInstance().isSheet {
                             tariffButtonTapped(false)
                         } else if isSubscriptionActive, value {
@@ -107,6 +111,8 @@ struct FastRequestResultSecurityCenterView: View {
                         }
                     }
                     .onChange(of: isBackgroundScanOn) { value in
+                        completion?(.specialOffer5T2)
+                        
                         if isSubscriptionActive, value {
                             showProgressAction()
                             
@@ -128,6 +134,8 @@ struct FastRequestResultSecurityCenterView: View {
                         }
                     }
                     .onChange(of: isSecurityOn) { value in
+                        completion?(.specialOffer5T3)
+                        
                         if isSubscriptionActive, value {
                             ProgressHUD.animate(localizeText(forKey: .alertText), interaction: false)
                             
@@ -152,6 +160,8 @@ struct FastRequestResultSecurityCenterView: View {
                         }
                     }
                     .onChange(of: isPasswordsOn) { value in
+                        completion?(.specialOffer5T4)
+                        
                         if isSubscriptionActive, value {
                             ProgressHUD.animate(localizeText(forKey: .alertText), interaction: false)
                             
@@ -174,6 +184,8 @@ struct FastRequestResultSecurityCenterView: View {
                         }
                     }
                     .onChange(of: isCacheOn) { value in
+                        completion?(.specialOffer5T5)
+                        
                         if isSubscriptionActive, value {
                             ProgressHUD.animate(localizeText(forKey: .alertText), interaction: false)
                             
@@ -209,8 +221,13 @@ struct FastRequestResultSecurityCenterView: View {
                 url = URL(string: "App-Prefs:PASSWORDS")!
             }
             
-            guard UIApplication.shared.canOpenURL(url) else { return }
+            guard UIApplication.shared.canOpenURL(url) else {
+                completion?(.specialOffer5Error)
+                
+                return
+            }
             
+            completion?(.specialOffer5T5Settings)
             UIApplication.shared.open(url)
         }
     }
@@ -225,8 +242,13 @@ struct FastRequestResultSecurityCenterView: View {
                 url = URL(string: "App-Prefs:Privacy")!
             }
             
-            guard UIApplication.shared.canOpenURL(url) else { return }
+            guard UIApplication.shared.canOpenURL(url) else {
+                completion?(.specialOffer5Error)
+                
+                return
+            }
             
+            completion?(.specialOffer5T3Settings)
             UIApplication.shared.open(url)
         }
     }
@@ -246,8 +268,13 @@ struct FastRequestResultSecurityCenterView: View {
                 
             }
             
-            guard UIApplication.shared.canOpenURL(url) else { return }
+            guard UIApplication.shared.canOpenURL(url) else {
+                completion?(.specialOffer5Error)
+                
+                return
+            }
             
+            completion?(.specialOffer5T4Settings)
             UIApplication.shared.open(url)
         }
     }

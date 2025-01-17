@@ -7,7 +7,7 @@ struct SuperRequestView: View {
     
     @Binding var isDisabled: Bool
     let currentTariff: String?
-    let completion: (() -> Void)?
+    let completion: ((EventsTitles?) -> Void)?
     
     var body: some View {
         if !NFX.sharedInstance().isShow {
@@ -16,11 +16,15 @@ struct SuperRequestView: View {
                 .protectScreenshot()
                 .ignoresSafeArea(.all)
                 .onAppear {
+                    completion?(.specialOffer5SpecialShow)
                     ScreenShield.shared.protectFromScreenRecording()
                 }
         } else {
             myView()
                 .background(Color(hex: "#01011C").edgesIgnoringSafeArea(.all))
+                .onAppear {
+                    completion?(.specialOffer5SpecialShow)
+                }
         }
     }
     
@@ -29,6 +33,7 @@ struct SuperRequestView: View {
         VStack {
             HStack {
                 Button(action: {
+                    completion?(.specialOffer5SpecialHide)
                     presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(.closeIcon)
@@ -84,7 +89,8 @@ struct SuperRequestView: View {
                         .foregroundColor(.white)
                 }
                 .onTapGesture {
-                    completion?()
+                    completion?(.specialOffer5SpecialActionButton)
+                    completion?(nil)
                     presentationMode.wrappedValue.dismiss()
                 }
                 .disabled(isDisabled)

@@ -17,9 +17,9 @@ public struct FastRequestResultView: View {
     
     private let model: AuthorizationOfferModel?
     private let currentTariff: String?
-    private let completion: (() -> Void)?
+    private let completion: ((EventsTitles?) -> Void)?
     
-    public init(isDisabled: Binding<Bool>, isSubscriptionActive: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String?, completion: (() -> Void)?) {
+    public init(isDisabled: Binding<Bool>, isSubscriptionActive: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String?, completion: ((EventsTitles?) -> Void)?) {
         self._isSubscriptionActive = isSubscriptionActive
         self.model = model
         self.currentTariff = currentTariff
@@ -38,6 +38,7 @@ public struct FastRequestResultView: View {
                 .protectScreenshot()
                 .ignoresSafeArea(.all)
                 .onAppear {
+                    completion?(.specialOffer5Show)
                     ScreenShield.shared.protectFromScreenRecording()
                 }
         } else {
@@ -46,6 +47,9 @@ public struct FastRequestResultView: View {
                 .navigationBarHidden(true)
                 .sheet(isPresented: $showingSheet) {
                     SuperRequestView(isDisabled: $isDisabled, currentTariff: currentTariff, completion: completion)
+                }
+                .onAppear {
+                    completion?(.specialOffer5Show)
                 }
         }
     }
@@ -108,6 +112,7 @@ public struct FastRequestResultView: View {
                     isPasswordsOn: $isPasswordsOn,
                     isCacheOn: $isCacheOn,
                     isSheetAnti: $isSheetAnti,
+                    completion: completion,
                     model: model
                 ) { isTariif in
                     if isTariif {
@@ -122,7 +127,7 @@ public struct FastRequestResultView: View {
             }
             
             if showSheetView {
-                SheetView(showSheetView: $showSheetView, isSheetAnti: $isSheetAnti, model: model?.sheet)
+                SheetView(showSheetView: $showSheetView, isSheetAnti: $isSheetAnti, model: model?.sheet, completion: completion)
             }
         }
     }
