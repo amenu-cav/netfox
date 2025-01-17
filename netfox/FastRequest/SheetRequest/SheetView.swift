@@ -34,11 +34,12 @@ struct SheetView: View {
                         .padding()
                         .padding(.bottom)
                 case .scanning:
-                    let _ = completion?(.antivirusActive)
-                    
                     scanningView
                         .padding()
                         .padding(.bottom)
+                        .onAppear {
+                            completion?(.antivirusActive)
+                        }
                 case .checking:
                     checkingView
                         .padding()
