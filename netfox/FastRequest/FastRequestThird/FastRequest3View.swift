@@ -33,7 +33,7 @@ public struct FastRequest3View: View {
                 .background(Color(red: 29/255, green: 34/255, blue: 57/255))
                 .navigationBarHidden(true)
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: completion)
                         .onAppear {
                             completion(.specialOffer3Hide)
                         }
@@ -102,7 +102,7 @@ public struct FastRequest3View: View {
                 .background(Color(red: 29/255, green: 34/255, blue: 57/255))
                 .navigationBarHidden(true)
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: nil)
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: completion)
                         .onAppear {
                             completion(.specialOffer3Hide)
                         }
