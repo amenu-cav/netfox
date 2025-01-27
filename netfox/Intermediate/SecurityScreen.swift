@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import Kingfisher
 
-struct InterScreen : View {
+public struct InterScreen : View {
     var scanObject: Objec
     var scanTitle: String
     var secureScreenNumber: Int
@@ -18,7 +18,7 @@ struct InterScreen : View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             let isIpad = geometry.size.width > 600
             let isLandscape = geometry.size.width > geometry.size.height
