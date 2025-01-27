@@ -18,6 +18,13 @@ public struct InterScreen : View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     
+    public init(scanObject: Objec, scanTitle: String, secureScreenNumber: Int, completion: @escaping (EventsTitles?) -> Void) {
+        self.scanObject = scanObject
+        self.scanTitle = scanTitle
+        self.secureScreenNumber = secureScreenNumber
+        self.completion = completion
+    }
+    
     public var body: some View {
         GeometryReader { geometry in
             let isIpad = geometry.size.width > 600
