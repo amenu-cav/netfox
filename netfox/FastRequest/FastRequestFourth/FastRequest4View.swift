@@ -38,12 +38,7 @@ public struct FastRequest4View: View {
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
                     if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
-                        InterScreen(
-                            scanObject: obj,
-                            scanTitle: model?.gap?.title ?? "",
-                            secureScreenNumber: model?.gap?.orderIndex ?? 0,
-                            completion: completion
-                        )
+                        InterScreen(showNextScreen: $showNextScreen, isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                     }
                 }
                 .protectScreenshot()
@@ -64,22 +59,13 @@ public struct FastRequest4View: View {
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
                     if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
-                        InterScreen(
-                            scanObject: obj,
-                            scanTitle: model?.gap?.title ?? "",
-                            secureScreenNumber: model?.gap?.orderIndex ?? 0,
-                            completion: completion
-                        )
+                        InterScreen(showNextScreen: $showNextScreen, isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                     }
                 }
                 .onAppear {
                     completion(.specialOffer4Show)
                 }
         }
-    }
-    
-    public func triggerForResult() {
-        showNextScreen = true
     }
     
     @MainActor
