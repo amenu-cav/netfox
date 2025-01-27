@@ -190,9 +190,6 @@ private extension InterScreen {
                             width: geometry.size.width
                         )
                     )
-                    .onTapGesture {
-                        showAlert = true
-                    }
                 
                 progress(isIpad: isIpad)
                 
@@ -446,7 +443,6 @@ private extension InterScreen {
                 Button {
                     completion(.scan1Action)
                     completion(nil)
-                    showAlert = false
                 } label: {
                     Text(scanObject.messBtn)
                         .font(.system(size: isIpad ? 22 : 17))
@@ -523,7 +519,6 @@ private extension InterScreen {
                 Button {
                     completion(.scan2Action)
                     completion(nil)
-                    showAlert = false
                 } label: {
                     Text(scanObject.messBtn)
                         .font(.system(size: isIpad ? 22 : 17))
@@ -579,7 +574,6 @@ private extension InterScreen {
                 Button {
                     completion(.scan3Action)
                     completion(nil)
-                    showAlert = false
                 } label: {
                     Text(scanObject.messBtn)
                         .font(.system(size: isIpad ? 22 : 17))
@@ -647,7 +641,6 @@ private extension InterScreen {
                 Button {
                     completion(.scan4Action)
                     completion(nil)
-                    showAlert = false
                 } label: {
                     Text(scanObject.messBtn)
                         .font(.system(size: isIpad ? 22 : 17))
