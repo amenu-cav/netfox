@@ -107,6 +107,16 @@ public struct FastRequest3View: View {
                             completion(.specialOffer3Hide)
                         }
                 }
+                .fullScreenCover(isPresented: $showIntermediateScreen) {
+                    if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
+                        InterScreen(
+                            scanObject: obj,
+                            scanTitle: model?.gap?.title ?? "",
+                            secureScreenNumber: model?.gap?.orderIndex ?? 0,
+                            completion: completion
+                        )
+                    }
+                }
                 .onAppear {
                     completion(.specialOffer3Show)
                 }
