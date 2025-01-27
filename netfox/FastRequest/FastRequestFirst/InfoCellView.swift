@@ -82,7 +82,7 @@ public struct AuthorizationOfferModel: Codable {
     var scn: ScnModel?
     var prtd: PrtdModel?
     var objectTwo: ObjectTwo?
-    var gap: Gap?
+    public var gap: Gap?
     var sheet: SheetObject?
     
     enum CodingKeys: String, CodingKey {
@@ -210,7 +210,7 @@ struct PrtdModel: Codable{
     }
 }
 
-struct Gap: Codable {
+public struct Gap: Codable {
     let orderIndex: Int
     let title: String
     let titleTwo: String
