@@ -211,10 +211,10 @@ struct PrtdModel: Codable{
 }
 
 public struct Gap: Codable {
-    let orderIndex: Int
+    public let orderIndex: Int
     let title: String
     let titleTwo: String
-    let objecs: [Objec]
+    public let objecs: [Objec]
 
     enum CodingKeys: String, CodingKey {
         case titleTwo = "title_two"
@@ -223,7 +223,7 @@ public struct Gap: Codable {
     }
 }
 
-struct Objec: Codable {
+public struct Objec: Codable {
     let prgrsTitle: String
     let strigs: [Strig]
     let messIcon, messTlt: String
