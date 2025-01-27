@@ -99,7 +99,7 @@ public struct FastRequest1View: View {
             }
             .fullScreenCover(isPresented: $showIntermediateScreen) {
                 if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
-                    InterScreen(showNextScreen: $showNextScreen, isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
+                    InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                 }
             }
         }
