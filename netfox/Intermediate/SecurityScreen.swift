@@ -405,6 +405,7 @@ private extension InterScreen {
                     .font(.system(size: isIpad ? 22 : 17))
                     .fontWeight(.bold)
                     .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 16)
             
@@ -477,6 +478,7 @@ private extension InterScreen {
                     .font(.system(size: isIpad ? 22 : 17))
                     .fontWeight(.bold)
                     .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
                 
                 Text(scanObject.messTltPrc ?? "")
                     .font(.system(size: isIpad ? 16 : 13))
@@ -553,6 +555,7 @@ private extension InterScreen {
                     .font(.system(size: isIpad ? 22 : 17))
                     .fontWeight(.bold)
                     .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
                 
                 Text(scanObject.messTltCmpl ?? "")
                     .font(.system(size: isIpad ? 16 : 13))
@@ -609,6 +612,7 @@ private extension InterScreen {
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 16)
             
