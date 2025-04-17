@@ -452,6 +452,7 @@ private extension InterScreen {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderless)
+                .disabled(isDisabled)
             }
         }
         .padding(.top, 19)
@@ -529,6 +530,7 @@ private extension InterScreen {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderless)
+                .disabled(isDisabled)
             }
         }
         .padding(.top, 19)
@@ -585,6 +587,7 @@ private extension InterScreen {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderless)
+                .disabled(isDisabled)
             }
         }
         .padding(.top, 19)
@@ -653,6 +656,7 @@ private extension InterScreen {
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderless)
+                .disabled(isDisabled)
             }
         }
         .padding(.top, 19)
