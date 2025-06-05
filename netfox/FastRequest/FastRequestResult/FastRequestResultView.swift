@@ -66,6 +66,19 @@ public struct FastRequestResultView: View {
                 .onAppear {
                     completion?(.specialOffer5Show)
                 }
+                .fullScreenCover(isPresented: $showDeepScreen) {
+                    if let objOne = model?.gap?.objecs[0], let objTwo = model?.gap?.objecs[4] {
+//                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
+                        InterScreen(showNextScreen: .constant(false),
+                                    isDisabled: $isDisabled,
+                                    model: model,
+                                    currentTariff: currentTariff ?? "",
+                                    scanObject: isSubscriptionActive ? objTwo : objOne,
+                                    scanTitle: isSubscriptionActive ? (model?.gap?.titleDeep ?? "") : (model?.gap?.title ?? ""),
+                                    secureScreenNumber: isSubscriptionActive ? 4 : 0,
+                                    completion: completion!)
+                    }
+                }
         }
     }
     
