@@ -20,7 +20,7 @@ struct FastRequestResultSecurityCenterView: View {
     let tariffButtonTapped: ((Bool) -> Void)
     
     var body: some View {
-        VStack {
+        VStack(spacing: 5) {
             VStack(spacing: 5) {
                 HStack {
                     ZStack {
@@ -207,6 +207,9 @@ struct FastRequestResultSecurityCenterView: View {
                                        subttitle: "Total stratistics for the entire scanning time",
                                        imageUrl: model?.scn?.banner_icon ?? "", //!
                                        backColor: Color(red: 239/255, green: 239/255, blue: 239/255))
+            .onTapGesture {
+                print("onTapGesture")
+            }
         }
     }
     
