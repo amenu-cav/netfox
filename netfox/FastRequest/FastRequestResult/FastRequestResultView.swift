@@ -47,7 +47,7 @@ public struct FastRequestResultView: View {
                     if let objOne = model?.gap?.objecs[0], let objTwo = model?.gap?.objecs[4] {
 //                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                         InterScreen(showNextScreen: .constant(false),
-                                    showDeepScreen: .constant(false),
+                                    showDeepScreen: $showDeepScreen,
                                     isSubscriptionActive: $isSubscriptionActive,
                                     isDisabled: $isDisabled,
                                     model: model,
@@ -92,12 +92,13 @@ public struct FastRequestResultView: View {
             ZStack {
                 VStack() {
                     Text(isProtect ? String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsOn)) : String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsDis)))
-                        .font(.system(size: Constants.smallScreen ? 22 : 33, weight: .bold, design: .default))
+                        .font(.system(size: Constants.smallScreen ? 20 : 33, weight: .bold, design: .default))
                         .foregroundStyle(.black)
                         .padding(.top, Constants.smallScreen ? 5 : 50)
                     
                     Text(isProtect ? model?.scn?.subtitle_compl ?? "" : model?.scn?.subtitle_unp ?? "")
                         .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .medium, design: .default))
+                        .lineLimit(2)
                         .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
@@ -125,10 +126,10 @@ public struct FastRequestResultView: View {
                         
                         VStack {
                             Image(isProtect ? .screen7GreenImg : .screen7Rtiangle)
-                                .frame(width: 58, height: 58)
+                                .frame(width: Constants.smallScreen ? 45 : 58, height: Constants.smallScreen ? 45 : 58)
                             
                             Text(isProtect ? model?.scn?.title_anim_compl ?? "" : model?.scn?.title_anim_unp ?? "")
-                                .font(.system(size: Constants.smallScreen ? 20 : 23, weight: .semibold, design: .default))
+                                .font(.system(size: Constants.smallScreen ? 18 : 23, weight: .semibold, design: .default))
                                 .foregroundColor(.black)
                                 .multilineTextAlignment(.center)
                             
