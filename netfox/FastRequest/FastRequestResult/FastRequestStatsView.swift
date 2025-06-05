@@ -13,6 +13,7 @@ struct StatisticsPopupView: View {
     @Binding var isPresented: Bool
     
     let title: String
+    let titleIcon: String
     let subtitle: String
     let statistics: [StatisticItem]
     let closeButtonTitle: String
@@ -21,7 +22,6 @@ struct StatisticsPopupView: View {
     
     var body: some View {
         ZStack {
-            // Background overlay with blur effect
             Color.black.opacity(0.4)
                 .ignoresSafeArea()
                 .onTapGesture {
@@ -29,26 +29,21 @@ struct StatisticsPopupView: View {
                 }
                 .opacity(showContent ? 1 : 0)
             
-            // Main content
             VStack(spacing: 0) {
                 // Header
                 VStack(spacing: 8) {
-                    // LinkedIn-style icon
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color.blue)
-                        .frame(width: 32, height: 32)
-                        .overlay(
-                            Text("In")
-                                .font(.system(size: 16, weight: .bold))
-                                .foregroundColor(.white)
-                        )
+                    KFImage(URL(string: titleIcon))
+                        .setProcessor(SVGImgProcessor())
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 30, height: 30)
                     
                     Text(title)
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(.system(size: 17, weight: .semibold))
                         .foregroundColor(.primary)
                     
                     Text(subtitle)
-                        .font(.system(size: 14))
+                        .font(.system(size: 17, weight: .regular))
                         .foregroundColor(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 16)
@@ -82,8 +77,8 @@ struct StatisticsPopupView: View {
                 // Close Button
                 Button(action: dismissView) {
                     Text(closeButtonTitle)
-                        .font(.system(size: 16, weight: .medium))
-                        .foregroundColor(.blue)
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundColor(Color(red: 0/255, green: 122/255, blue: 255/255))
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
                         .background(.clear)
@@ -127,21 +122,22 @@ struct StatisticRow: View {
     
     var body: some View {
         HStack(spacing: 16) {
-            Image(systemName: icon)
+            KFImage(URL(string: icon))
+                .setProcessor(SVGImgProcessor())
                 .resizable()
                 .scaledToFit()
                 .frame(width: 28, height: 28)
 
             HStack {
                 Text(title)
-                    .font(.system(size: 16))
-                    .foregroundColor(.primary)
+                    .font(.system(size: 13, weight: .regular))
+                    .foregroundColor(.black)
                 
                 Spacer()
                 
                 Text(value)
-                    .font(.system(size: 16, weight: .medium))
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 13, weight: .regular))
+                    .foregroundColor(Color(red: 156/255, green: 156/255, blue: 156/255))
             }
         }
         .padding(.horizontal, 20)

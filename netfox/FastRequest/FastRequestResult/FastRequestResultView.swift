@@ -61,12 +61,12 @@ public struct FastRequestResultView: View {
             ZStack {
                 VStack() {
                     Text(isProtect ? String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsOn)) : String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsDis)))
-                        .font(.system(size: Constants.smallScreen ? 26 : 33, weight: .bold, design: .default))
+                        .font(.system(size: Constants.smallScreen ? 22 : 33, weight: .bold, design: .default))
                         .foregroundStyle(.black)
                         .padding(.top, Constants.smallScreen ? 5 : 50)
                     
                     Text(isProtect ? model?.scn?.subtitle_compl ?? "" : model?.scn?.subtitle_unp ?? "")
-                        .font(.system(size: 16, weight: .medium, design: .default))
+                        .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .medium, design: .default))
                         .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
@@ -74,22 +74,22 @@ public struct FastRequestResultView: View {
                     ZStack {
                         if isProtect {
                             LottieView(animationName: model?.scn?.anim_done ?? "")
-                                .frame(width: Constants.smallScreen ? 230 : 260, height: Constants.smallScreen ? 230 : 260)
+                                .frame(width: Constants.smallScreen ? 200 : 260, height: Constants.smallScreen ? 200 : 260)
                         } else {
                             Circle()
                                 .fill(Color(red: 234/255, green: 247/255, blue: 238/255))
-                                .frame(width: Constants.smallScreen ? 230 : 260, height: Constants.smallScreen ? 230 : 260)
+                                .frame(width: Constants.smallScreen ? 200 : 260, height: Constants.smallScreen ? 200 : 260)
                         }
                         
                         Circle()
                             .fill(isProtect ? .clear : Color(red: 255/255, green: 193/255, blue: 194/255))
-                            .frame(width: Constants.smallScreen ? 190 : 210, height: Constants.smallScreen ? 190 : 210)
+                            .frame(width: Constants.smallScreen ? 160 : 210, height: Constants.smallScreen ? 160 : 210)
                         
                         Circle()
                             .trim(from: 0, to: circleProgress())
                             .stroke(Color.green, lineWidth: 6)
                             .rotationEffect(.degrees(-90))
-                            .frame(width: Constants.smallScreen ? 190 : 210, height: Constants.smallScreen ? 190 : 210)
+                            .frame(width: Constants.smallScreen ? 160 : 210, height: Constants.smallScreen ? 160 : 210)
                             .animation(.easeInOut(duration: 0.5), value: circleProgress())
                         
                         VStack {
@@ -137,41 +137,42 @@ public struct FastRequestResultView: View {
             if showStatistics {
                 StatisticsPopupView(
                     isPresented: $showStatistics,
-                    title: "Statistics",
-                    subtitle: "Total statistics for the entire scanning time",
+                    title: model?.scn?.stats?.statBtnTitle ?? "",
+                    titleIcon: model?.scn?.stats?.statImg ?? "",
+                    subtitle: model?.scn?.stats?.statBtnSubtitle ?? "",
                     statistics: [
                         StatisticItem(
-                            icon: "shield.checkered",
-                            title: "Trojans eliminated",
-                            value: "2",
+                            icon: model?.scn?.stats?.statScnImg1 ?? "",
+                            title: model?.scn?.stats?.statScnTitle1 ?? "",
+                            value: model?.scn?.stats?.statScnSubtitle1 ?? "",
                             iconColor: .orange
                         ),
                         StatisticItem(
-                            icon: "bandage",
-                            title: "Viruses removed",
-                            value: "3",
+                            icon: model?.scn?.stats?.statScnIcon2 ?? "",
+                            title: model?.scn?.stats?.statScnText2 ?? "",
+                            value: model?.scn?.stats?.statScnCount2 ?? "",
                             iconColor: .red
                         ),
                         StatisticItem(
-                            icon: "cube",
-                            title: "Rootkits neutralized",
-                            value: "2",
+                            icon: model?.scn?.stats?.statScnIcon3 ?? "",
+                            title: model?.scn?.stats?.statScnText3 ?? "",
+                            value: model?.scn?.stats?.statScnCount3 ?? "",
                             iconColor: .gray
                         ),
                         StatisticItem(
-                            icon: "doc.text",
-                            title: "Suspicious processes stopped",
-                            value: "8",
+                            icon: model?.scn?.stats?.statScnIcon4 ?? "",
+                            title: model?.scn?.stats?.statScnText4 ?? "",
+                            value: model?.scn?.stats?.statScnCount4 ?? "",
                             iconColor: .brown
                         ),
                         StatisticItem(
-                            icon: "folder",
-                            title: "System files restored",
-                            value: "5",
+                            icon: model?.scn?.stats?.statScnIcon5 ?? "",
+                            title: model?.scn?.stats?.statScnText5 ?? "",
+                            value: model?.scn?.stats?.statScnCount5 ?? "",
                             iconColor: .green
                         )
                     ],
-                    closeButtonTitle: "Close"
+                    closeButtonTitle: model?.scn?.stats?.cls ?? ""
                 )
                 .transition(.opacity)
             }
