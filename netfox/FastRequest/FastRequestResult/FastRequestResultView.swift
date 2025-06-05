@@ -96,13 +96,19 @@ public struct FastRequestResultView: View {
                         .foregroundStyle(.black)
                         .padding(.top, Constants.smallScreen ? 5 : 50)
                     
+//                    Text(isProtect ? model?.scn?.subtitle_compl ?? "" : model?.scn?.subtitle_unp ?? "")
+//                        .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .medium, design: .default))
+//                        .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
+//                        .multilineTextAlignment(.center)
+//                        .padding(.horizontal)
+                    
                     Text(isProtect ? model?.scn?.subtitle_compl ?? "" : model?.scn?.subtitle_unp ?? "")
                         .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .medium, design: .default))
-                        .lineLimit(2)
-                        .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal)
-                        .padding(.bottom)
+                            .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal)
                     
                     ZStack {
                         if isProtect {
