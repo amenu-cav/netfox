@@ -121,6 +121,7 @@ public struct FastRequestResultView: View {
                     .padding(.vertical)
                     .onTapGesture {
                         showDeepScreen = true
+                        print("onTapGesture")
                     }
                     
                     FastRequestResultSecurityCenterView(
