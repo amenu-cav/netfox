@@ -296,7 +296,7 @@ private extension InterScreen {
                                     )
                                 )
                                 .foregroundColor(
-                                    scanString.color == "red" ? .red : .black
+                                    scanString.color == "red" ? .red : scanString.color == "green" ? .green : .black
                                 )
                         }
                     }
