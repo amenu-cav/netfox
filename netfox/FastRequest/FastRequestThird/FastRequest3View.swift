@@ -39,7 +39,7 @@ public struct FastRequest3View: View {
             myView()
                 .background(Color(red: 29/255, green: 34/255, blue: 57/255))
                 .navigationBarHidden(true)
-                .fullScreenCover(isPresented: $showNextScreen) {
+                .fullScreenCover(isPresented: model?.gap?.orderIndex == 0 ? $showNextScreen : .constant(false)) {
                     if let index = model?.gap?.orderIndex, index == 0 {
                         FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: $isSubscriptionActive, model: model, currentTariff: currentTariff, completion: completion)
                             .onAppear {
@@ -105,7 +105,7 @@ public struct FastRequest3View: View {
             myView()
                 .background(Color(red: 29/255, green: 34/255, blue: 57/255))
                 .navigationBarHidden(true)
-                .fullScreenCover(isPresented: $showNextScreen) {
+                .fullScreenCover(isPresented: model?.gap?.orderIndex == 0 ? $showNextScreen : .constant(false)) {
                     if let index = model?.gap?.orderIndex, index == 0 {
                         FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: $isSubscriptionActive, model: model, currentTariff: currentTariff, completion: completion)
                             .onAppear {
