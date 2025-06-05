@@ -203,7 +203,7 @@ struct FastRequestResultSecurityCenterView: View {
             .background(Color(red: 239/255, green: 239/255, blue: 239/255))
             .cornerRadius(15)
             
-            FastRequestResultStatsView(title: "Statistics",
+            FastRequestResultBoxStatsView(title: "Statistics",
                                        subttitle: "Total stratistics for the entire scanning time",
                                        imageUrl: model?.scn?.banner_icon ?? "", //!
                                        backColor: Color(red: 239/255, green: 239/255, blue: 239/255))

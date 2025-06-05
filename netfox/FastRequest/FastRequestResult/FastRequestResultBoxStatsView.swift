@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import Kingfisher
 
-struct FastRequestResultStatsView: View {
+struct FastRequestResultBoxStatsView: View {
     let title: String
     let subttitle: String
     let imageUrl: String
@@ -17,7 +17,7 @@ struct FastRequestResultStatsView: View {
                 .scaledToFit()
                 .frame(width: 30, height: 30)
             
-            VStack {
+            VStack(alignment: .leading) {
                 Text(title)
                     .font(.system(size: 14, weight: .semibold, design: .default))
                     .foregroundColor(.black)
@@ -29,10 +29,17 @@ struct FastRequestResultStatsView: View {
                     .foregroundColor(Color(red: 103/255, green: 103/255, blue: 103/255))
             }
             
+            Spacer()
             
+//            Image(systemName: "chevron.right")
+//                .scaledToFit()
+//                .frame(width: 4, height: 8)
+//                .tint(Color(red: 156/255, green: 156/255, blue: 156/255))
             Image(systemName: "chevron.right")
+                .renderingMode(.template)
                 .scaledToFit()
-                .tint(Color(red: 156/255, green: 156/255, blue: 156/255))
+                .frame(width: 4, height: 8)
+                .foregroundColor(Color(red: 156/255, green: 156/255, blue: 156/255)) 
         }
         .padding(.horizontal, 10)
         .frame(maxWidth: .infinity)
