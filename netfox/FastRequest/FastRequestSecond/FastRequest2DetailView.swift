@@ -8,6 +8,7 @@ public struct FastRequest2DetailView: View {
     @State private var showNotification = false
     @State var showIntermediateScreen: Bool = false
     @Binding var showNextScreen: Bool
+    @Binding var isSubscriptionActive: Bool
     @Binding var isDisabled: Bool
     
     private let model: AuthorizationOfferModel?
@@ -20,12 +21,14 @@ public struct FastRequest2DetailView: View {
         isDisabled: Binding<Bool>,
         model: AuthorizationOfferModel?,
         currentTariff: String,
+        isSubscriptionActive: Binding<Bool>,
         completion: @escaping ((EventsTitles?) -> Void)
     ) {
         self.model = model
         var fullArray: [MockInfoItem] = []
         self.currentTariff = currentTariff
         self._showNextScreen = showNextScreen
+        self._isSubscriptionActive = isSubscriptionActive
         self.completion = completion
         self._isDisabled = isDisabled
         
@@ -42,14 +45,14 @@ public struct FastRequest2DetailView: View {
                 .protectScreenshot()
                 .ignoresSafeArea(.all)
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: completion)
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: $isSubscriptionActive, model: model, currentTariff: currentTariff, completion: completion)
                         .onAppear {
                             completion(.specialOffer2Hide)
                         }
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
                     if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
-                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
+                        InterScreen(showNextScreen: $showNextScreen, isSubscriptionActive: $isSubscriptionActive, isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                     }
                 }
                 .onAppear {
@@ -59,14 +62,14 @@ public struct FastRequest2DetailView: View {
         } else {
             myView()
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: completion)
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: $isSubscriptionActive, model: model, currentTariff: currentTariff, completion: completion)
                         .onAppear {
                             completion(.specialOffer2Hide)
                         }
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
                     if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
-                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
+                        InterScreen(showNextScreen: $showNextScreen, isSubscriptionActive: $isSubscriptionActive, isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                     }
                 }
                 .onAppear {

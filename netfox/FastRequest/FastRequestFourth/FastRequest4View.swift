@@ -6,6 +6,7 @@ import ScreenShield
 public struct FastRequest4View: View {
     @State var showIntermediateScreen: Bool = false
     @Binding var showNextScreen: Bool
+    @Binding var isSubscriptionActive: Bool
     @Binding var isDisabled: Bool
     
     private let model: AuthorizationOfferModel?
@@ -13,10 +14,11 @@ public struct FastRequest4View: View {
     private let completion: ((EventsTitles?) -> Void)
     private let data: [(String, String)]
     
-    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, completion: @escaping ((EventsTitles?) -> Void)) {
+    public init(showNextScreen: Binding<Bool>, isSubscriptionActive: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, completion: @escaping ((EventsTitles?) -> Void)) {
         self.model = model
         self.currentTariff = currentTariff
         self._showNextScreen = showNextScreen
+        self._isSubscriptionActive = isSubscriptionActive
         self.completion = completion
         self._isDisabled = isDisabled
         
@@ -31,14 +33,14 @@ public struct FastRequest4View: View {
                 .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
                 .navigationBarHidden(true)
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: completion)
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: $isSubscriptionActive, model: model, currentTariff: currentTariff, completion: completion)
                         .onAppear {
                             completion(.specialOffer4Hide)
                         }
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
                     if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
-                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
+                        InterScreen(showNextScreen: $showNextScreen, isSubscriptionActive: $isSubscriptionActive, isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                     }
                 }
                 .protectScreenshot()
@@ -52,14 +54,14 @@ public struct FastRequest4View: View {
                 .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
                 .navigationBarHidden(true)
                 .fullScreenCover(isPresented: $showNextScreen) {
-                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: completion)
+                    FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: $isSubscriptionActive, model: model, currentTariff: currentTariff, completion: completion)
                         .onAppear {
                             completion(.specialOffer4Hide)
                         }
                 }
                 .fullScreenCover(isPresented: $showIntermediateScreen) {
                     if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
-                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
+                        InterScreen(showNextScreen: $showNextScreen, isSubscriptionActive: $isSubscriptionActive, isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                     }
                 }
                 .onAppear {

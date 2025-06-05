@@ -47,6 +47,7 @@ public struct FastRequestResultView: View {
                     if let objOne = model?.gap?.objecs[0], let objTwo = model?.gap?.objecs[4] {
 //                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                         InterScreen(showNextScreen: .constant(false),
+                                    isSubscriptionActive: $isSubscriptionActive,
                                     isDisabled: $isDisabled,
                                     model: model,
                                     currentTariff: currentTariff ?? "",
@@ -70,6 +71,7 @@ public struct FastRequestResultView: View {
                     if let objOne = model?.gap?.objecs[0], let objTwo = model?.gap?.objecs[4] {
 //                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                         InterScreen(showNextScreen: .constant(false),
+                                    isSubscriptionActive: $isSubscriptionActive,
                                     isDisabled: $isDisabled,
                                     model: model,
                                     currentTariff: currentTariff ?? "",

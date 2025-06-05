@@ -15,15 +15,17 @@ public struct InterScreen : View {
     @State private var isFinalDisplay: Bool = false
     @Binding var showNextScreen: Bool
     @Binding var isDisabled: Bool
+    @Binding var isSubscriptionActive: Bool
     private let currentTariff: String
     private let model: AuthorizationOfferModel?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     
-    public init(showNextScreen: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, scanObject: Objec, scanTitle: String, secureScreenNumber: Int, completion: @escaping (EventsTitles?) -> Void) {
+    public init(showNextScreen: Binding<Bool>, isSubscriptionActive: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, scanObject: Objec, scanTitle: String, secureScreenNumber: Int, completion: @escaping (EventsTitles?) -> Void) {
         self.model = model
         self.currentTariff = currentTariff
+        self._isSubscriptionActive = isSubscriptionActive
         self._showNextScreen = showNextScreen
         self._isDisabled = isDisabled
         self.scanObject = scanObject
@@ -74,7 +76,7 @@ public struct InterScreen : View {
             }
         }
         .fullScreenCover(isPresented: $showNextScreen) {
-            FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: .constant(true), model: model, currentTariff: currentTariff, completion: completion)
+            FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: $isSubscriptionActive, model: model, currentTariff: currentTariff, completion: completion)
         }
     }
     
