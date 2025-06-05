@@ -238,7 +238,7 @@ struct PrtdModel: Codable{
 
 public struct Gap: Codable {
     public let orderIndex: Int?
-    let title: String
+    public let title: String
     let titleTwo: String
     let titleDeep: String
     public let objecs: [Objec]
