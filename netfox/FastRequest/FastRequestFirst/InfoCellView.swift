@@ -79,7 +79,7 @@ public struct AuthorizationOfferModel: Codable {
     var homeTitle: String?
     var homeSub: String?
     var homeIcon: String?
-    var scn: ScnModel?
+    public var scn: ScnModel?
     var prtd: PrtdModel?
     var objectTwo: ObjectTwo?
     public var gap: Gap?
@@ -116,7 +116,7 @@ public struct AuthorizationOfferModel: Codable {
     }
 }
 
-struct ScnModel: Codable {
+public struct ScnModel: Codable {
     var title_proc            : String?
     var subtitle_proc        : String?
     var title_anim_proc        : String?
@@ -140,12 +140,38 @@ struct ScnModel: Codable {
     var anim_done_unp        : String?
     var rr_title            : String?
     var rr_subtitle            : String?
+    public var push_title: String?
+    public var push_content: String?
+    var stats: Stats?
     var features            : [Features]?
     
     struct Features: Codable {
         var name    : String?
         var g_status: String?
         var b_status: String?
+    }
+    
+    struct Stats: Codable {
+        var cls    : String?
+        var statScnIcon5: String?
+        var statScnIcon4: String?
+        var statBtnSubtitle    : String?
+        var statScnIcon3: String?
+        var statScnCount5: String?
+        var statScnIcon2    : String?
+        var statScnTitle1: String?
+        var statImg: String?
+        var statScnText5: String?
+        var statBtnArrowImg: String?
+        var statScnText4: String?
+        var statScnCount4: String?
+        var statScnText3: String?
+        var statScnText2: String?
+        var statScnCount3: String?
+        var statScnSubtitle1: String?
+        var statBtnTitle: String?
+        var statScnImg1: String?
+        var statScnCount2: String?
     }
 }
 
@@ -211,31 +237,96 @@ struct PrtdModel: Codable{
 }
 
 public struct Gap: Codable {
-    public let orderIndex: Int?
-    public let title: String
+    let orderIndex: Int?
+    let title: String
     let titleTwo: String
-    public let objecs: [Objec]
-
+    let titleDeep: String
+    let objecs: [Objec]
+    
     enum CodingKeys: String, CodingKey {
         case titleTwo = "title_two"
         case orderIndex = "order_index"
+        case titleDeep = "title_deep"
         case title, objecs
     }
+}
+
+struct LevelOne: Codable {
+    let scr_first: ScreenFirst
+    let scr_second: ScreenSecond
+    let scr_third: ScreenThird
+}
+
+struct LevelTwo: Codable {
+    let scr_first: ScreenFirstLevel
+    let scr_second: ScreenSecondLevel
+}
+
+struct ScreenFirstLevel: Codable {
+    let title: String
+    let description: String
+    let item: String
+    let scr_btn: String
+    let scr_img: String
+}
+
+struct ScreenSecondLevel: Codable {
+    let title: String
+    let description: String
+    let scr_img: String
+    let scn_items: [String]
+    let scr_btn: String
+}
+
+struct ScreenFirst: Codable {
+    let title: String
+    let description: String
+    let item: String
+    let scr_btn: String
+    let anim_lot: String
+    let item_icon: String
+}
+
+struct ScreenSecond: Codable {
+    let titles: [String]
+    let anim_lot: String
+}
+
+struct ScreenThird: Codable {
+    let title_icon: String
+    let title: String
+    let description: String
+    let cart: Cart
+}
+
+struct Cart: Codable {
+    let title_icon: String
+    let title: String
+    let subtitle: String
+    let items: [CartItem]
+    let btn: String
+}
+
+struct CartItem: Codable {
+    let icon: String
+    let text: String
 }
 
 public struct Objec: Codable {
     let prgrsTitle: String
     let strigs: [Strig]
+    let strigs_hand_start: [Strig]?
     let messIcon, messTlt: String
     let subMessTlt, subMessTxt: String?
-    let messSbtlt, messBtn: String
+    let messSbtlt: String
+    let messBtn: String
     let messTltPrc, messTltCmpl, subMessTxtOne, subMessTxtTwo: String?
     let subMessTxtThree, strigsTlt, strigsSubtlt, strigsRes: String?
     let messTltRed: [String]?
-
+    
     enum CodingKeys: String, CodingKey {
         case prgrsTitle = "prgrs_title"
-        case strigs
+        case strigs, strigs_hand_start
         case messIcon = "mess_icon"
         case messTlt = "mess_tlt"
         case subMessTlt = "sub_mess_tlt"
