@@ -15,6 +15,8 @@ struct FastRequestResultSecurityCenterView: View {
     
     @Binding var isSheetAnti: Bool
     
+    @Binding var showStatistics: Bool
+    
     let completion: ((EventsTitles?) -> Void)?
     let model: AuthorizationOfferModel?
     let tariffButtonTapped: ((Bool) -> Void)
@@ -208,7 +210,7 @@ struct FastRequestResultSecurityCenterView: View {
                                        imageUrl: model?.scn?.banner_icon ?? "", //!
                                        backColor: Color(red: 239/255, green: 239/255, blue: 239/255))
             .onTapGesture {
-                print("onTapGesture")
+                showStatistics = true
             }
         }
     }

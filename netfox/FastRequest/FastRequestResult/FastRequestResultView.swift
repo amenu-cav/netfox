@@ -14,6 +14,7 @@ public struct FastRequestResultView: View {
     @State private var isProtect = false
     @State private var showSheetView = false
     @State private var showingSheet = false
+    @State private var showStatistics = false
     
     private let model: AuthorizationOfferModel?
     private let currentTariff: String?
@@ -57,77 +58,122 @@ public struct FastRequestResultView: View {
     @MainActor
     private func myView() -> some View {
         ZStack {
-            VStack() {
-                Text(isProtect ? String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsOn)) : String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsDis)))
-                    .font(.system(size: Constants.smallScreen ? 26 : 33, weight: .bold, design: .default))
-                    .foregroundStyle(.black)
-                    .padding(.top, Constants.smallScreen ? 5 : 50)
-                
-                Text(isProtect ? model?.scn?.subtitle_compl ?? "" : model?.scn?.subtitle_unp ?? "")
-                    .font(.system(size: 16, weight: .medium, design: .default))
-                    .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-                
-                ZStack {
-                    if isProtect {
-                        LottieView(animationName: model?.scn?.anim_done ?? "")
-                            .frame(width: Constants.smallScreen ? 230 : 260, height: Constants.smallScreen ? 230 : 260)
-                    } else {
+            ZStack {
+                VStack() {
+                    Text(isProtect ? String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsOn)) : String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsDis)))
+                        .font(.system(size: Constants.smallScreen ? 26 : 33, weight: .bold, design: .default))
+                        .foregroundStyle(.black)
+                        .padding(.top, Constants.smallScreen ? 5 : 50)
+                    
+                    Text(isProtect ? model?.scn?.subtitle_compl ?? "" : model?.scn?.subtitle_unp ?? "")
+                        .font(.system(size: 16, weight: .medium, design: .default))
+                        .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                    
+                    ZStack {
+                        if isProtect {
+                            LottieView(animationName: model?.scn?.anim_done ?? "")
+                                .frame(width: Constants.smallScreen ? 230 : 260, height: Constants.smallScreen ? 230 : 260)
+                        } else {
+                            Circle()
+                                .fill(Color(red: 234/255, green: 247/255, blue: 238/255))
+                                .frame(width: Constants.smallScreen ? 230 : 260, height: Constants.smallScreen ? 230 : 260)
+                        }
+                        
                         Circle()
-                            .fill(Color(red: 234/255, green: 247/255, blue: 238/255))
-                            .frame(width: Constants.smallScreen ? 230 : 260, height: Constants.smallScreen ? 230 : 260)
-                    }
-                    
-                    Circle()
-                        .fill(isProtect ? .clear : Color(red: 255/255, green: 193/255, blue: 194/255))
-                        .frame(width: Constants.smallScreen ? 190 : 210, height: Constants.smallScreen ? 190 : 210)
-                    
-                    Circle()
-                        .trim(from: 0, to: circleProgress())
-                        .stroke(Color.green, lineWidth: 6)
-                        .rotationEffect(.degrees(-90))
-                        .frame(width: Constants.smallScreen ? 190 : 210, height: Constants.smallScreen ? 190 : 210)
-                        .animation(.easeInOut(duration: 0.5), value: circleProgress())
-                    
-                    VStack {
-                        Image(isProtect ? .screen7GreenImg : .screen7Rtiangle)
-                            .frame(width: 58, height: 58)
+                            .fill(isProtect ? .clear : Color(red: 255/255, green: 193/255, blue: 194/255))
+                            .frame(width: Constants.smallScreen ? 190 : 210, height: Constants.smallScreen ? 190 : 210)
                         
-                        Text(isProtect ? model?.scn?.title_anim_compl ?? "" : model?.scn?.title_anim_unp ?? "")
-                            .font(.system(size: Constants.smallScreen ? 20 : 23, weight: .semibold, design: .default))
-                            .foregroundColor(.black)
-                            .multilineTextAlignment(.center)
+                        Circle()
+                            .trim(from: 0, to: circleProgress())
+                            .stroke(Color.green, lineWidth: 6)
+                            .rotationEffect(.degrees(-90))
+                            .frame(width: Constants.smallScreen ? 190 : 210, height: Constants.smallScreen ? 190 : 210)
+                            .animation(.easeInOut(duration: 0.5), value: circleProgress())
                         
-                        Text(createAtrStr())
+                        VStack {
+                            Image(isProtect ? .screen7GreenImg : .screen7Rtiangle)
+                                .frame(width: 58, height: 58)
+                            
+                            Text(isProtect ? model?.scn?.title_anim_compl ?? "" : model?.scn?.title_anim_unp ?? "")
+                                .font(.system(size: Constants.smallScreen ? 20 : 23, weight: .semibold, design: .default))
+                                .foregroundColor(.black)
+                                .multilineTextAlignment(.center)
+                            
+                            Text(createAtrStr())
+                        }
                     }
-                }
-                .padding(.vertical)
-                
-                FastRequestResultSecurityCenterView(
-                    isSubscriptionActive: $isSubscriptionActive,
-                    isRealTimeAntivirusOn: $isRealTimeAntivirusOn,
-                    isBackgroundScanOn: $isBackgroundScanOn,
-                    isSecurityOn: $isSecurityOn,
-                    isPasswordsOn: $isPasswordsOn,
-                    isCacheOn: $isCacheOn,
-                    isSheetAnti: $isSheetAnti,
-                    completion: completion,
-                    model: model
-                ) { isTariif in
-                    if isTariif {
-                        showingSheet = true
-                    } else {
-                        showSheetView = true
+                    .padding(.vertical)
+                    
+                    FastRequestResultSecurityCenterView(
+                        isSubscriptionActive: $isSubscriptionActive,
+                        isRealTimeAntivirusOn: $isRealTimeAntivirusOn,
+                        isBackgroundScanOn: $isBackgroundScanOn,
+                        isSecurityOn: $isSecurityOn,
+                        isPasswordsOn: $isPasswordsOn,
+                        isCacheOn: $isCacheOn,
+                        isSheetAnti: $isSheetAnti,
+                        showStatistics: $showStatistics,
+                        completion: completion,
+                        model: model
+                    ) { isTariif in
+                        if isTariif {
+                            showingSheet = true
+                        } else {
+                            showSheetView = true
+                        }
                     }
+                    .padding(.horizontal)
+                    
+                    Spacer()
                 }
-                .padding(.horizontal)
                 
-                Spacer()
+                if showSheetView {
+                    SheetView(showSheetView: $showSheetView, isSheetAnti: $isSheetAnti, model: model?.sheet, completion: completion)
+                }
             }
             
-            if showSheetView {
-                SheetView(showSheetView: $showSheetView, isSheetAnti: $isSheetAnti, model: model?.sheet, completion: completion)
+            if showStatistics {
+                StatisticsPopupView(
+                    isPresented: $showStatistics,
+                    title: "Statistics",
+                    subtitle: "Total statistics for the entire scanning time",
+                    statistics: [
+                        StatisticItem(
+                            icon: "shield.checkered",
+                            title: "Trojans eliminated",
+                            value: "2",
+                            iconColor: .orange
+                        ),
+                        StatisticItem(
+                            icon: "bandage",
+                            title: "Viruses removed",
+                            value: "3",
+                            iconColor: .red
+                        ),
+                        StatisticItem(
+                            icon: "cube",
+                            title: "Rootkits neutralized",
+                            value: "2",
+                            iconColor: .gray
+                        ),
+                        StatisticItem(
+                            icon: "doc.text",
+                            title: "Suspicious processes stopped",
+                            value: "8",
+                            iconColor: .brown
+                        ),
+                        StatisticItem(
+                            icon: "folder",
+                            title: "System files restored",
+                            value: "5",
+                            iconColor: .green
+                        )
+                    ],
+                    closeButtonTitle: "Close"
+                )
+                .transition(.opacity)
             }
         }
     }
