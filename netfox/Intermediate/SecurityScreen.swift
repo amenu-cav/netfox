@@ -14,6 +14,7 @@ public struct InterScreen : View {
     @State private var displayedAntivirusStrings: [Strig] = []
     @State private var isFinalDisplay: Bool = false
     @Binding var showNextScreen: Bool
+    @Binding var showDeepScreen: Bool?
     @Binding var isDisabled: Bool
     @Binding var isSubscriptionActive: Bool
     private let currentTariff: String
@@ -22,11 +23,12 @@ public struct InterScreen : View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     
-    public init(showNextScreen: Binding<Bool>, isSubscriptionActive: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, scanObject: Objec, scanTitle: String, secureScreenNumber: Int, completion: @escaping (EventsTitles?) -> Void) {
+    public init(showNextScreen: Binding<Bool>, showDeepScreen: Binding<Bool?>, isSubscriptionActive: Binding<Bool>, isDisabled: Binding<Bool>, model: AuthorizationOfferModel?, currentTariff: String, scanObject: Objec, scanTitle: String, secureScreenNumber: Int, completion: @escaping (EventsTitles?) -> Void) {
         self.model = model
         self.currentTariff = currentTariff
         self._isSubscriptionActive = isSubscriptionActive
         self._showNextScreen = showNextScreen
+        self._showDeepScreen = showDeepScreen
         self._isDisabled = isDisabled
         self.scanObject = scanObject
         self.scanTitle = scanTitle
@@ -446,6 +448,7 @@ private extension InterScreen {
                 Button {
                     completion(.scan1Action)
                     completion(nil)
+                    showDeepScreen = false
                 } label: {
                     Text(scanObject.messBtn)
                         .font(.system(size: isIpad ? 22 : 17))
