@@ -237,11 +237,11 @@ struct PrtdModel: Codable{
 }
 
 public struct Gap: Codable {
-    let orderIndex: Int?
+    public let orderIndex: Int?
     let title: String
     let titleTwo: String
     let titleDeep: String
-    let objecs: [Objec]
+    public let objecs: [Objec]
     
     enum CodingKeys: String, CodingKey {
         case titleTwo = "title_two"
