@@ -121,7 +121,6 @@ public struct FastRequestResultView: View {
                     .padding(.vertical)
                     .onTapGesture {
                         showDeepScreen = true
-                        print("onTapGesture")
                     }
                     
                     FastRequestResultSecurityCenterView(
@@ -222,7 +221,7 @@ public struct FastRequestResultView: View {
 //        attributedStrOne.append(attributedStrTwo)
 //        
 //        return AttributedString(attributedStrOne)
-        let attributedStrOne = NSMutableAttributedString(string: String(model?.scn?.subtitle_anim_compl?.dropLast(2) ?? ""), attributes: [
+        let attributedStrOne = NSMutableAttributedString(string: String((model?.scn?.subtitle_anim_compl?.dropLast(2) ?? "") + "\n"), attributes: [
             NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: "#000000"),
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)
         ])
