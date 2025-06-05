@@ -43,19 +43,19 @@ public struct FastRequestResultView: View {
                     completion?(.specialOffer5Show)
                     ScreenShield.shared.protectFromScreenRecording()
                 }
-//                .fullScreenCover(isPresented: $showDeepScreen) {
-//                    if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
-////                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
-//                        InterScreen(showNextScreen: <#T##Binding<Bool>#>,
-//                                    isDisabled: <#T##Binding<Bool>#>,
-//                                    model: <#T##AuthorizationOfferModel?#>,
-//                                    currentTariff: <#T##String#>,
-//                                    scanObject: isSubscriptionActive ? 4 : 0,
-//                                    scanTitle: isSubscriptionActive ? (model?.gap?.titleDeep ?? "") : (model?.gap?.title ?? ""),
-//                                    secureScreenNumber: isSubscriptionActive ? 4 : 0,
-//                                    completion: <#T##(EventsTitles?) -> Void#>)
-//                    }
-//                }
+                .fullScreenCover(isPresented: $showDeepScreen) {
+                    if let objOne = model?.gap?.objecs[0], let objTwo = model?.gap?.objecs[4] {
+//                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
+                        InterScreen(showNextScreen: .constant(false),
+                                    isDisabled: $isDisabled,
+                                    model: model,
+                                    currentTariff: currentTariff ?? "",
+                                    scanObject: isSubscriptionActive ? objTwo : objOne,
+                                    scanTitle: isSubscriptionActive ? (model?.gap?.titleDeep ?? "") : (model?.gap?.title ?? ""),
+                                    secureScreenNumber: isSubscriptionActive ? 4 : 0,
+                                    completion: completion!)
+                    }
+                }
         } else {
             myView()
                 .background(.white)
