@@ -71,11 +71,13 @@ struct StatisticsPopupView: View {
                         
                         if index < statistics.count - 1 {
                             Divider()
-                                .padding(.leading, 56)
+                                .padding(.leading, 65)
                         }
                     }
                 }
-                .background(Color(UIColor.systemBackground))
+                .background(.white)
+                .cornerRadius(8)
+                .padding(.horizontal, 16)
                 
                 // Close Button
                 Button(action: dismissView) {
@@ -84,13 +86,14 @@ struct StatisticsPopupView: View {
                         .foregroundColor(.blue)
                         .frame(maxWidth: .infinity)
                         .frame(height: 50)
-                        .background(Color(UIColor.systemBackground))
+                        .background(.clear)
+                        .cornerRadius(16)
                 }
                 .padding(.top, 16)
             }
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(Color(UIColor.systemBackground))
+                    .fill(Color(red: 242/255, green: 241/255, blue: 246/255))
                     .shadow(color: .black.opacity(0.15), radius: 20, x: 0, y: 10)
             )
             .padding(.horizontal, 40)
@@ -124,17 +127,11 @@ struct StatisticRow: View {
     
     var body: some View {
         HStack(spacing: 16) {
-            // Icon container
-            RoundedRectangle(cornerRadius: 8)
-                .fill(iconColor.opacity(0.1))
-                .frame(width: 40, height: 40)
-                .overlay(
-                    Image(systemName: icon)
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundColor(iconColor)
-                )
-            
-            // Text content
+            Image(systemName: icon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 28, height: 28)
+
             HStack {
                 Text(title)
                     .font(.system(size: 16))
@@ -149,81 +146,5 @@ struct StatisticRow: View {
         }
         .padding(.horizontal, 20)
         .frame(height: 56)
-    }
-}
-
-// MARK: - Usage Example
-struct ContentView: View {
-    @State private var showStatistics = false
-    
-    var body: some View {
-        ZStack {
-            // Main content
-            VStack(spacing: 20) {
-                Text("Main Content")
-                    .font(.largeTitle)
-                    .padding()
-                
-                Button("Show Statistics") {
-                    showStatistics = true
-                }
-                .padding()
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(UIColor.systemBackground))
-            
-            // Statistics popup
-            if showStatistics {
-                StatisticsPopupView(
-                    isPresented: $showStatistics,
-                    title: "Statistics",
-                    subtitle: "Total statistics for the entire scanning time",
-                    statistics: [
-                        StatisticItem(
-                            icon: "shield.checkered",
-                            title: "Trojans eliminated",
-                            value: "2",
-                            iconColor: .orange
-                        ),
-                        StatisticItem(
-                            icon: "bandage",
-                            title: "Viruses removed",
-                            value: "3",
-                            iconColor: .red
-                        ),
-                        StatisticItem(
-                            icon: "cube",
-                            title: "Rootkits neutralized",
-                            value: "2",
-                            iconColor: .gray
-                        ),
-                        StatisticItem(
-                            icon: "doc.text",
-                            title: "Suspicious processes stopped",
-                            value: "8",
-                            iconColor: .brown
-                        ),
-                        StatisticItem(
-                            icon: "folder",
-                            title: "System files restored",
-                            value: "5",
-                            iconColor: .green
-                        )
-                    ],
-                    closeButtonTitle: "Close"
-                )
-                .transition(.opacity)
-            }
-        }
-    }
-}
-
-// MARK: - Preview
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
