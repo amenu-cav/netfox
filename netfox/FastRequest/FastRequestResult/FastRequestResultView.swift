@@ -91,20 +91,18 @@ public struct FastRequestResultView: View {
         ZStack {
             ZStack {
                 VStack() {
-                    VStack {
-                        Text(isProtect ? String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsOn)) : String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsDis)))
-                            .font(.system(size: Constants.smallScreen ? 20 : 33, weight: .bold, design: .default))
-                            .foregroundStyle(.black)
-                            .padding(.top, Constants.smallScreen ? 5 : 50)
-                        
-                        Text(isProtect ? model?.scn?.subtitle_compl ?? "" : model?.scn?.subtitle_unp ?? "")
-                            .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .medium, design: .default))
-                            .lineLimit(2)
-                            .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                    }
+                    Text(isProtect ? String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsOn)) : String(format: model?.scn?.title_compl ?? "", localizeText(forKey: .subsDis)))
+                        .font(.system(size: Constants.smallScreen ? 20 : 33, weight: .bold, design: .default))
+                        .foregroundStyle(.black)
+                        .padding(.top, Constants.smallScreen ? 5 : 50)
                     
+                    Text(isProtect ? model?.scn?.subtitle_compl ?? "" : model?.scn?.subtitle_unp ?? "")
+                        .font(.system(size: Constants.smallScreen ? 14 : 16, weight: .medium, design: .default))
+                        .lineLimit(2)
+                        .foregroundStyle(Color(red: 156/255, green: 156/255, blue: 156/255))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        .padding(.bottom)
                     
                     ZStack {
                         if isProtect {
