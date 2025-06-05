@@ -192,12 +192,29 @@ public struct FastRequestResultView: View {
     }
     
     private func createAtrStr() -> AttributedString {
+//        let attributedStrOne = NSMutableAttributedString(string: String(model?.scn?.subtitle_anim_compl?.dropLast(2) ?? ""), attributes: [
+//            NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: "#000000"),
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)
+//        ])
+//        let attributedStrTwo = NSMutableAttributedString(string: localizeText(forKey: isProtect ? .subsActive : .subsOff).uppercased(), attributes: [
+//            NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: isProtect ? "#65D65C" : "#E74444"),
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .bold)
+//        ])
+//        
+//        attributedStrOne.append(attributedStrTwo)
+//        
+//        return AttributedString(attributedStrOne)
         let attributedStrOne = NSMutableAttributedString(string: String(model?.scn?.subtitle_anim_compl?.dropLast(2) ?? ""), attributes: [
             NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: "#000000"),
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)
         ])
-        let attributedStrTwo = NSMutableAttributedString(string: localizeText(forKey: isProtect ? .subsActive : .subsOff).uppercased(), attributes: [
-            NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: isProtect ? "#65D65C" : "#E74444"),
+//        let attributedStrTwo = NSMutableAttributedString(string: localizeText(forKey: isProtect ? .subsActive : .subsOff).uppercased(), attributes: [
+//            NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: isProtect ? "#65D65C" : "#E74444"),
+//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .bold)
+//        ])
+
+        let attributedStrTwo = NSMutableAttributedString(string:  model?.gap?.titleDeep?.uppercased() ?? "", attributes: [
+            NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: "#65D65C"),
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .bold)
         ])
         
