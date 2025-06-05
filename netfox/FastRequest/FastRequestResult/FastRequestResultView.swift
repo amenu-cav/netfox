@@ -116,6 +116,7 @@ public struct FastRequestResultView: View {
                                 .multilineTextAlignment(.center)
                             
                             Text(createAtrStr())
+                                .multilineTextAlignment(.center)
                         }
                     }
                     .padding(.vertical)
