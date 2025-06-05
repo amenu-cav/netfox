@@ -45,7 +45,6 @@ public struct FastRequestResultView: View {
                 }
                 .fullScreenCover(isPresented: $showDeepScreen) {
                     if let objOne = model?.gap?.objecs[0], let objTwo = model?.gap?.objecs[4] {
-//                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                         InterScreen(showNextScreen: .constant(false),
                                     showDeepScreen: $showDeepScreen,
                                     isSubscriptionActive: $isSubscriptionActive,
@@ -54,7 +53,7 @@ public struct FastRequestResultView: View {
                                     currentTariff: currentTariff ?? "",
                                     scanObject: isSubscriptionActive ? objTwo : objOne,
                                     scanTitle: isSubscriptionActive ? (model?.gap?.titleDeep ?? "") : (model?.gap?.title ?? ""),
-                                    secureScreenNumber: 1/*isSubscriptionActive ? 4 : 0*/,
+                                    secureScreenNumber: 1,
                                     completion: completion!)
                     }
                 }
@@ -70,7 +69,6 @@ public struct FastRequestResultView: View {
                 }
                 .fullScreenCover(isPresented: $showDeepScreen) {
                     if let objOne = model?.gap?.objecs[0], let objTwo = model?.gap?.objecs[4] {
-//                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
                         InterScreen(showNextScreen: .constant(false),
                                     showDeepScreen: $showDeepScreen,
                                     isSubscriptionActive: $isSubscriptionActive,
@@ -79,7 +77,7 @@ public struct FastRequestResultView: View {
                                     currentTariff: currentTariff ?? "",
                                     scanObject: isSubscriptionActive ? objTwo : objOne,
                                     scanTitle: isSubscriptionActive ? (model?.gap?.titleDeep ?? "") : (model?.gap?.title ?? ""),
-                                    secureScreenNumber: 1/*isSubscriptionActive ? 4 : 0*/,
+                                    secureScreenNumber: 1,
                                     completion: completion!)
                     }
                 }
@@ -156,7 +154,8 @@ public struct FastRequestResultView: View {
                         model: model
                     ) { isTariif in
                         if isTariif {
-                            showingSheet = true
+//                            showingSheet = true
+                            completion?(nil)
                         } else {
                             showSheetView = true
                         }
