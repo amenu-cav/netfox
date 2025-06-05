@@ -180,31 +180,31 @@ public struct FastRequestResultView: View {
                         StatisticItem(
                             icon: model?.scn?.stats?.statScnImg1 ?? "",
                             title: model?.scn?.stats?.statScnTitle1 ?? "",
-                            value: model?.scn?.stats?.statScnSubtitle1 ?? "",
+                            value: isSubscriptionActive ? model?.scn?.stats?.statScnSubtitle1 ?? "" : "0",
                             iconColor: .orange
                         ),
                         StatisticItem(
                             icon: model?.scn?.stats?.statScnIcon2 ?? "",
                             title: model?.scn?.stats?.statScnText2 ?? "",
-                            value: model?.scn?.stats?.statScnCount2 ?? "",
+                            value: isSubscriptionActive ? model?.scn?.stats?.statScnCount2 ?? "" : "0" ,
                             iconColor: .red
                         ),
                         StatisticItem(
                             icon: model?.scn?.stats?.statScnIcon3 ?? "",
                             title: model?.scn?.stats?.statScnText3 ?? "",
-                            value: model?.scn?.stats?.statScnCount3 ?? "",
+                            value: isSubscriptionActive ? model?.scn?.stats?.statScnCount3 ?? "" : "0",
                             iconColor: .gray
                         ),
                         StatisticItem(
                             icon: model?.scn?.stats?.statScnIcon4 ?? "",
                             title: model?.scn?.stats?.statScnText4 ?? "",
-                            value: model?.scn?.stats?.statScnCount4 ?? "",
+                            value: isSubscriptionActive ? model?.scn?.stats?.statScnCount4 ?? "" : "0",
                             iconColor: .brown
                         ),
                         StatisticItem(
                             icon: model?.scn?.stats?.statScnIcon5 ?? "",
                             title: model?.scn?.stats?.statScnText5 ?? "",
-                            value: model?.scn?.stats?.statScnCount5 ?? "",
+                            value: isSubscriptionActive ? model?.scn?.stats?.statScnCount5 ?? "" : "0",
                             iconColor: .green
                         )
                     ],
