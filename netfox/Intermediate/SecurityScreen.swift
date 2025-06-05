@@ -430,7 +430,7 @@ private extension InterScreen {
             )
             .padding(.horizontal, 16)
             
-            Text(scanObject.messSbtlt)
+            Text(scanObject.messSbtlt ?? "")
                 .font(.system(size: isIpad ? 16 : 13))
                 .lineLimit(4)
                 .foregroundColor(.black)
@@ -508,7 +508,7 @@ private extension InterScreen {
             )
             .padding(.horizontal, 16)
             
-            Text(scanObject.messSbtlt)
+            Text(scanObject.messSbtlt ?? "")
                 .font(.system(size: isIpad ? 16 : 13))
                 .lineLimit(4)
                 .foregroundColor(.black)
@@ -565,7 +565,7 @@ private extension InterScreen {
             }
             .padding(.horizontal, 16)
             
-            Text(scanObject.messSbtlt)
+            Text(scanObject.messSbtlt ?? "")
                 .font(.system(size: isIpad ? 16 : 13))
                 .lineLimit(4)
                 .foregroundColor(.black)
@@ -635,7 +635,7 @@ private extension InterScreen {
             )
             .padding(.horizontal, 16)
             
-            Text(scanObject.messSbtlt)
+            Text(scanObject.messSbtlt ?? "")
                 .font(.system(size: isIpad ? 16 : 13))
                 .foregroundColor(.black)
                 .multilineTextAlignment(.center)

@@ -15,6 +15,7 @@ public struct FastRequestResultView: View {
     @State private var showSheetView = false
     @State private var showingSheet = false
     @State private var showStatistics = false
+    @State var showDeepScreen: Bool = false
     
     private let model: AuthorizationOfferModel?
     private let currentTariff: String?
@@ -42,6 +43,19 @@ public struct FastRequestResultView: View {
                     completion?(.specialOffer5Show)
                     ScreenShield.shared.protectFromScreenRecording()
                 }
+//                .fullScreenCover(isPresented: $showDeepScreen) {
+//                    if let obj = model?.gap?.objecs[(model?.gap?.orderIndex ?? 1) - 1] {
+////                        InterScreen(showNextScreen: .constant(false), isDisabled: $isDisabled, model: model, currentTariff: currentTariff, scanObject: obj, scanTitle: model?.gap?.title ?? "", secureScreenNumber: model?.gap?.orderIndex ?? 0, completion: completion)
+//                        InterScreen(showNextScreen: <#T##Binding<Bool>#>,
+//                                    isDisabled: <#T##Binding<Bool>#>,
+//                                    model: <#T##AuthorizationOfferModel?#>,
+//                                    currentTariff: <#T##String#>,
+//                                    scanObject: isSubscriptionActive ? 4 : 0,
+//                                    scanTitle: isSubscriptionActive ? (model?.gap?.titleDeep ?? "") : (model?.gap?.title ?? ""),
+//                                    secureScreenNumber: isSubscriptionActive ? 4 : 0,
+//                                    completion: <#T##(EventsTitles?) -> Void#>)
+//                    }
+//                }
         } else {
             myView()
                 .background(.white)
@@ -105,6 +119,9 @@ public struct FastRequestResultView: View {
                         }
                     }
                     .padding(.vertical)
+                    .onTapGesture {
+                        showDeepScreen = true
+                    }
                     
                     FastRequestResultSecurityCenterView(
                         isSubscriptionActive: $isSubscriptionActive,
@@ -208,10 +225,6 @@ public struct FastRequestResultView: View {
             NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: "#000000"),
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 11, weight: .medium)
         ])
-//        let attributedStrTwo = NSMutableAttributedString(string: localizeText(forKey: isProtect ? .subsActive : .subsOff).uppercased(), attributes: [
-//            NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: isProtect ? "#65D65C" : "#E74444"),
-//            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .bold)
-//        ])
 
         let attributedStrTwo = NSMutableAttributedString(string:  model?.gap?.titleDeep?.uppercased() ?? "", attributes: [
             NSAttributedString.Key.foregroundColor: UIColor().hexStringToUIColor(hex: "#65D65C"),
