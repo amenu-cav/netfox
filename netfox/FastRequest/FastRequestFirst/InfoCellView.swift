@@ -240,7 +240,7 @@ public struct Gap: Codable {
     public let orderIndex: Int?
     public let title: String
     let titleTwo: String
-    let titleDeep: String
+    let titleDeep: String?
     public let objecs: [Objec]
     
     enum CodingKeys: String, CodingKey {
