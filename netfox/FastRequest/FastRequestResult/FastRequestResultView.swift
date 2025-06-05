@@ -91,7 +91,7 @@ public struct FastRequestResultView: View {
                             .rotationEffect(.degrees(-90))
                             .frame(width: Constants.smallScreen ? 160 : 210, height: Constants.smallScreen ? 160 : 210)
                             .animation(.easeInOut(duration: 0.5), value: circleProgress())
-                        
+                         
                         VStack {
                             Image(isProtect ? .screen7GreenImg : .screen7Rtiangle)
                                 .frame(width: 58, height: 58)
