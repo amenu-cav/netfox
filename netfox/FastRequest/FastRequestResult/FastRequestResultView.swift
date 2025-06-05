@@ -52,7 +52,7 @@ public struct FastRequestResultView: View {
                                     currentTariff: currentTariff ?? "",
                                     scanObject: isSubscriptionActive ? objTwo : objOne,
                                     scanTitle: isSubscriptionActive ? (model?.gap?.titleDeep ?? "") : (model?.gap?.title ?? ""),
-                                    secureScreenNumber: isSubscriptionActive ? 4 : 0,
+                                    secureScreenNumber: 1/*isSubscriptionActive ? 4 : 0*/,
                                     completion: completion!)
                     }
                 }
