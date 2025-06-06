@@ -32,7 +32,7 @@ public struct FastRequest4View: View {
             myView()
                 .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
                 .navigationBarHidden(true)
-                .fullScreenCover(isPresented: $showNextScreen) {
+                .fullScreenCover(isPresented: model?.gap?.orderIndex == 0 ? $showNextScreen : .constant(false)) {
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: $isSubscriptionActive, model: model, currentTariff: currentTariff, completion: completion)
                         .onAppear {
                             completion(.specialOffer4Hide)
@@ -53,7 +53,7 @@ public struct FastRequest4View: View {
             myView()
                 .background(Color(UIColor(red: 243/255, green: 243/255, blue: 247/255, alpha: 1)))
                 .navigationBarHidden(true)
-                .fullScreenCover(isPresented: $showNextScreen) {
+                .fullScreenCover(isPresented: model?.gap?.orderIndex == 0 ? $showNextScreen : .constant(false)) {
                     FastRequestResultView(isDisabled: $isDisabled, isSubscriptionActive: $isSubscriptionActive, model: model, currentTariff: currentTariff, completion: completion)
                         .onAppear {
                             completion(.specialOffer4Hide)
